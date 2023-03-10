@@ -1,0 +1,523 @@
+Steps
+-------------------------------
+KG_RELATION = {
+    USER: {
+        PURCHASE: PRODUCT,
+        MENTION: WORD,
+    },
+    WORD: {
+        MENTION: USER,
+        DESCRIBED_AS: PRODUCT,
+    },
+    PRODUCT: {
+        PURCHASE: USER,
+        DESCRIBED_AS: WORD,
+        PRODUCED_BY: BRAND,
+        BELONG_TO: CATEGORY,
+        ALSO_BOUGHT: RPRODUCT,
+        ALSO_VIEWED: RPRODUCT,
+        BOUGHT_TOGETHER: RPRODUCT,
+    },
+    BRAND: {
+        PRODUCED_BY: PRODUCT,
+    },
+    CATEGORY: {
+        BELONG_TO: PRODUCT,
+    },
+    RPRODUCT: {
+        ALSO_BOUGHT: PRODUCT,
+        ALSO_VIEWED: PRODUCT,
+        BOUGHT_TOGETHER: PRODUCT,
+    }
+}
+
+PATH_PATTERN = {
+    # length = 3
+    1: ((None, USER), (MENTION, WORD), (DESCRIBED_AS, PRODUCT)),
+    # length = 4
+    11: ((None, USER), (PURCHASE, PRODUCT), (PURCHASE, USER), (PURCHASE, PRODUCT)),
+    12: ((None, USER), (PURCHASE, PRODUCT), (DESCRIBED_AS, WORD), (DESCRIBED_AS, PRODUCT)),
+    13: ((None, USER), (PURCHASE, PRODUCT), (PRODUCED_BY, BRAND), (PRODUCED_BY, PRODUCT)),
+    14: ((None, USER), (PURCHASE, PRODUCT), (BELONG_TO, CATEGORY), (BELONG_TO, PRODUCT)),
+    15: ((None, USER), (PURCHASE, PRODUCT), (ALSO_BOUGHT, RPRODUCT), (ALSO_BOUGHT, PRODUCT)),
+    16: ((None, USER), (PURCHASE, PRODUCT), (ALSO_VIEWED, RPRODUCT), (ALSO_VIEWED, PRODUCT)),
+    17: ((None, USER), (PURCHASE, PRODUCT), (BOUGHT_TOGETHER, RPRODUCT), (BOUGHT_TOGETHER, PRODUCT)),
+    18: ((None, USER), (MENTION, WORD), (MENTION, USER), (PURCHASE, PRODUCT)),
+}
+
+-------------------------------
+1.  Preprocess the data first:
+	# Create AmazonDataset instance for dataset.
+	A.  Create and save the dataset
+		i)  Load entities
+		        """	Load 6 global entities from data files: `user`, `product`, `word`, `related_product`, `brand`, `category`.
+					Create a member variable for each entity associated with attributes:
+					- `vocab`: a list of string indicating entity values.
+					- `vocab_size`: vocabulary size.
+				"""
+				Ex: 
+					Load category of size 248
+					{'vocab': ['Beauty', 'Makeup', 'Face', 'Concealers & Neutralizers', 'Hair Care', 'Styling Products', 'Creams, Gels & Lotions', 'Fragrance', "Women's", 'Eau de Parfum', 'Eau de Toilette', 'Conditioners', 'Bath & Body', 'Bathing Accessories', 'Bath Trays', 'Skin Care', 'Hands & Nails', 'Hand Creams & Lotions', 'Styling --------------------
+					--------------------
+					'Hairpieces', 'Makeup Palettes', 'Eye Masks', 'Packing Organizers', 'Self Tanners', 'Braiders', 'Body Paint', 'Braid Maintenance', 'Women', 'Men', 'Brush Bags', "Children's", 'Hats & Caps', 'Temporary Tattoos', 'Body Mud'], 
+					'vocab_size': 248}
+		ii) Load Product Relations
+		        """	Load 5 product -> ? relations:
+					- `produced_by`: product -> brand,
+					- `belongs_to`: product -> category,
+					- `also_bought`: product -> related_product,
+					- `also_viewed`: product -> related_product,
+					- `bought_together`: product -> related_product,
+					Create member variable for each relation associated with following attributes:
+					- `data`: list of list of entity_tail indices (can be empty).
+					- `et_vocab`: vocabulary of entity_tail (copy from entity vocab).
+					- `et_distrib`: frequency of entity_tail vocab.
+				"""
+				Ex:
+					{'data': [[20,18,19,4], [100,166,46], ...],
+					'et_vocab': ['B00JKER2YE', 'B007Y2MBP4', 'B00AT0N5RG', 'B00H8AB50Y', 'B00CMHTYWY', 'B00LFPS0CY', 'B00LWZOIXM',...], 
+					'et_distrib': array([0., 0., 0., ..., 0., 0., 0.])}
+				
+		iii)Load Reviews
+		        """	Load user-product reviews from train/test data files. 
+					Create member variable `review` associated with following attributes:
+					- `data`: list of tuples (user_idx, product_idx, [word_idx...]).
+					- `size`: number of reviews.
+					- `product_distrib`: product vocab frequency among all reviews.
+					- `product_uniform_distrib`: product vocab frequency (all 1's)
+					- `word_distrib`: word vocab frequency among all reviews.
+					- `word_count`: number of words (including duplicates).
+					- `review_distrib`: always 1.
+				"""
+				Ex: 
+					{'data': [...(3070, 5284, [8343, 6256, 11725, 5870, 671, 18050, 1804, 8343, 6256, 11725, 5870, 671, 18050, 1804, 8343, 3942, 14993, 19186, 8793, 10443, 8343, 6256, 7728, 5120, 12342, 5742, 1804, 18050, 8083, 10575, 6963, 10443, 16407, 18022, 10575, 8343, 3942, 1833, 266, 17206, 2034, 21667, 16789, 5839, 14470, 8655, 19051, 18022, 14602, 7239, 8793, 13623, 18022, 3015, 20064, 12000, 6500, 16294, 7239, 6054, 12508, 5839, 9970, 8793]), (18548, 7125, [7239, 7636, 1232, 18050, 8655, 8171, 19583, 14392, 7152, 1833, 18584, 18050, 671, 11308, 19583, 14392, 1804, 18816, 14539, 19500, 13226, 19051, 14615, 19583, 9853, 13355, 10583, 11308, 20744, 2514, 8864, 10443, 11308, 1232, 18983, 10735, 1833, 3980, 8655, 7239, 7636, 4371, 8655, 18050, 19256, 22441, 925, 18983, 19051, 8931, 17294, 19857, 4371, 8655, 18816, 19686, 7237, 17730, 5869, 14392, 18983, 3015, 14072, 12342, 8658, 5839, 16973, 16693, 10583, 16973, 687])], 
+					'size': 149844, 
+					'product_distrib': array([ 3.,  4.,  5., ..., 60., 13., 13.]), 
+					'product_uniform_distrib': array([1., 1., 1., ..., 1., 1., 1.]), 
+					'word_distrib': array([197.,   8.,   5., ...,   5.,  17.,  63.]), 
+					'word_count': 13529933, 
+					'review_distrib': array([1., 1., 1., ..., 1., 1., 1.])}
+				
+		iv) Create word sampling rate
+				min((np.sqrt(float(self.review.word_distrib[i]) / threshold) + 1) * threshold / float(self.review.word_distrib[i]), 1.0)
+	
+	# Generate knowledge graph instance.
+	B. 	Generate and save the knowledge graph
+		i)  Load the dataset
+		ii)	Load entities
+				# Create entity nodes
+				self.G[entity][eid] = {r: [] for r in get_relations(entity)}
+				Ex: RPRODUCT
+					164719: {'also_bought': [], 'also_viewed': [], 'bought_together': []}, 
+					164720: {'also_bought': [], 'also_viewed': [], 'bought_together': []}
+					Total 224074 nodes.
+		iii)Load Reviews - Create edges of review data
+				# (1) Filter words by both tfidf and frequency thresholds.
+						Compute the tfidf score for each term/doc present in reviews
+						Identify the words meeting the threshold criteria
+				# (2) Add edges beweeen users and target products/words
+						self._add_edge(USER, uid, PURCHASE, PRODUCT, pid)
+						num_edges += 2
+						for wid in remained_words:
+							self._add_edge(USER, uid, MENTION, WORD, wid)
+							self._add_edge(PRODUCT, pid, DESCRIBED_AS, WORD, wid)
+							num_edges += 4
+				Ex:	User
+					22360: {'purchase': [2120, 11155, 5903, 4858], 'mentions': [2863, 19249, 6708, 2319, 15952]}, 
+					22361: {'purchase': [6966, 2204, 5098], 'mentions': [3731, 12856, 10953, 7446, 19946]}, 
+					22362: {'purchase': [10338, 1220, 4430, 2341, 1757, 5748, 5331, 7746], 'mentions': [18702, 16819, 12617, 4193, 18180, 7333, 16357, 1921, 17557, 12255, 22436, 2107, 13350, 20551, 12249, 1910]}}
+		iv)	Load Knowledge - for all the relations
+				# Create edges between product and relations
+		        for relation in [PRODUCED_BY, BELONG_TO, ALSO_BOUGHT, ALSO_VIEWED, BOUGHT_TOGETHER]:
+					for eid in set(eids):
+						et_type = get_entity_tail(PRODUCT, relation)
+						self._add_edge(PRODUCT, pid, relation, et_type, eid)
+				Ex:	Product
+					12100: {'purchase': [6139, 3875, 4598, 20794, 184, 363, 17286, 7315, 13260, 19003, 2361, 14925], 
+							'described_as': [16169, 13350, 22078, 17602, 16169, 16169, 9262, 1326, 6539, 15763, 2690, 14085, 8135, 5118, 16169, 10133, 8218, 6450, 12478, 12478, 	16169, 8450, 14103, 18731, 12782], 
+							'produced_by': [211], 
+							'belongs_to': [0, 15, 24, 25, 29], 
+							'also_bought': [19971, 18468, 17972, 2137, 17010, 10369, 72843, 72844, 72845, 72846, 72847, 72848, 72849, 59541, 59542, 59543, 59545, 59546, 59549, 59550, 59552, 59567, 59569, 14519, 38072, 24280, 24281, 24282, 3291, 24283, 24285, 24286, 24287, 24288, 19681, 24290, 3298, 16607, 24293, 24294, 24295, 3296, 24297, 24292, 24299, 24300, 3822, 24304, 24305, 16625, 24307, 24309, 3318, 24311, 24313, 13567, 24320, 3332, 24325, 24326, 13575, 24328, 16650, 3340, 24333, 3346, 18201, 18203, 18213, 18226, 18230, 18234, 18235, 14659, 12122, 12123, 1937, 42912, 20393, 11698, 39870, 39871, 17863, 11723, 11726, 11727, 17359, 41425, 11729, 11731, 11742, 36836, 11749, 11750, 11752, 2538, 16367, 17903, 17906, 11769], 
+							'also_viewed': [13575, 17903, 11727, 24305, 24287, 11731, 12123, 24285, 24286, 13567], 
+							'bought_together': []}}
+		v) 	Clean
+				Remove Duplicates
+		vi) Compute node degrees
+			Ex:	User
+				Compute node degrees...
+				{0: 5, 1: 20, 2: 10, 3: 15, 4: 13, 5: 10, 6: 5, 7: 13, 8: 7, 9: 4, 10: 22, 11: 9, 12: 12, 13: 3, 14: 6, 15: 4, 16: 19, 17: 8, 18: 2, 19: 11, 20: 8, 21: 14, 22: 10, 23: 11, ------------------------------------------------------------------
+				22337: 9, 22338: 13, 22339: 13, 22340: 5, 22341: 61, 22342: 17, 22343: 13, 22344: 27, 22345: 12, 22346: 12, 22347: 16, 22348: 13, 22349: 9, 22350: 13, 22351: 6, 22352: 13, 22353: 10, 22354: 11, 22355: 25, 22356: 4, 22357: 3, 22358: 13, 22359: 25, 22360: 9, 22361: 8, 22362: 24}
+			
+	# Genereate train/test labels.
+	C. 	Generate and save Labels
+		i) 	Train - - Total users 22363
+			Ex:	{User: Products}
+				11162: [6864, 11453, 10764, 7745, 9360], 2852: [7941, 5024, 7390, 6237, 3377, 3858, 7069, 5284], 3070: [2412, 5024, 480, 5284], 14966: [1925, 3369, 4635, 9613, 10556], 5167: [11453, 8179, 1895, 9709], 16492: [11453, 2136, 7745, 535, 8179], 8798: [4094, 2136, 7745, 8179], 6844: [4094, 2136, 7745, 535, 8179], 19009: [2136, 11383, 3161, 3331, 8179]}
+				Sorted
+				(22360, [4830, 2120, 11155, 5903, 4858]), (22361, [6966, 2204, 9590, 5098, 1929]), (22362, [10338, 1220, 4430, 2341, 1757, 5748, 5331, 7746])]
+		ii) Test - Total users 22363
+			Ex: {User: Products}
+				(22360, [561, 792]), (22361, [11615, 5506]), (22362, [43, 1635, 6384])]
+			
+2. 	Train knowledge graph embeddings (TransE in this case):
+	A.	Train knowledge graph embeddings
+		i) 	Load the dataset
+		ii) Initialize batch dataloader for the dataset (64 - Batch Size)
+			Ex:
+				review_seq
+				[ 23171 104063  62738 ...  17730  28030  15725]
+		iii)Evaluate the number of words to train by multiplying epochs with review word counts
+			Ex:
+				Words_To_Train = 405897991
+		iv)	Create the model for knowledge embeddings
+			Ex:
+				model:  KnowledgeEmbedding(
+					  (user): Embedding(22364, 100, padding_idx=22363)
+					  (product): Embedding(12102, 100, padding_idx=12101)
+					  (word): Embedding(22565, 100, padding_idx=22564)
+					  (related_product): Embedding(164722, 100, padding_idx=164721)
+					  (brand): Embedding(2078, 100, padding_idx=2077)
+					  (category): Embedding(249, 100, padding_idx=248)
+					  (purchase_bias): Embedding(12102, 1, padding_idx=12101)
+					  (mentions_bias): Embedding(22565, 1, padding_idx=22564)
+					  (describe_as_bias): Embedding(22565, 1, padding_idx=22564)
+					  (produced_by_bias): Embedding(2078, 1, padding_idx=2077)
+					  (belongs_to_bias): Embedding(249, 1, padding_idx=248)
+					  (also_bought_bias): Embedding(164722, 1, padding_idx=164721)
+					  (also_viewed_bias): Embedding(164722, 1, padding_idx=164721)
+					  (bought_together_bias): Embedding(164722, 1, padding_idx=164721)
+					)
+			a)	Create entity embedding and weight of size [vocab_size+1, embed_size]
+				- For all the entities (User, Product, Word, Related_Product, Brand, Category)
+				Ex:
+					Embedding(22364, 100, padding_idx=22363)
+					Embedding(12102, 100, padding_idx=12101)
+					Embedding(22565, 100, padding_idx=22564)
+					Embedding(164722, 100, padding_idx=164721)
+					Embedding(2078, 100, padding_idx=2077)
+					Embedding(249, 100, padding_idx=248)
+			b) 	Create relation vector of size [1, embed_size].
+				- For all the relations (purchase, mentions, describe_as, produced_by, belongs_to, also_bought, also_viewed, bought_together)
+				Ex:
+					tensor([[ 4.9435e-03,  3.6995e-03, -4.1904e-03,  1.0566e-03,  1.9856e-03,	4.4676e-03,  2.0149e-03, -3.9396e-04, -4.3457e-03, -3.8841e-03,
+							  2.7365e-03,  2.4711e-03, -3.5770e-03, -3.7178e-03,  2.3039e-04,	-2.1612e-03, -3.8489e-03, -4.1255e-03, -2.3637e-03,  2.1219e-03,
+							  4.7373e-03,  1.5966e-04,  4.6915e-03,  3.6734e-04,  3.3442e-03,	2.6159e-04, -1.6323e-03,  3.3014e-04, -4.5499e-03, -4.7401e-03,
+							  3.1706e-03,  1.8246e-03,  4.8492e-03, -3.7857e-03, -3.5861e-03,	-2.0924e-03,  3.6884e-03,  7.8775e-04,  4.3698e-03,  1.6344e-03,
+							  2.5549e-03, -1.8018e-03, -4.7823e-03, -6.9648e-04, -4.0369e-03,	3.2755e-03,  1.9974e-03, -3.6958e-03,  4.8653e-03,  1.0890e-03,
+							 -2.3945e-03,  4.5148e-03, -2.8609e-03, -4.0083e-03, -2.2857e-04,	2.5991e-03,  2.6313e-03, -4.8685e-03,  4.1357e-03,  2.1001e-04,
+							 -1.2280e-03,  3.6114e-03,  1.6024e-03, -4.9956e-03, -4.8650e-03,	-1.4771e-03,  4.2041e-03, -3.0024e-03,  3.0066e-03,  8.9496e-04,
+							 -2.9639e-03,  3.8362e-03,  3.2723e-03,  2.6382e-03,  3.6255e-03,	-4.4115e-03,  4.4810e-03,  1.1261e-03, -3.4890e-03, -4.9256e-03,
+							 -3.2334e-03, -2.5666e-03, -5.0491e-05,  3.5083e-03, -1.0662e-03,	1.4630e-03,  7.4911e-04, -2.4959e-04, -2.8742e-03, -4.4002e-03,
+							 -8.2954e-04, -6.0453e-04,  2.9000e-03,  4.2829e-03, -3.5156e-04,	3.7957e-03, -5.5431e-04, -2.2367e-03, -1.3379e-03, -4.0801e-03]],
+						   requires_grad=True)
+			c) 	Create relation bias (embedding and weight) of size [vocab_size+1, 1]
+				- Evaluate the bias for all those relations
+				Ex:
+					Embedding(12102, 1, padding_idx=12101)
+					
+		v)	Create an optimizer to optimize the parameters
+			Ex:
+				[INFO]  Parameters:['purchase', 'mentions', 'describe_as', 'produced_by', 'belongs_to', 'also_bought', 'also_viewed', 'bought_together', 'user.weight', 'product.weight', 'word.weight', 'related_product.weight', 'brand.weight', 'category.weight', 'purchase_bias.weight', 'mentions_bias.weight', 'describe_as_bias.weight', 'produced_by_bias.weight', 'belongs_to_bias.weight', 'also_bought_bias.weight', 'also_viewed_bias.weight', 'bought_together_bias.weight']
+				SGD (
+					Parameter Group 0
+					dampening: 0
+					lr: 0.5
+					momentum: 0
+					nesterov: False
+					weight_decay: 0
+				)
+				
+		vi)	Run it for multiple epochs to train the model and optimize the parameters
+			a)	Reset the dataloader
+			b)	Evaluate the learning rate
+			c)	Get batch idx from the dataloader batchwise (64 - Batch Size)
+				# Get training batch
+				I)	Get review_idx from review_seq 
+					Ex: 
+						# [ 23171 104063  62738 ...  17730  28030  15725]
+				II)	Extract user_idx, product_idx, text_list from review data
+					Ex:
+						user_idx, product_idx, text_list = 
+						3840 11357 [10278, 5085, 8343, 3747, 5945, 18050, 1804, 8658, 4185, 9970, 4075, 671, 21042, 10443, 984, 3787, 8658, 9843, 2187, 18816, 14933, 8164, 10677, 4063, 14991, 10583, 7239, 1804, 11885, 12342, 2854, 10443, 5839, 7239, 13210, 18983, 3015, 8083, 483]
+				III)Get product_knowledge corresponding to the product
+					Ex:
+						product_knowledge = {
+							'produced_by': [524], 
+							'belongs_to': [0, 4, 5, 6], 
+							'also_bought': [39357, 25836, 53067, 53115, 32768, 4421, 29129, 23607, 147801, 53074, 46677, 53077, 39789, 3486, 53083, 4488, 970, 39786, 14490, 53068, 8464, 7975, 3449, 5154, 3485, 8580, 147802, 3443], 
+							'also_viewed': [53115, 29129, 28819, 4488, 41317, 46677, 39336, 53066, 53074, 53069, 6872, 29127, 39353, 28802, 7616], 
+							'bought_together': []}
+				IV)	Generate batch 
+					Ex:
+						batch
+						[[3840, 11357, 5085, 524, 0, 5154, 46677, -1], 
+						[3840, 11357, 3747, 524, 0, 147801, 7616, -1], 
+						[3840, 11357, 21042, 524, 4, 29129, 46677, -1], 
+						[3840, 11357, 10443, 524, 6, 53083, 53115, -1], 
+						[3840, 11357, 984, 524, 4, 8464, 53074, -1], 
+						[3840, 11357, 9843, 524, 0, 970, 41317, -1], 
+						[3840, 11357, 14933, 524, 5, 147802, 53069, -1], 
+						[3840, 11357, 8164, 524, 6, 8580, 46677, -1], 
+						[3840, 11357, 10677, 524, 5, 3486, 46677, -1], 
+						[3840, 11357, 5839, 524, 6, 4488, 53074, -1], 
+						[3840, 11357, 13210, 524, 0, 3443, 53066, -1], 
+						[3840, 11357, 483, 524, 5, 3485, 53069, -1], 
+						.............................................
+						.............................................
+						[5774, 10508, 5839, -1, 0, 69656, 78807, 2998], 
+						[5774, 10508, 8655, -1, 2, 13367, 31488, 2998], 
+						[5774, 10508, 6431, -1, 2, 2946, 40559, 2998], 
+						[5774, 10508, 231, -1, 0, 2090, 13367, 2998], 
+						[5774, 10508, 5288, -1, 15, 53997, 78790, 2998], 
+						[5774, 10508, 9957, -1, 0, 7151, 40559, 2998], 
+						[5774, 10508, 9957, -1, 2, 17727, 190, 2998], 
+						[5774, 10508, 15028, -1, 0, 17210, 7445, 2998], 
+						[5774, 10508, 10252, -1, 15, 12553, 40558, 2998], 
+						[5774, 10508, 2809, -1, 0, 68760, 31488, 2998], 
+						[5774, 10508, 8966, -1, 15, 153, 7445, 2998], 
+						[5774, 10508, 12980, -1, 15, 2111, 40559, 2998], 
+						[5774, 10508, 13355, -1, 15, 12891, 78807, 2998]]
+			d) 	Train model
+				I)	Sets the gradients of all optimized torch.Tensor's to zero.
+				II)	Invoke the model with batch idxs
+					1.	Compute loss for the model
+						"""	Compute knowledge graph negative sampling loss.
+							batch_idxs: batch_size * 8 array, where each row is
+							(u_id, p_id, w_id, b_id, c_id, rp_id, rp_id, rp_id).
+						"""
+						A. 	Get loss and emdedding for all the relations
+						
+			Evaluate train_loss & smooth_loss
+			e)	Save the model at every checkpoint
+		vii)Save the model's epoch state_dict information
+		
+	B. 	Extract the embeddings
+		i) 	Load the last epoch embedded file
+		ii)	Extract the embed information
+			Ex:
+				{'user': array([[-0.7601029 , -0.04831964,  0.35539666, ...,  0.39044866, 0.8359676 , -0.39406192],
+							    [ 0.48469684, -0.1739423 ,  0.5433008 , ...,  0.32765785, -0.3614237 , -0.7418173 ],
+							    [ 0.32308736, -0.25609112,  0.39592916, ..., -0.1965686 , -0.2920035 ,  0.41617405],
+							   ...,
+							    [ 0.67191005,  0.37225986,  0.7548055 , ...,  0.5247119 , -0.5106909 ,  0.4747516 ],
+							    [-0.00265096,  0.55794275, -0.21549124, ..., -0.21850368, -0.15380424, -0.03635252],
+							    [ 0.21804574,  0.33507058, -0.05714496, ..., -0.5133956 , 0.46092987,  0.47186327]], dtype=float32), 
+				'product': array([[ 0.92035234,  0.8246731 ,  0.05147943, ..., -0.28206795, 0.28223762, -1.164662  ],
+							      [ 0.4802721 , -0.35188127, -0.23403816, ..., -0.39692625, 0.06854936,  0.21173419],
+								  [-0.29926127, -0.61958796, -0.14065842, ..., -0.23534815, -0.52679354,  0.09388689],
+		iii)Save embeddings
+
+3. 	Train RL agent:
+	A.	Create Batch KG Environment
+		i)	Load KG
+		ii)	Load Embedding
+		iii)Generate KG State
+		iv) Compute user-product scores for scaling.
+		v)	Compute path patterns
+			Ex:
+				['self_loop', 'mentions', 'described_as', 'self_loop']
+				['self_loop', 'purchase', 'purchase', 'purchase']
+				['self_loop', 'purchase', 'described_as', 'described_as']
+				['self_loop', 'purchase', 'produced_by', 'produced_by']
+				['self_loop', 'purchase', 'belongs_to', 'belongs_to']
+				['self_loop', 'purchase', 'also_bought', 'also_bought']
+				['self_loop', 'purchase', 'also_viewed', 'also_viewed']
+				['self_loop', 'purchase', 'bought_together', 'bought_together']
+				['self_loop', 'mentions', 'mentions', 'purchase']
+		vi)	Identify current episode information
+	B.	Identify all the users there in the KG
+	C.	Actor Critic data loader for those users as per the batch size
+		i)	Instantiate the object
+	D.	Create an Actor Critic model for the corresponding environment related parameters
+		i)	Instantiate the object
+		ii)	Instantiate the neural model for Actor and Critic
+		Ex: Parameters : env.state_dim:  400 env.act_dim:  251
+			model : ActorCritic(
+								  (l1): Linear(in_features=400, out_features=512, bias=True)
+								  (l2): Linear(in_features=512, out_features=256, bias=True)
+								  (actor): Linear(in_features=256, out_features=251, bias=True)
+								  (critic): Linear(in_features=256, out_features=1, bias=True)
+								)
+	E.	Optimize the model parameters through Adam Optimizer
+		Ex:
+			[INFO]  Parameters:['l1.weight', 'l1.bias', 'l2.weight', 'l2.bias', 'actor.weight', 'actor.bias', 'critic.weight', 'critic.bias']
+					optimizer: Adam (
+										Parameter Group 0
+										amsgrad: False
+										betas: (0.9, 0.999)
+										eps: 1e-08
+										lr: 0.0001
+										weight_decay: 0
+									)
+	F.	Train the model
+	G.	Iterate the model for number of epochs
+		i) 	Reset the dataloader
+		ii)	Process for all batch of users
+			a)	Identify the batch user ids
+			b) 	Reset the environment state for the batch of users
+				I)	Get the batch path
+					Ex: 
+						[[('self_loop', 'user', 17943)], [('self_loop', 'user', 7008)]...]
+				II)	Get the batch current state
+				III)Get the batch current actions
+					# Get all possible edges from original knowledge graph.
+					Ex:
+					relations_nodes {'purchase': (678, 8453, 9892), 'mentions': (17845, 18431, 21798)}
+					curr_node_type: user r: purchase next_node_type: product next_node_ids (678, 8453, 9892)
+					curr_node_type: user r: mentions next_node_type: word next_node_ids (17845, 18431, 21798)
+					candidate_acts: [('purchase', 678), ('purchase', 8453), ('purchase', 9892), ('mentions', 17845), ('mentions', 18431), ('mentions', 21798)]
+					actions: [('self_loop', 17943), ('mentions', 17845), ('mentions', 18431), ('mentions', 21798), ('purchase', 678), ('purchase', 8453), ('purchase', 9892)]
+				IV)	Get the batch current rewards
+					Ex:
+					uid 7803 target_score: 0.49376374
+					batch_reward [0.0, 0.0, 0.27121058, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.6349815, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7757665, 0.0, 0.0]
+			c) 	Masking the actions based on dropout
+			d)	Select valid actions through model based on current batch state and masked actions
+			e)	Get batch next state and reward for batch of users
+			f) 	Get total rewards, and different losses for the model.
+		iii)Save the evaluated information to a policy checklist file.
+			
+4. 	Evaluation
+	A. 	Define default parameters as arguments
+	B.	Load train and test labels
+	C.	Predict the paths for test users
+		i)	Instantiate the Batch KG Environment -- Reinforcement Learning
+			a)	Load KG
+			b)	Load Embedding
+			c)	Generate KG State
+			d) 	Compute user-product scores for scaling.
+			e)	Compute path patterns
+				Ex:
+					['self_loop', 'mentions', 'described_as', 'self_loop']
+					['self_loop', 'purchase', 'purchase', 'purchase']
+					['self_loop', 'purchase', 'described_as', 'described_as']
+					['self_loop', 'purchase', 'produced_by', 'produced_by']
+					['self_loop', 'purchase', 'belongs_to', 'belongs_to']
+					['self_loop', 'purchase', 'also_bought', 'also_bought']
+					['self_loop', 'purchase', 'also_viewed', 'also_viewed']
+					['self_loop', 'purchase', 'bought_together', 'bought_together']
+					['self_loop', 'mentions', 'mentions', 'purchase']
+			f)	Identify current episode information
+		ii)	Load policy file's pretrain state dict information
+		iii)Instantiate ActorCritic model
+		iv)	Update model's state dict information with pretrain state dict values
+		v) 	Identify the users need to be predicted
+		vi)	Evaluate paths & probability for the batch users
+			a)	Evaluate state_pool = Reset the environment state for the batch of users
+				I)	Get the batch path
+					Ex: 
+						[[('self_loop', 'user', 17943)], [('self_loop', 'user', 7008)]...]
+				II)	Get the batch current state
+				III)Get the batch current actions
+					# Get all possible edges from original knowledge graph.
+					Ex:
+					relations_nodes {'purchase': (678, 8453, 9892), 'mentions': (17845, 18431, 21798)}
+					curr_node_type: user r: purchase next_node_type: product next_node_ids (678, 8453, 9892)
+					curr_node_type: user r: mentions next_node_type: word next_node_ids (17845, 18431, 21798)
+					candidate_acts: [('purchase', 678), ('purchase', 8453), ('purchase', 9892), ('mentions', 17845), ('mentions', 18431), ('mentions', 21798)]
+					actions: [('self_loop', 17943), ('mentions', 17845), ('mentions', 18431), ('mentions', 21798), ('purchase', 678), ('purchase', 8453), ('purchase', 9892)]
+				IV)	Get the batch current rewards
+					Ex:
+					uid 7803 target_score: 0.49376374
+					batch_reward [0.0, 0.0, 0.27121058, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.6349815, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7757665, 0.0, 0.0]
+			b)	Evaluate path_pool = Get the batch paths
+			c)	For all the hops
+				I)	Evaluate state_tensor
+				II)	Get batch actions for the path pools
+				III)Get probs for corresponding state and action paths
+				iV)	Get top probs
+				v)	Evaluate Path_Pool & Probs_Pool
+		vii)Save the predicts
+	D.	Evaluate paths
+		i)	Load embeds
+		ii)	Evaluate similarity score of user & purchase embeds vs product embeds
+		iii)Load prediction of test users
+			1)	Get all valid paths for each user, compute path score and path probability.
+			2)	Pick best path for each user-product pair, also remove pid if it is in train set.
+			3) 	Compute top 10 recommended products for each user.
+			4)	Evaluate the prediction labels vs actual test labels
+				I)	Evaluate precisions, recalls, ndcgs, hits
+
+
+
+			
+		
+	
+    train_labels = {
+	22341: [10463, 4215, 8177, 591, 12007, 10105, 6316, 331, 1317, 10430, 5635, 6767, 587, 8322, 5395, 6730, 10244, 5213, 7817, 5884, 6451, 8365, 359, 9389, 6629, 10732, 8185, 599, 5334, 11798, 9004, 9116, 3135], 
+	22342: [1885, 8885, 5210, 1768, 2163, 8417, 1153, 5672, 5063, 257, 1442, 1847, 2500, 6131]}
+    test_labels = {
+	22341: [3253, 9439, 11393, 5432, 8616, 3412, 10474, 540, 2823, 8720, 8889, 1812, 9568], 
+	22342: [1117, 9042, 6758, 711, 2478]}
+	
+Existing Approach	
+1st epcoh:
+	path: [('self_loop', 'user', 22341), ('purchase', 'product', 5395), ('also_bought', 'related_product', 933), ('also_bought', 'product', 4715)]
+	done: True
+	actions: [('self_loop', 4715)]
+	path: [('self_loop', 'user', 22342), ('self_loop', 'user', 22342), ('mentions', 'word', 13612), ('self_loop', 'word', 13612)]
+	done: True
+	actions: [('self_loop', 13612)]
+
+2nd epoch:
+	path: [('self_loop', 'user', 22341), ('purchase', 'product', 7817), ('also_bought', 'related_product', 110384), ('also_bought', 'product', 11222)]
+	done: True
+	actions: [('self_loop', 11222)]
+	path: [('self_loop', 'user', 22342), ('purchase', 'product', 257), ('also_bought', 'related_product', 61015), ('also_bought', 'product', 8331)]
+	done: True
+	actions: [('self_loop', 8331)]
+		
+Iteration 1
+	path: [('self_loop', 'user', 22341), ('purchase', 'product', 587), ('also_bought', 'related_product', 5245), ('also_bought', 'product', 925)]
+	done: True
+	actions: [('self_loop', 925)]
+	path: [('self_loop', 'user', 22342), ('mentions', 'word', 21815), ('mentions', 'user', 7957), ('purchase', 'product', 6986)]
+	done: True
+
+	path: [('self_loop', 'user', 22341), ('purchase', 'product', 5213), ('also_bought', 'related_product', 88992), ('also_bought', 'product', 2723)]
+	done: True
+	actions: [('self_loop', 2723)]
+	path: [('self_loop', 'user', 22342), ('mentions', 'word', 9735), ('mentions', 'user', 21047), ('mentions', 'word', 15110)]
+	done: True
+	actions: [('self_loop', 15110)]
+	
+NDCG=3.577 |  Recall=4.708 | HR=9.014 | Precision=1.045 | Invalid users=1173
+
+
+Proposed Algorithm
+Steps
+    train_labels = {
+	22341: [10463, 4215, 8177, 591, 12007, 10105, 6316, 331, 1317, 10430, 5635, 6767, 587, 8322, 5395, 6730, 10244, 5213, 7817, 5884, 6451, 8365, 359, 9389, 6629, 10732, 8185, 599, 5334, 11798, 9004, 9116, 3135], 
+	22342: [1885, 8885, 5210, 1768, 2163, 8417, 1153, 5672, 5063, 257, 1442, 1847, 2500, 6131]}
+    
+	test_labels = {
+	22341: [3253, 9439, 11393, 5432, 8616, 3412, 10474, 540, 2823, 8720, 8889, 1812, 9568], 
+	22342: [1117, 9042, 6758, 711, 2478]}
+
+Train
+	1. Find all the uids
+	2. Get corresponding train labels based on the train dataset
+	For all epochs
+		3.  Get the batch uids and its corresponding train labels
+			For the uids whose train labels haven't been processed
+				4.  Get the current batch state of the uid
+					For the labels 
+						### Start episode
+						Get all paths sourcing from user and leading to the product label
+						Find the best suited path based on reward, score and probability
+						Update the state of user
+						
+Test
+	1. Find all the uids for recommendation
+	2. Get corresponding test labels for validation
+	3. Get the current state of users based on training data path
+	4. Get top 10 recommendations based on reward, score & probability
+	5. Validate the accuracy of prediction with the test labels
+
+Quantitative evaluation of explainability
+R - the number of rules/features/hops outputted by the explanation
+S - The score of the path traversal for the recommended item
+P - The probability of the path traversal for the recommended item
+Rw- The reward of the path traversal for the recommended item
+
+Formula = (S + P + Rw)/ ((MAX range(S) + MAX range(P) + MAX range(Rw)) * R)
