@@ -1,5 +1,5 @@
 # Reinforcement Knowledge Graph Reasoning for Explainable Recommendation
-This repository contains the source code of the SIGIR 2019 paper "[Reinforcement Knowledge Graph Reasoning for Explainable Recommendation](https://arxiv.org/abs/1906.05237)" [2].
+This repository contains the source code of the Explainable Recommendation
 
 ## Datasets
 Two Amazon datasets (Amazon_Beauty, Amazon_Cellphones) are available in the "data/" directory and the split is consistent with [1].
@@ -35,6 +35,3 @@ If "run_path" is True, the program will generate paths for recommendation accord
 If "run_eval" is True, the program will evaluate the recommendation performance based on the resulting paths.
 
 ## References
-[1] Yongfeng Zhang, Qingyao Ai, Xu Chen, W. Bruce Croft. "Joint Representation Learning for Top-N Recommendation with Heterogeneous Information Sources". In Proceedings of CIKM. 2017.
-
-[2] Yikun Xian, Zuohui Fu, S. Muthukrishnan, Gerard de Melo, Yongfeng Zhang. "Reinforcement Knowledge Graph Reasoning for Explainable Recommendation." In Proceedings of SIGIR. 2019.
