@@ -72,10 +72,10 @@ class AmazonDataset(object):
             # So for each product-relation, there are always |products| records.
             relation = edict(
                 data=[],
-                et_vocab=product_relations[name][1].vocab, #copy of brand, catgory ... 's vocab
-                et_distrib=np.zeros(product_relations[name][1].vocab_size) #[1] means self.brand ..
+                et_vocab=product_relations[name][1].vocab,  # copy of brand, category ... 's vocab
+                et_distrib=np.zeros(product_relations[name][1].vocab_size)  # [1] means self.brand ..
             )
-            for line in self._load_file(product_relations[name][0]): #[0] means brand_p_b.txt.gz ..
+            for line in self._load_file(product_relations[name][0]):  # [0] means brand_p_b.txt.gz ..
                 knowledge = []
                 for x in line.split(' '):  # some lines may be empty
                     if len(x) > 0:
@@ -121,7 +121,6 @@ class AmazonDataset(object):
                 review_distrib=np.ones(len(review_data)) #set to 1 now
         )
         print('Load review of size', self.review.size, 'word count=', word_count)
-
 
     def create_word_sampling_rate(self, sampling_threshold):
         print('Create word sampling rate')
