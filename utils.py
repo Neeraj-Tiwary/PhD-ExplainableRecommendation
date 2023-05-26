@@ -9,7 +9,8 @@ import numpy as np
 import scipy.sparse as sp
 from sklearn.feature_extraction.text import TfidfTransformer
 import torch
-
+import glob
+import os.path
 
 # Dataset names.
 BEAUTY = 'beauty'
@@ -41,7 +42,6 @@ LABELS = {
     CD: (TMP_DIR[CD] + '/train_label.pkl', TMP_DIR[CD] + '/test_label.pkl')
 }
 
-
 # Entities
 USER = 'user'
 PRODUCT = 'product'
@@ -49,7 +49,6 @@ WORD = 'word'
 RPRODUCT = 'related_product'
 BRAND = 'brand'
 CATEGORY = 'category'
-
 
 # Relations
 PURCHASE = 'purchase'
@@ -62,6 +61,7 @@ ALSO_VIEWED = 'also_viewed'
 BOUGHT_TOGETHER = 'bought_together'
 SELF_LOOP = 'self_loop'  # only for kg env
 
+# Defining the KG relation
 KG_RELATION = {
     USER: {
         PURCHASE: PRODUCT,
@@ -93,20 +93,21 @@ KG_RELATION = {
     }
 }
 
-
+# Defining the followed path patterns in the KG
 PATH_PATTERN = {
-    # length = 3
-    1: ((None, USER), (MENTION, WORD), (DESCRIBED_AS, PRODUCT)),
+    # length = 3 - Final path
+    1:  ((None, USER), (MENTION, WORD), (DESCRIBED_AS, PRODUCT)),
     # length = 3 - sub paths
-    31: ((None, USER), (PURCHASE, PRODUCT), (PURCHASE, USER)),
-    32: ((None, USER), (PURCHASE, PRODUCT), (DESCRIBED_AS, WORD)),
-    33: ((None, USER), (PURCHASE, PRODUCT), (PRODUCED_BY, BRAND)),
-    34: ((None, USER), (PURCHASE, PRODUCT), (BELONG_TO, CATEGORY)),
-    35: ((None, USER), (PURCHASE, PRODUCT), (ALSO_BOUGHT, RPRODUCT)),
-    36: ((None, USER), (PURCHASE, PRODUCT), (ALSO_VIEWED, RPRODUCT)),
-    37: ((None, USER), (PURCHASE, PRODUCT), (BOUGHT_TOGETHER, RPRODUCT)),
-    38: ((None, USER), (MENTION, WORD), (MENTION, USER)),
+    2:  ((None, USER), (MENTION, WORD), (MENTION, USER)),
+    3:  ((None, USER), (PURCHASE, PRODUCT), (PURCHASE, USER)),
+    4:  ((None, USER), (PURCHASE, PRODUCT), (DESCRIBED_AS, WORD)),
+    5:  ((None, USER), (PURCHASE, PRODUCT), (PRODUCED_BY, BRAND)),
+    6:  ((None, USER), (PURCHASE, PRODUCT), (BELONG_TO, CATEGORY)),
+    7:  ((None, USER), (PURCHASE, PRODUCT), (ALSO_BOUGHT, RPRODUCT)),
+    8:  ((None, USER), (PURCHASE, PRODUCT), (ALSO_VIEWED, RPRODUCT)),
+    9:  ((None, USER), (PURCHASE, PRODUCT), (BOUGHT_TOGETHER, RPRODUCT)),
     # length = 4 - Final paths
+    10: ((None, USER), (MENTION, WORD), (MENTION, USER), (PURCHASE, PRODUCT)),
     11: ((None, USER), (PURCHASE, PRODUCT), (PURCHASE, USER), (PURCHASE, PRODUCT)),
     12: ((None, USER), (PURCHASE, PRODUCT), (DESCRIBED_AS, WORD), (DESCRIBED_AS, PRODUCT)),
     13: ((None, USER), (PURCHASE, PRODUCT), (PRODUCED_BY, BRAND), (PRODUCED_BY, PRODUCT)),
@@ -120,8 +121,9 @@ PATH_PATTERN = {
     21: ((None, USER), (PURCHASE, PRODUCT), (BOUGHT_TOGETHER, RPRODUCT), (ALSO_BOUGHT, PRODUCT)),
     22: ((None, USER), (PURCHASE, PRODUCT), (BOUGHT_TOGETHER, RPRODUCT), (ALSO_VIEWED, PRODUCT)),
     23: ((None, USER), (PURCHASE, PRODUCT), (BOUGHT_TOGETHER, RPRODUCT), (BOUGHT_TOGETHER, PRODUCT)),
-    24: ((None, USER), (MENTION, WORD), (MENTION, USER), (PURCHASE, PRODUCT)),
 }
+
+''' ######################### Defining the utilities functions ######################### '''
 
 
 def get_entities():
@@ -165,14 +167,14 @@ def compute_tfidf_fast(vocab, docs):
     return tfidf
 
 
-def get_logger(logname):
+def get_logger(logname, mode='w'):
     logger = logging.getLogger(logname)
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('[%(levelname)s]  %(message)s')
     ch = logging.StreamHandler(sys.stdout)
     ch.setFormatter(formatter)
     logger.addHandler(ch)
-    fh = logging.handlers.RotatingFileHandler(logname, mode='w')
+    fh = logging.handlers.RotatingFileHandler(logname, mode=mode)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
     return logger
@@ -248,3 +250,38 @@ def load_kg(dataset):
     kg = pickle.load(open(kg_file, 'rb'))
     return kg
 
+
+def get_entity_details(dataset, entity_type, entity_id):
+    if entity_type == 'user':
+        entity_value = dataset.user.vocab[entity_id]
+    elif entity_type == 'product':
+        entity_value = dataset.product.vocab[entity_id]
+    elif entity_type == 'word':
+        entity_value = dataset.word.vocab[entity_id]
+    elif entity_type == 'related_product':
+        entity_value = dataset.related_product.vocab[entity_id]
+    elif entity_type == 'brand':
+        entity_value = dataset.brand.vocab[entity_id]
+    elif entity_type == 'category':
+        entity_value = dataset.category.vocab[entity_id]
+    else:
+        entity_value = None
+    return entity_value
+
+
+def load_checkpoint(checkpoint_fpath):
+    checkpoint = torch.load(checkpoint_fpath, map_location=lambda storage, loc: storage)
+    return checkpoint
+
+
+def save_checkpoint(checkpoint, checkpoint_fpath):
+    torch.save(checkpoint, checkpoint_fpath)
+
+
+def get_latest_file(folder_path, file_type):
+    files = glob.glob(folder_path + file_type)
+    if len(files) > 0:
+        max_file = max(files, key=os.path.getctime)
+    else:
+        max_file = None
+    return max_file

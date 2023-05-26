@@ -46,7 +46,6 @@ class KnowledgeGraph(object):
         reviews = [d[2] for d in dataset.review.data]
         review_tfidf = compute_tfidf_fast(vocab, reviews)
         distrib = dataset.review.word_distrib
-
         num_edges = 0
         all_removed_words = []
         for rid, data in enumerate(dataset.review.data):
@@ -155,7 +154,6 @@ class KnowledgeGraph(object):
                     if r not in degrees[entity]:
                         degrees[entity][r] = []
                     degrees[entity][r].append(len(self.G[entity][eid][r]))
-
         for entity in degrees:
             for r in degrees[entity]:
                 tmp = sorted(degrees[entity][r], reverse=True)
@@ -175,7 +173,6 @@ class KnowledgeGraph(object):
             _get = lambda e, i, r: self.get_tails_given_user(e, i, r, uid)
         else:
             _get = lambda e, i, r: self.get_tails(e, i, r)
-
         pattern = PATH_PATTERN[pattern_id]
         paths = []
         if pattern_id == 1:  # OK
@@ -188,14 +185,16 @@ class KnowledgeGraph(object):
             pids_u = pids_u.difference([pid])  # exclude target product
             nodes_p = set(_get(PRODUCT, pid, pattern[3][0]))  # PRODUCT->relation->node2
             if pattern[2][1] == USER:
-                nodes_p.difference([uid])
+                nodes_p = nodes_p.difference(set([uid]))  # remove the self user
+            elif pattern[2][1] == CATEGORY:
+                nodes_p = nodes_p.difference(set([0]))  # remove the most common category
             for pid_u in pids_u:
                 relation, entity_tail = pattern[2][0], pattern[2][1]
                 et_ids = set(_get(PRODUCT, pid_u, relation))  # USER->PURCHASE->PRODUCT->relation->node2
                 intersect_nodes = et_ids.intersection(nodes_p)
                 tmp_paths = [(uid, pid_u, x, pid) for x in intersect_nodes]
                 paths.extend(tmp_paths)
-        elif pattern_id == 24:
+        elif pattern_id == 10:
             wids_u = set(_get(USER, uid, MENTION))  # USER->MENTION->WORD
             uids_p = set(_get(PRODUCT, pid, PURCHASE))  # PRODUCT->PURCHASE->USER
             uids_p = uids_p.difference([uid])  # exclude source user
@@ -204,19 +203,154 @@ class KnowledgeGraph(object):
                 intersect_nodes = wids_u.intersection(wids_u_p)
                 tmp_paths = [(uid, x, uid_p, pid) for x in intersect_nodes]
                 paths.extend(tmp_paths)
-
         return paths
 
 
-def check_test_path(dataset_str, kg):
+def check_user_product_path(dataset_str, kg, batch_uids=None, mode='train', is_debug=0):
     # Check if there exists at least one path for any user-product in test set.
-    test_user_products = load_labels(dataset_str, 'test')
-    for uid in test_user_products:
-        for pid in test_user_products[uid]:
+    user_products_labels = load_labels(dataset_str, mode)
+    if len(batch_uids) != 0:
+        user_products_labels = dict(sorted((key, batch_uids[key]) for key in batch_uids.keys() if key in batch_uids))
+    if is_debug == 1:
+        print('user_products_labels: ', user_products_labels)
+    user_labels_path = []
+    for uid in user_products_labels:
+        for pid in user_products_labels[uid]:
+            #print(uid, pid)
             count = 0
-            for pattern_id in [1, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]:
+            for pattern_id in [1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]:
                 tmp_path = kg.heuristic_search(uid, pid, pattern_id)
+                user_labels_path.append({'uid': uid, 'pid': pid, 'pattern_id': pattern_id, 'count_paths': len(tmp_path), 'path': tmp_path})
                 count += len(tmp_path)
-            if count == 0:
-                print(uid, pid)
 
+    print(user_labels_path)
+    return user_labels_path
+
+
+def batch_get_user_product_path_actions_actual(dataset_str, kg, batch_uids_targetlabel={}, batch_path=[], batch_curr_further_processing=[], is_train=0, is_debug=0):
+    # Check if there exists at least one path for any user-product in the dataset.
+    if is_train == 1:
+        mode = 'train'
+    else:
+        mode = 'test'
+    if len(batch_uids_targetlabel) != 0:
+        user_products_labels = dict((key, [batch_uids_targetlabel[key]]) for key in batch_uids_targetlabel.keys() if key in batch_uids_targetlabel)
+    else:
+        user_products_labels = load_labels(dataset_str, mode)
+    if is_debug == 1:
+        print('user_products_labels: ', user_products_labels)
+        print('batch_curr_further_processing: ', batch_curr_further_processing)
+    batch_user_acts_actual = {}
+    for uid in user_products_labels:
+        user_acts = []  # list of tuples of (relation, node_type, node_id)
+        if is_debug == 1:
+            print('uid: ', uid)
+            print('batch_curr_further_processing[uid]: ', batch_curr_further_processing[uid])
+        if batch_curr_further_processing[uid] == 1:
+            for pid in user_products_labels[uid]:
+                if pid != -9999:
+                    path = [path for path in batch_path if path[0][2] == uid][0]
+                    # path = batch_path[uid]
+                    if is_debug == 1:
+                        print('path: ', path)
+                    for pattern_id in [1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]:
+                        if is_debug == 1:
+                            print(PATH_PATTERN[pattern_id])
+                        pattern = tuple([SELF_LOOP] + [v[0] for v in PATH_PATTERN[pattern_id][1:]])
+                        path_pattern = tuple([v[0] for v in path])
+                        if is_debug == 1:
+                            print('path_pattern:', path_pattern)
+                            print('pattern:', pattern)
+                            print('uid, pid, path, pattern_id: ', uid, pid, path, pattern_id)
+                        if path_pattern <= pattern:
+                            tmp_path = kg.heuristic_search(uid=uid, pid=pid, pattern_id=pattern_id)
+                            if is_debug == 1:
+                                print('inside')
+                                print('tmp_path:', tmp_path)
+                            if len(tmp_path) > 0:
+                                _, curr_node_type, curr_node_id = path[-1]
+                                relations_nodes = kg(curr_node_type, curr_node_id)
+                                for r in relations_nodes:
+                                    path_pattern_ext = path_pattern + (r,)
+                                    if is_debug == 1:
+                                        print('r:', path_pattern_ext)
+                                    if any((path_pattern_ext == pattern[i:i + len(path_pattern_ext)]) for i in range(len(pattern) - len(path_pattern_ext) + 1)):
+                                        next_node_type = KG_RELATION[curr_node_type][r]
+                                        next_node_ids = relations_nodes[r]
+                                        if is_debug == 1:
+                                            print('r:', r, 'next_node_type:', next_node_type, 'next_node_ids: Pre:', next_node_ids)
+                                        next_node_ids = [n for n in next_node_ids if n in [v[len(path)] for v in tmp_path]]  # filter
+                                        if is_debug == 1:
+                                            print('r:', r, 'next_node_type:', next_node_type, 'next_node_ids: Post:', next_node_ids)
+                                        user_acts.extend(zip([r] * len(next_node_ids), next_node_ids))
+        batch_user_acts_actual[uid] = sorted(set(user_acts))
+    if is_debug == 1:
+        print(batch_user_acts_actual)
+    return batch_user_acts_actual
+
+
+def batch_get_user_products_actions_actual(dataset_str, kg, batch_uids_targetlabel={}, batch_path=[], batch_curr_further_processing=[], is_train=0, is_debug=0):
+    # Check if there exists at least one path for any user-product in the dataset.
+    if is_train == 1:
+        mode = 'train'
+    else:
+        mode = 'test'
+    if len(batch_uids_targetlabel) != 0:
+        user_products_labels = dict((key, batch_uids_targetlabel[key]) for key in batch_uids_targetlabel.keys() if key in batch_uids_targetlabel)
+    else:
+        user_products_labels = load_labels(dataset_str, mode)
+    if is_debug == 1:
+        print('user_products_labels: ', user_products_labels)
+        print('batch_curr_further_processing: ', batch_curr_further_processing)
+    batch_user_acts_actual = []
+    for uid in user_products_labels:
+        user_pid_acts = {}
+        user_acts_list = []
+        if is_debug == 1:
+            print('uid: ', uid)
+            print('batch_curr_further_processing[uid]: ', batch_curr_further_processing[uid])
+        if batch_curr_further_processing[uid] == 1:
+            for pid in user_products_labels[uid]:
+                user_acts = []  # list of tuples of (relation, node_type, node_id)
+                if pid != -9999:
+                    path = [path for path in batch_path if path[0][2] == uid][0]
+                    # path = batch_path[uid]
+                    if is_debug == 1:
+                        print('path: ', path)
+                    for pattern_id in [1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]:
+                        if is_debug == 1:
+                            print(PATH_PATTERN[pattern_id])
+                        pattern = tuple([SELF_LOOP] + [v[0] for v in PATH_PATTERN[pattern_id][1:]])
+                        path_pattern = tuple([v[0] for v in path])
+                        if is_debug == 1:
+                            print('path_pattern:', path_pattern)
+                            print('pattern:', pattern)
+                            print('uid, pid, path, pattern_id: ', uid, pid, path, pattern_id)
+                        if path_pattern <= pattern:
+                            tmp_path = kg.heuristic_search(uid=uid, pid=pid, pattern_id=pattern_id)
+                            if is_debug == 1:
+                                print('inside')
+                                print('tmp_path:', tmp_path)
+                            if len(tmp_path) > 0:
+                                _, curr_node_type, curr_node_id = path[-1]
+                                relations_nodes = kg(curr_node_type, curr_node_id)
+                                for r in relations_nodes:
+                                    path_pattern_ext = path_pattern + (r,)
+                                    if is_debug == 1:
+                                        print('r:', path_pattern_ext)
+                                    if any((path_pattern_ext == pattern[i:i + len(path_pattern_ext)]) for i in range(len(pattern) - len(path_pattern_ext) + 1)):
+                                        next_node_type = KG_RELATION[curr_node_type][r]
+                                        next_node_ids = relations_nodes[r]
+                                        if is_debug == 1:
+                                            print('r:', r, 'next_node_type:', next_node_type, 'next_node_ids: Pre:', next_node_ids)
+                                        next_node_ids = [n for n in next_node_ids if n in [v[len(path)] for v in tmp_path]]  # filter
+                                        if is_debug == 1:
+                                            print('r:', r, 'next_node_type:', next_node_type, 'next_node_ids: Post:', next_node_ids)
+                                        user_acts.extend(zip([r] * len(next_node_ids), next_node_ids))
+                user_pid_acts[pid] = sorted(set(user_acts))
+        user_acts_list = sorted(list(set([acts for pid_acts in user_pid_acts.values() for acts in pid_acts])))
+        user_acts_list = [('self_loop', uid)] + user_acts_list
+        batch_user_acts_actual.append(user_acts_list) #user_pid_acts
+    if is_debug == 1:
+        print(batch_user_acts_actual)
+    return batch_user_acts_actual
