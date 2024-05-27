@@ -27,9 +27,24 @@ def train(args):
     optimizer = optim.SGD(model.parameters(), lr=args.lr)
     steps = 0
     smooth_loss = 0.0
+    start_epoch = 1
 
-    for epoch in range(1, args.epochs + 1):
+    # Parameters created for resumption of run from the last failures
+    file_type = r'/*.ckpt'
+    latest_checkpoint_file = get_latest_file(args.checkpoint_dir, file_type)
+
+    # Resume the run from the last failure / saved checkpoint state
+    if args.is_resume_from_checkpoint == 1 and latest_checkpoint_file is not None:
+        latest_checkpoint = load_checkpoint(latest_checkpoint_file)
+        model.load_state_dict(latest_checkpoint['model_state_dict'])
+        optimizer.load_state_dict(latest_checkpoint['optimizer_state_dict'])
+        dataloader.finished_word_num = latest_checkpoint['finished_word_num']
+        start_epoch = latest_checkpoint['epoch'] + 1
+
+    # Iterate for number of epochs
+    for epoch in range(start_epoch, args.epochs + 1):
         dataloader.reset()
+        model.train()
         while dataloader.has_next():
             # Set learning rate.
             lr = args.lr * max(1e-4, 1.0 - dataloader.finished_word_num / float(words_to_train))
@@ -56,14 +71,22 @@ def train(args):
                             'Smooth loss: {:.5f}'.format(smooth_loss))
                 smooth_loss = 0.0
 
-        torch.save(model.state_dict(), '{}/transe_model_sd_epoch_{}.ckpt'.format(args.log_dir, epoch))
+        checkpoint = {
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'finished_word_num': dataloader.finished_word_num
+        }
+        save_checkpoint(checkpoint, '{}/transe_model_sd_epoch_{}.ckpt'.format(args.checkpoint_dir, epoch))
 
 
 def extract_embeddings(args):
     """Note that last entity embedding is of size [vocab_size+1, d]."""
-    model_file = '{}/transe_model_sd_epoch_{}.ckpt'.format(args.log_dir, args.epochs)
+    model_file = '{}/transe_model_sd_epoch_{}.ckpt'.format(args.checkpoint_dir, args.epochs)
     print('Load embeddings', model_file)
-    state_dict = torch.load(model_file, map_location=lambda storage, loc: storage)
+    model = load_checkpoint(model_file)
+    state_dict = model['model_state_dict']
+    #torch.load(model_file, map_location=lambda storage, loc: storage)
     embeds = {
         USER: state_dict['user.weight'].cpu().data.numpy()[:-1],  # Must remove last dummy 'user' with 0 embed.
         PRODUCT: state_dict['product.weight'].cpu().data.numpy()[:-1],
@@ -110,7 +133,7 @@ def extract_embeddings(args):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default=BEAUTY, help='One of {beauty, cd, cell, clothing}.')
+    parser.add_argument('--dataset', type=str, default=CLOTH, help='One of {beauty, cd, cell, cloth}.')
     parser.add_argument('--name', type=str, default='train_transe_model', help='model name.')
     parser.add_argument('--seed', type=int, default=123, help='random seed.')
     parser.add_argument('--gpu', type=str, default='1', help='gpu device.')
@@ -122,18 +145,31 @@ def main():
     parser.add_argument('--max_grad_norm', type=float, default=5.0, help='Clipping gradient.')
     parser.add_argument('--embed_size', type=int, default=100, help='knowledge embedding size.')
     parser.add_argument('--num_neg_samples', type=int, default=5, help='number of negative samples.')
-    parser.add_argument('--steps_per_checkpoint', type=int, default=200, help='Number of steps for checkpoint.')
+    parser.add_argument('--steps_per_checkpoint', type=int, default=10000, help='Number of steps for checkpoint.')
+    parser.add_argument('--checkpoint_folder', type=str, default='checkpoint', help='Number of steps for checkpoint.')
+    parser.add_argument('--log_folder', type=str, default='log', help='Number of steps for checkpoint.')
+    parser.add_argument('--log_file_name', type=str, default='train_log.txt', help='Number of steps for checkpoint.')
+    parser.add_argument('--is_resume_from_checkpoint', type=int, default=1, help='Number of steps for checkpoint.')
+    parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
     args = parser.parse_args()
 
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     args.device = torch.device('cuda:0') if torch.cuda.is_available() else 'cpu'
 
-    args.log_dir = '{}/{}'.format(TMP_DIR[args.dataset], args.name)
+    args.dir = '{}/{}'.format(TMP_DIR[args.dataset], args.name)
+    if not os.path.isdir(args.dir):
+        os.makedirs(args.dir)
+
+    args.checkpoint_dir = '{}/{}'.format(args.dir, args.checkpoint_folder)
+    if not os.path.isdir(args.checkpoint_dir):
+        os.makedirs(args.checkpoint_dir)
+
+    args.log_dir = '{}/{}'.format(args.dir, args.log_folder)
     if not os.path.isdir(args.log_dir):
         os.makedirs(args.log_dir)
 
     global logger
-    logger = get_logger(args.log_dir + '/train_log.txt')
+    logger = get_logger(args.log_dir + '/' + args.log_file_name, mode=args.logging_mode)
     logger.info(args)
 
     set_random_seed(args.seed)
