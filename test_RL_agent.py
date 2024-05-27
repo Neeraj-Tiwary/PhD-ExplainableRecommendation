@@ -57,21 +57,29 @@ def get_explainability_score(pred_labels_details):
     path_rewards_diff_user_mean = pred_labels_details[8]    # Rewards difference of the prediction from the user mean
 
     # Compute metrics for Explainability - Rewards * Entropy
-    explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
+    if args.MES_score_option == 1:
+        explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
     # Compute metrics for Explainability - Only Rewards
-    # explainability_score = ((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean))
+    elif args.MES_score_option == 2:
+        explainability_score = ((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean))
     # Compute metrics for Explainability - Only Entropy
-    # explainability_score = (pred_entropy + path_entropy_diff_user_mean)
+    elif args.MES_score_option == 3:
+        explainability_score = (pred_entropy + path_entropy_diff_user_mean)
     # Compute metrics for Explainability - Only Probs
-    # explainability_score = (pred_probs + path_prob_diff_user_mean)
+    elif args.MES_score_option == 4:
+        explainability_score = (pred_probs + path_prob_diff_user_mean)
     # Compute metrics for Explainability - Entropy *  Probs
-    # explainability_score = ((pred_entropy + path_entropy_diff_user_mean) * (pred_probs + path_prob_diff_user_mean))
+    elif args.MES_score_option == 5:
+        explainability_score = ((pred_entropy + path_entropy_diff_user_mean) * (pred_probs + path_prob_diff_user_mean))
     # Compute metrics for Explainability - Rewards *  Probs
-    #explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean))
+    elif args.MES_score_option == 6:
+        explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean))
     # Compute metrics for Explainability - Rewards *  Probs * Entropy
-    # explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
+    elif args.MES_score_option == 7:
+        explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
     # Compute metrics for Explainability - Rewards +  Probs + Entropy
-    # explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_entropy + path_entropy_diff_user_mean) + (pred_probs + path_prob_diff_user_mean))
+    elif args.MES_score_option == 8:
+        explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_entropy + path_entropy_diff_user_mean) + (pred_probs + path_prob_diff_user_mean))
     #--- Baseline
 
     if is_debug == 1:
@@ -80,6 +88,43 @@ def get_explainability_score(pred_labels_details):
         print('explainability_score: ', explainability_score)
 
     return explainability_score
+
+
+# Function to get the quantification of the explainability
+def get_product_affinity_score(pred_labels_details):
+    """Compute explainability metrics for predicted recommendations.
+    Args:
+        pred_labels_details: A prediction label/s consisting of path score, probability, entropy, rewards and path of that prediction.
+
+        Quantitative evaluation of explainability
+        R - the number of rules outputted by the explanation
+        S - The average score of the path traversal for the recommended item
+        P - The average probability of the path traversal for the recommended item
+        Rw- The average reward of the path traversal for the recommended item
+
+        Formula = (S + P + Rw)/ ((MAX range(S) + MAX range(P) + MAX range(Rw))) * R
+    """
+    invalid_users = []
+    # Extract the key metrics from the prediction label details
+    pred_score = pred_labels_details[0]                     # Affinity score of the prediction label
+    pred_probs = pred_labels_details[1]                     # Probability of the prediction label
+    pred_entropy = pred_labels_details[2]                   # Entropy of the prediction label
+    pred_reward = pred_labels_details[3]                    # Rewards of the prediction label
+    pred_path = pred_labels_details[4]                      # Path traverses by the user to reach to the prediction
+    path_score_diff_user_mean = pred_labels_details[5]      # Affinity score difference of the prediction from the user mean
+    path_prob_diff_user_mean = pred_labels_details[6]       # Prob difference of the prediction from the user mean
+    path_entropy_diff_user_mean = pred_labels_details[7]    # Entropy difference of the prediction from the user mean
+    path_rewards_diff_user_mean = pred_labels_details[8]    # Rewards difference of the prediction from the user mean
+
+    # Compute metrics for Explainability - (Rewards Gain + Score Gain) * Entropy
+    affinity_score = ((((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_score + path_score_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean))
+
+    if is_debug == 1:
+        print('pred_score={} | pred_probs={} | pred_entropy={} | pred_reward={} | | pred_path={} | path_score_diff_user_mean={} | path_prob_diff_user_mean={} | path_entropy_diff_user_mean={} | path_rewards_diff_user_mean={} |  len(pred_path)={}'.
+              format(pred_score, pred_probs, pred_entropy, pred_reward, pred_path, path_score_diff_user_mean, path_prob_diff_user_mean, path_entropy_diff_user_mean, path_rewards_diff_user_mean, len(pred_path)))
+        print('affinity_score: ', affinity_score)
+
+    return affinity_score
 
 
 def evaluate(topk_matches, test_user_products, args):
@@ -278,7 +323,7 @@ def predict_paths(policy_file, path_file, test_labels, args):
     pickle.dump(predicts, open(path_file, 'wb'))
 
 
-def evaluate_paths(path_file, train_labels, test_labels, args):
+def evaluate_paths(path_file, train_labels, test_labels, args, epoch):
     is_debug = args.debug
     embeds = load_embed(args.dataset)
     user_embeds = embeds[USER]
@@ -340,7 +385,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args):
             print('len(pred_paths_revised): ', len(pred_paths_revised[uid].values()))
             print('pred_paths_revised: ', pred_paths_revised[uid].values())'''
 
-    # 2) Pick best path for each user-product pair, also remove pid if it is in train set.
+    # 2) Path Prioritization - Pick best path for each user-product pair, also remove pid if it is in train set.
     best_pred_paths = {}
     for userid in pred_paths_revised:
         train_pids = set(train_labels[userid])
@@ -350,23 +395,17 @@ def evaluate_paths(path_file, train_labels, test_labels, args):
                 continue
             if len(pred_paths_revised[userid][pid]) > 0:
                 # Get the path with highest probability
-                # Baseline approach - without explainability score applied
-                #sorted_path = pred_paths_revised[userid][pid]
-                #sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (x[3]), reverse=True)
-                #sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (x[1], x[3], x[2]), reverse=True)
-                sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (get_explainability_score(x), x[1], x[3], x[2]), reverse=True)
-                #sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[2])), reverse=True)
-                #sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: ((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7])), reverse=True)
-                #sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7])), reverse=True)
-                #sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * ((x[1] + x[6])) * (x[2] + x[7])), reverse=True)
-                #for i in range(len(sorted_path)):
-                    #print('sorted_path: ', sorted_path[i])
-                #    evaluate_explainability(sorted_path[i])
+                if args.MES_score_option == 0: # Baseline approach
+                    # Baseline approach - without explainability score applied
+                    sorted_path = pred_paths_revised[userid][pid]
+                else:
+                    # Path Prioritization - Through Explainability scoring mechanism
+                    sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (get_explainability_score(x), x[1], x[3], x[2]), reverse=True)
                 best_pred_paths[userid].append(sorted_path[0])
     '''if is_debug == 1:
         print('best_pred_paths: ', best_pred_paths)'''
 
-    # 3) Compute top 10 recommended products for each user.
+    # 3) Product Prioritization - Compute top 10 recommended products for each user.
     sort_by = 'other' #'reward_per_score'
     #sort_by = 'entropy'
     pred_labels = {}
@@ -374,19 +413,24 @@ def evaluate_paths(path_file, train_labels, test_labels, args):
     pred_labels_details = {}
     sorted_path = {}
     for uid in best_pred_paths:
-        if sort_by == 'score':
+        if args.PAS_score_option == 0:  # Baseline approach
+            sorted_path[uid] = best_pred_paths[uid]
+        elif args.PAS_score_option == 1:  # PAS (Product Affinity Score)
+            sorted_path[uid] = sorted(best_pred_paths[uid], key= lambda x: (get_product_affinity_score(x)), reverse = True)
+        elif args.PAS_score_option == 2:  # score
             sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (x[0]), reverse=True)
-        elif sort_by == 'prob':
+        elif args.PAS_score_option == 3:  # prob
             sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((x[1] + x[2]), x[0]), reverse=True)
-        elif sort_by == 'entropy':
+        elif args.PAS_score_option == 4:  # entropy
             sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (x[2]), reverse=True)
-        elif sort_by == 'reward':
+        elif args.PAS_score_option == 5:  # reward
             sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (x[3]), reverse=True)
-        else:
+#        else:
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((x[3] + x[8]) / (x[3])), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((x[3] + x[8]) / (x[3] - x[8])), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[2])), reverse=True)
-            sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7])), reverse=True)
+            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7])), reverse=True)
+            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (get_product_affinity_score(x)), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7])), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[1] + x[6])) * (x[2] + x[7])), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (get_explainability_score(x)), reverse=True)
@@ -444,7 +488,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args):
     #print('Count Pred_labels & test_labels: ', len(pred_labels), len(test_labels))
     ndcg, recall, hit_ratio, precision, invalid_users = evaluate(pred_labels, test_labels, args)
     logger.info(
-        'model epoch={:d}'.format(args.epochs) +
+        'model epoch={:d}'.format(epoch) +
         ' | count (users)={}'.format(len(pred_labels)) +
         ' | ndcg={:.5f}'.format(ndcg) +
         ' | recall={:.5f}'.format(recall) +
@@ -454,56 +498,83 @@ def evaluate_paths(path_file, train_labels, test_labels, args):
         ' | execution_timestamp={}'.format(datetime.now())
     )
 
+
 def test(args):
-    policy_file = TMP_DIR[args.dataset] + '/' + args.source_name + '/' + args.checkpoint_folder + '/policy_model_epoch_{}.ckpt'.format(args.epochs)
-    path_file = args.output_dir + '/policy_paths_epoch{}_{}.pkl'.format(args.epochs, args.run_number)
-    is_debug = args.debug
-    if is_debug == 1:
-        print('policy_file : ', policy_file)
-        print('path_file : ', path_file)
-        print('args :', args)
+    start_epoch = 1
 
-    train_labels = load_labels(args.dataset, 'train')
-    test_labels = load_labels(args.dataset, 'test')
+    # Parameters created for resumption of run from the last failures
+    file_type = r'/*.pkl'
+    latest_checkpoint_file = get_latest_file(args.output_dir, file_type)
 
-    #train_labels = {key: value for key, value in train_labels.items() if key in range(20000, 22363, 1)}
-    #test_labels = {key: value for key, value in test_labels.items() if key in range(20000, 22363, 1)}
-    #train_labels = {key: value for key, value in train_labels.items() if key in range(22012, 22013, 1)}
-    #test_labels = {key: value for key, value in test_labels.items() if key in range(22012, 22013, 1)}
-    if is_debug == 1:
-        print('train_labels: ', train_labels)
-        print('test_labels: ', test_labels)
+    # Resume the run from the last failure / saved checkpoint state
+    if args.is_only_run_specific_epoch == 0 and args.is_resume_from_checkpoint == 1 and latest_checkpoint_file is not None:
+        print('latest_checkpoint_file: ', latest_checkpoint_file)
+        start_epoch = int(str.split(latest_checkpoint_file[:-4], '_')[-1]) + 1
+    elif args.is_only_run_specific_epoch == 1:
+        print('is_only_run_specific_epoch: {} , args.epochs: {}'.format(args.is_only_run_specific_epoch, args.epochs))
+        start_epoch = args.epochs
 
-    if args.run_path:
-        predict_paths(policy_file, path_file, test_labels, args)
-    if args.run_eval:
-        evaluate_paths(path_file, train_labels, test_labels, args)
+    print('start_epoch: ', start_epoch)
+
+
+    # Iterate for number of epochs
+    for epoch in range(start_epoch, args.epochs + 1):
+        policy_file = TMP_DIR[args.dataset] + '/' + args.source_name + '/' + args.checkpoint_folder + '/policy_model_epoch_{}.ckpt'.format(epoch)
+        #path_file = args.output_dir + '/policy_paths_epoch{}_{}.pkl'.format(args.epochs, args.run_number)
+        path_file = args.output_dir + '/policy_paths_epoch_{}.pkl'.format(epoch)
+
+        is_debug = args.debug
+        if is_debug == 1:
+            print('policy_file : ', policy_file)
+            print('path_file : ', path_file)
+            print('args :', args)
+
+        train_labels = load_labels(args.dataset, 'train')
+        test_labels = load_labels(args.dataset, 'test')
+
+        #train_labels = {key: value for key, value in train_labels.items() if key in range(20000, 22363, 1)}
+        #test_labels = {key: value for key, value in test_labels.items() if key in range(20000, 22363, 1)}
+        #train_labels = {key: value for key, value in train_labels.items() if key in range(22012, 22013, 1)}
+        #test_labels = {key: value for key, value in test_labels.items() if key in range(22012, 22013, 1)}
+        if is_debug == 1:
+            print('train_labels: ', train_labels)
+            print('test_labels: ', test_labels)
+
+        if args.run_path:
+            predict_paths(policy_file, path_file, test_labels, args)
+        if args.run_eval:
+            evaluate_paths(path_file, train_labels, test_labels, args, epoch)
 
 
 if __name__ == '__main__':
     boolean = lambda x: (str(x).lower() == 'true')
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default=CLOTH, help='One of {cloth, beauty, cell, cd}')
-    parser.add_argument('--source_name', type=str, default='train_agent', help='directory name.')
-    parser.add_argument('--output_folder', type=str, default='test_agent', help='directory name.')
+    parser.add_argument('--dataset', type=str, default=CELL, help='One of {cloth, beauty, cell, cd}')
+    parser.add_argument('--source_name', type=str, default='train_RL_agent', help='directory name.')
+    parser.add_argument('--output_folder', type=str, default='test_RL_agent', help='directory name.')
     parser.add_argument('--seed', type=int, default=123, help='random seed.')
     parser.add_argument('--gpu', type=str, default='0', help='gpu device.')
-    parser.add_argument('--epochs', type=int, default=7, help='num of epochs.')
+    parser.add_argument('--epochs', type=int, default=100, help='num of epochs.')
     parser.add_argument('--max_acts', type=int, default=250, help='Max number of actions.')
     parser.add_argument('--max_path_len', type=int, default=3, help='Max path length.')
     parser.add_argument('--gamma', type=float, default=0.99, help='reward discount factor.')
     parser.add_argument('--state_history', type=int, default=1, help='state history length')
     parser.add_argument('--hidden', type=int, nargs='*', default=[512, 256], help='number of samples')
     parser.add_argument('--add_products', type=boolean, default=False, help='Add predicted products up to 10')
-    parser.add_argument('--topk', type=int, nargs='*', default=[25, 10, 4], help='number of samples')
+    parser.add_argument('--topk', type=int, nargs='*', default=[10, 10, 12], help='number of samples')
     parser.add_argument('--run_path', type=boolean, default=True, help='Generate predicted path? (takes long time)')
     parser.add_argument('--run_eval', type=boolean, default=True, help='Run evaluation?')
     parser.add_argument('--debug', type=int, nargs='*', default=0, help='number of samples')
     parser.add_argument('--batch_size', type=int, default=512, help='batch size.')
+    parser.add_argument('--is_resume_from_checkpoint', type=int, default=0, help='Flag for resuming from last checkpoint')
     parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
     parser.add_argument('--log_file_name', type=str, default='test_agent_log', help='logging mode')
     parser.add_argument('--checkpoint_folder', type=str, default='checkpoint', help='Checkpoint folder location')
-    parser.add_argument('--run_number', type=str, default='6', help='logging mode')
+    parser.add_argument('--MES_score_option', type=str, default=1, help='Choose 0 for [Baseline], Choose 1 for [MES (Rewards Gain * Entropy Gain)], 2 for Only [Rewards Gain], 3 for Only [Entropy Gain], 4 for Only [Probs Gain], 5 for [Entopy Gain * Probs Gain], 6 for [Rewards Gain * Probs Gain], 7 for [Rewards Gain * Entopy Gain * Probs Gain], 8 for [Rewards Gain + Entopy Gain + Probs Gain]')
+    parser.add_argument('--PAS_score_option', type=str, default=1, help='Choose 0 for [Baseline], Choose 1 for [PAS ()], 2 for Only [Score], 3 for Only [Prob], 4 for Only [Entropy], 5 for [Reward]')
+    parser.add_argument('--run_number', type=str, default='1', help='logging mode')
+    parser.add_argument('--is_only_run_specific_epoch', type=str, default=1, help='is_only_run_specific_epoch')
+
     args = parser.parse_args()
 
     is_debug = args.debug
@@ -512,7 +583,7 @@ if __name__ == '__main__':
     args.output_dir = TMP_DIR[args.dataset] + '/' + args.output_folder
     if not os.path.isdir(args.output_dir):
         os.makedirs(args.output_dir)
-    logger = get_logger(args.output_dir + '/' + args.log_file_name + '_' + args.run_number + '.txt', mode=args.logging_mode)
+    logger = get_logger(args.output_dir + '/' + args.log_file_name + '.txt', mode=args.logging_mode)
     logger.info(args)
 
     set_random_seed(args.seed)

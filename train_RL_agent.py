@@ -172,6 +172,7 @@ def train(args):
 
     # Resume the run from the last failure / saved checkpoint state
     if args.is_resume_from_checkpoint == 1 and latest_checkpoint_file is not None:
+        print('latest_checkpoint_file: ', latest_checkpoint_file)
         latest_checkpoint = load_checkpoint(latest_checkpoint_file)
         model.load_state_dict(latest_checkpoint['model_state_dict'])
         optimizer.load_state_dict(latest_checkpoint['optimizer_state_dict'])
@@ -279,11 +280,11 @@ def train(args):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default=CELL, help='One of {beauty, cd, cell, cloth}')
-    parser.add_argument('--name', type=str, default='train_agent', help='directory name.')
+    parser.add_argument('--dataset', type=str, default=CLOTH, help='One of {beauty, cd, cell, cloth}')
+    parser.add_argument('--name', type=str, default='train_RL_agent', help='directory name.')
     parser.add_argument('--seed', type=int, default=123, help='random seed.')
     parser.add_argument('--gpu', type=str, default='0', help='gpu device.')
-    parser.add_argument('--epochs', type=int, default=50, help='Max number of epochs.')
+    parser.add_argument('--epochs', type=int, default=100, help='Max number of epochs.')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size.')
     parser.add_argument('--lr', type=float, default=1e-4, help='learning rate.')
     parser.add_argument('--max_acts', type=int, default=250, help='Max number of actions.')
@@ -298,7 +299,7 @@ def main():
     parser.add_argument('--checkpoint_folder', type=str, default='checkpoint', help='Checkpoint folder location')
     parser.add_argument('--log_folder', type=str, default='log', help='Log folder location')
     parser.add_argument('--log_file_name', type=str, default='train_log.txt', help='Log file name')
-    parser.add_argument('--is_resume_from_checkpoint', type=int, default=0, help='Flag for resuming from last checkpoint')
+    parser.add_argument('--is_resume_from_checkpoint', type=int, default=1, help='Flag for resuming from last checkpoint')
     parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
     args = parser.parse_args()
 
