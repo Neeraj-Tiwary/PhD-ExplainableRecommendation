@@ -169,18 +169,12 @@ class BatchKGEnvironment(object):
             score = np.matmul(src_embed, self.embeds[next_node_type][next_node_id])
             # This trimming may filter out target products!
             # Manually set the score of target products a very large number.
-            if is_train == 1 and next_node_type == PRODUCT and next_node_id == target_product: #self._target_pids:
+            if is_train == 1 and next_node_type == PRODUCT and next_node_id == target_product:
                 score += 99999.0
             scores.append(score)
         candidate_idxs = np.argsort(scores)[-self.max_acts:]  # choose actions with larger scores
-        #candidate_acts = sorted([candidate_acts[i] for i in candidate_idxs], key=lambda x: (x[0], x[1])) # Existing code block
         candidate_acts = [candidate_acts[i] for i in candidate_idxs]  # New code block
-        #candidate_acts = sorted(candidate_acts, key=lambda x: (x[0], x[1]))
-        #print('candidate_acts: Post: ', candidate_acts)
         actions.extend(candidate_acts)
-        if is_debug == 1:
-            print('too many actions')
-            print('actions:', actions)
         return actions
 
     def _batch_get_actions(self, batch_path, done, uids, batch_curr_further_processing=None, is_train=0, is_debug=0):
