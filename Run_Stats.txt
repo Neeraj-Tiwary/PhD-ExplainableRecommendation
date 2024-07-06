@@ -1,0 +1,126 @@
+NDCG=6.272 |  Recall=9.789 | HR=16.363 | Precision=1.983 | Invalid users=2 -- 2
+NDCG=6.278 |  Recall=9.794 | HR=16.341 | Precision=1.978 | Invalid users=2 -- 15
+NDCG=6.283 |  Recall=9.794 | HR=16.390 | Precision=1.983 | Invalid users=2 -- 30
+NDCG=6.288 |  Recall=9.812 | HR=16.377 | Precision=1.983 | Invalid users=2 -- 42
+Beauty
+[INFO]  model epoch=59 | count (users)=22363 | ndcg=6.53271 | recall=10.14186 | hit_ratio=17.01176 | precision=2.10769 | invalid_users=2.00000
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.53077 | recall=10.14018 | hit_ratio=17.00282 | precision=2.10590 | invalid_users=2.00000
+
+
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.49722 | recall=10.12037 | hit_ratio=17.00282 | precision=2.10545 | invalid_users=2.00000 | execution_timestamp=2023-05-06 18:56:31.945993		--- Baseline
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.50748 | recall=10.10310 | hit_ratio=16.96257 | precision=2.10098 | invalid_users=2.00000    														--- explainability_score = (pred_probs + path_prob_diff_user_mean)
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.63706 | recall=10.28817 | hit_ratio=17.21748 | precision=2.13586 | invalid_users=2.00000 | execution_timestamp=2023-05-05 18:49:30.160697		--- explainability_score = ((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean))
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.68497 | recall=10.30016 | hit_ratio=17.26220 | precision=2.14346 | invalid_users=2.00000 | execution_timestamp=.5f 								--- explainability_score = (pred_entropy + path_entropy_diff_user_mean)
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.50748 | recall=10.10310 | hit_ratio=16.96257 | precision=2.10098 | invalid_users=2.00000 | execution_timestamp=2023-05-06 12:25:56.638092		--- explainability_score = ((pred_entropy + path_entropy_diff_user_mean) * (pred_probs + path_prob_diff_user_mean))
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.53163 | recall=10.14011 | hit_ratio=17.00282 | precision=2.10590 | invalid_users=2.00000 | execution_timestamp=2023-05-06 09:54:54.620993		--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean))
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.67281 | recall=10.31769 | hit_ratio=17.24878 | precision=2.14346 | invalid_users=2.00000 | execution_timestamp=2023-05-06 02:04:30.482084		--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.53077 | recall=10.14018 | hit_ratio=17.00282 | precision=2.10590 | invalid_users=2.00000 | execution_timestamp=2023-05-05 23:01:17.458850		--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
+[INFO]  model epoch=100 | count (users)=22363 | ndcg=6.54818 | recall=10.15646 | hit_ratio=17.02965 | precision=2.10903 | invalid_users=2.00000 | execution_timestamp=2023-05-06 15:50:35.552003		--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_entropy + path_entropy_diff_user_mean) + (pred_probs + path_prob_diff_user_mean))
+
+Cellphone
+[INFO]  model epoch=3 | count (users)=27879 | ndcg=6.08958 | recall=10.44896 | hit_ratio=14.66705 | precision=1.59694 | invalid_users=7.00000
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.10861 | recall=10.45977 | hit_ratio=14.67781 | precision=1.59874 | invalid_users=7.00000
+
+
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.07430 | recall=10.41056 | hit_ratio=14.60247 | precision=1.59013 | invalid_users=7.00000 | execution_timestamp=2023-05-06 20:36:26.854666			--- Baseline
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.12527 | recall=10.45287 | hit_ratio=14.67423 | precision=1.59802 | invalid_users=7.00000 | execution_timestamp=2023-05-06 16:50:18.954829			--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_entropy + path_entropy_diff_user_mean) + (pred_probs + path_prob_diff_user_mean))
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.20451 | recall=10.56283 | hit_ratio=14.85003 | precision=1.61739 | invalid_users=7.00000 | execution_timestamp=2023-05-06 23:31:25.672936			--- explainability_score = ((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean))
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.24569 | recall=10.55953 | hit_ratio=14.81774 | precision=1.61596 | invalid_users=7.00000 | execution_timestamp=2023-05-07 00:59:25.091848			--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.17834 | recall=10.47723 | hit_ratio=14.69216 | precision=1.60376 | invalid_users=7.00000 | execution_timestamp=2023-05-07 01:11:14.835218			--- explainability_score = (pred_entropy + path_entropy_diff_user_mean)
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.03613 | recall=10.38030 | hit_ratio=14.55941 | precision=1.58403 | invalid_users=7.00000 | execution_timestamp=2023-05-07 02:55:19.375555			--- explainability_score = (pred_probs + path_prob_diff_user_mean)
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.03634 | recall=10.38030 | hit_ratio=14.55941 | precision=1.58403 | invalid_users=7.00000 | execution_timestamp=2023-05-07 03:56:42.033379			--- explainability_score = (pred_entropy + path_entropy_diff_user_mean) * (pred_probs + path_prob_diff_user_mean)
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.10104 | recall=10.45333 | hit_ratio=14.65270 | precision=1.59587 | invalid_users=7.00000 | execution_timestamp=2023-05-07 04:02:09.673476			--- explainability_score = ((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean)
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=6.10152 | recall=10.45423 | hit_ratio=14.65629 | precision=1.59623 | invalid_users=7.00000 | execution_timestamp=2023-05-07 04:14:43.632267			--- explainability_score = ((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean) * (pred_entropy + path_entropy_diff_user_mean)
+[INFO]  model epoch=25 | count (users)=27879 | ndcg=5.43161 | recall=8.96098 | hit_ratio=12.72603 | precision=1.39100 | invalid_users=7.00000 | execution_timestamp=2023-05-07 04:18:54.577240			--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)				--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
+			
+
+
+Clothing
+1. [INFO]  model epoch=7 | count (users)=39387 | ndcg=2.74793 | recall=4.68726 | hit_ratio=6.98218 | precision=0.72183 | invalid_users=1.00000 | execution_timestamp=2023-05-13 18:44:53.453231			--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
+2. [INFO]  model epoch=7 | count (users)=39387 | ndcg=2.73371 | recall=4.68603 | hit_ratio=6.97456 | precision=0.72031 | invalid_users=1.00000 | execution_timestamp=2023-05-14 22:59:30.119023			--- explainability_score = ((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean))
+3. [INFO]  model epoch=7 | count (users)=39387 | ndcg=2.72941 | recall=4.65351 | hit_ratio=6.91870 | precision=0.71574 | invalid_users=1.00000 | execution_timestamp=2023-05-15 08:49:36.024484			--- explainability_score = (pred_entropy + path_entropy_diff_user_mean)
+4. [INFO]  model epoch=7 | count (users)=39387 | ndcg=2.66090 | recall=4.59647 | hit_ratio=6.82476 | precision=0.70431 | invalid_users=1.00000 | execution_timestamp=2023-05-16 01:21:50.177477			--- explainability_score = (pred_probs + path_prob_diff_user_mean)
+5. [INFO]  model epoch=7 | count (users)=39387 | ndcg=2.66141 | recall=4.59647 | hit_ratio=6.82476 | precision=0.70431 | invalid_users=1.00000 | execution_timestamp=2023-05-16 01:35:23.903607			--- explainability_score = ((pred_entropy + path_entropy_diff_user_mean) * (pred_probs + path_prob_diff_user_mean))
+6. [INFO]  model epoch=7 | count (users)=39387 | ndcg=2.67710 | recall=4.62785 | hit_ratio=6.86284 | precision=0.71117 | invalid_users=1.00000 | execution_timestamp=2023-05-16 12:16:02.255556			--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean))
+7. [INFO]  model epoch=7 | count (users)=39387 | ndcg=2.67710 | recall=4.62785 | hit_ratio=6.86284 | precision=0.71117 | invalid_users=1.00000 | execution_timestamp=2023-05-16 12:37:40.578968			--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) * (pred_probs + path_prob_diff_user_mean) * (pred_entropy + path_entropy_diff_user_mean)) / len(pred_path)
+8. [INFO]  model epoch=7 | count (users)=39387 | ndcg=2.69229 | recall=4.62836 | hit_ratio=6.88062 | precision=0.71294 | invalid_users=1.00000 | execution_timestamp=2023-05-16 09:13:35.582866			--- explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_entropy + path_entropy_diff_user_mean) + (pred_probs + path_prob_diff_user_mean))
+9. [INFO]  model epoch=7 | count (users)=39387 | ndcg=2.66976 | recall=4.60029 | hit_ratio=6.83999 | precision=0.70837 | invalid_users=1.00000 | execution_timestamp=2023-05-16 08:42:58.816151			--- Baseline
+
+
+Beauty
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.43023 | recall=9.50499 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.43023 | recall=9.50499 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.26156 | recall=9.78047 | hit_ratio=16.80441 | precision=1.84573 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.26156 | recall=9.78047 | hit_ratio=16.80441 | precision=1.84573 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.30927 | recall=9.78047 | hit_ratio=16.80441 | precision=1.84573 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.30927 | recall=9.78047 | hit_ratio=16.80441 | precision=1.84573 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.22760 | recall=9.55703 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.20020 | recall=9.77741 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.20020 | recall=9.77741 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.30927 | recall=9.78047 | hit_ratio=16.80441 | precision=1.84573 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.05135 | recall=9.65215 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.04854 | recall=9.62154 | hit_ratio=16.25344 | precision=1.79063 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.19666 | recall=9.57845 | hit_ratio=16.52893 | precision=1.76309 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.19666 | recall=9.57845 | hit_ratio=16.52893 | precision=1.76309 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.24892 | recall=9.80519 | hit_ratio=16.80441 | precision=1.87328 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=4.93741 | recall=7.22505 | hit_ratio=13.49862 | precision=1.48760 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.24892 | recall=9.80519 | hit_ratio=16.80441 | precision=1.87328 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.19454 | recall=9.71337 | hit_ratio=16.25344 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=5.79430 | recall=9.11496 | hit_ratio=15.97796 | precision=1.73554 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.19551 | recall=9.79601 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.24892 | recall=9.80519 | hit_ratio=16.80441 | precision=1.87328 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.35173 | recall=10.06973 | hit_ratio=17.07989 | precision=1.84573 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.41698 | recall=10.43880 | hit_ratio=17.35537 | precision=1.90083 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.28880 | recall=10.71429 | hit_ratio=17.90634 | precision=1.95592 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.15596 | recall=9.44071 | hit_ratio=16.25344 | precision=1.73554 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.37198 | recall=9.57845 | hit_ratio=16.52893 | precision=1.76309 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.08020 | recall=9.26338 | hit_ratio=15.97796 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.37175 | recall=9.50499 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.30927 | recall=9.78047 | hit_ratio=16.80441 | precision=1.84573 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.43008 | recall=9.50499 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.43008 | recall=9.50499 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.21574 | recall=9.38232 | hit_ratio=16.52893 | precision=1.87328 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.43008 | recall=9.50499 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.43073 | recall=9.57845 | hit_ratio=16.52893 | precision=1.76309 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.17005 | recall=9.15275 | hit_ratio=16.52893 | precision=1.87328 | invalid_users=0.00000
+[INFO]  model epoch=42 | count (users)=363 | ndcg=6.21700 | recall=9.38888 | hit_ratio=16.80441 | precision=1.92837 | invalid_users=0.00000
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.21700 | recall=9.38888 | hit_ratio=16.80441 | precision=1.92837 | invalid_users=0.00000	 	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.17350 | recall=9.11340 | hit_ratio=16.52893 | precision=1.90083 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7] / (x[2] - x[7])))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.11079 | recall=9.10684 | hit_ratio=16.25344 | precision=1.84573 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7] / (x[7])))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.19102 | recall=9.13635 | hit_ratio=16.52893 | precision=1.92837 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7] / (x[2])))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.35101 | recall=9.44989 | hit_ratio=16.52893 | precision=1.79063 | invalid_users=0.00000
+[INFO]  model epoch=40 | count (users)=363 | ndcg=3.38071 | recall=5.31987 | hit_ratio=11.29477 | precision=1.18457 | invalid_users=0.00000	 	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) * (x[1]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=2.56710 | recall=3.95011 | hit_ratio=8.53994 | precision=0.90909 | invalid_users=0.00000   	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) * (x[6]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=2.80286 | recall=4.40924 | hit_ratio=9.64187 | precision=1.04683 | invalid_users=0.00000   	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) * (x[1] + x[6]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=3.07008 | recall=3.58539 | hit_ratio=7.43802 | precision=0.85399 | invalid_users=0.00000   	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) / (x[1] + x[6]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=3.34156 | recall=5.35047 | hit_ratio=11.29477 | precision=1.21212 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7] + x[1] + x[6]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=5.93166 | recall=8.79333 | hit_ratio=15.42700 | precision=1.62534 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) * (x[0]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.27164 | recall=9.33052 | hit_ratio=16.52893 | precision=1.76309 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) * (x[5]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.31590 | recall=9.30756 | hit_ratio=16.52893 | precision=1.73554 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) * (x[0] + x[5]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.20826 | recall=9.56774 | hit_ratio=16.52893 | precision=1.76309 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) + (x[0] + x[5]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.35101 | recall=9.44989 | hit_ratio=16.52893 | precision=1.79063 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7] + x[5]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.37387 | recall=9.46870 | hit_ratio=16.52893 | precision=1.79063 | invalid_users=0.00000  	((((x[3] + x[8]) / (x[3] - x[8])) + x[5]) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.37630 | recall=9.34735 | hit_ratio=16.52893 | precision=1.76309 | invalid_users=0.00000  	((((x[3] + x[8]) / (x[3] - x[8])) + (x[0])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.28339 | recall=9.70548 | hit_ratio=16.80441 | precision=1.79063 | invalid_users=0.00000  	((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=0.78320 | recall=0.83410 | hit_ratio=1.65289 | precision=0.16529 | invalid_users=0.00000   	((((x[3] + x[8]) / (x[3] - x[8])) + ((x[0] + x[5]) / (x[0] - x[5]))) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=0.27961 | recall=0.36731 | hit_ratio=1.65289 | precision=0.19284 | invalid_users=0.00000   	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) / (x[0] + x[5]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=0.27870 | recall=0.25253 | hit_ratio=0.82645 | precision=0.08264 | invalid_users=0.00000   	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]) * ((x[0] + x[5]) / (x[0] - x[5])))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.37175 | recall=9.50499 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[2]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.30927 | recall=9.78047 | hit_ratio=16.80441 | precision=1.84573 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[2]))   									(((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[2]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.43008 | recall=9.50499 | hit_ratio=16.52893 | precision=1.81818 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[2]))										(((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[1] + x[6])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.34611 | recall=10.05595 | hit_ratio=17.07989 | precision=1.87328 | invalid_users=0.00000	(((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[2]))										(((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[2] + x[7])))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.08020 | recall=9.26338 | hit_ratio=15.97796 | precision=1.81818 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]))										(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.21700 | recall=9.38888 | hit_ratio=16.80441 | precision=1.92837 | invalid_users=0.00000  	(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]))										(((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[1] + x[6])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=0.27961 | recall=0.36731 | hit_ratio=1.65289 | precision=0.19284 | invalid_users=0.00000		((((x[3] + x[8]) / (x[3] - x[8])) / (x[0] + x[5])) * (x[2] + x[7]))						(((x[3] + x[8]) / (x[3] - x[8])) * ((x[1] + x[6])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.37980 | recall=9.58304 | hit_ratio=16.80441 | precision=1.76309 | invalid_users=0.00000		((((x[3] + x[8]) / (x[3] - x[8])) * (x[0] + x[5])) * (x[2] + x[7]))						(((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[1] + x[6])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.27258 | recall=10.10996 | hit_ratio=16.80441 | precision=1.81818 | invalid_users=0.00000 	((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7]))						(((x[3] + x[8]) / (x[3] - x[8])) + ((x[0] + x[5]) * (x[2] + x[7])))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.27221 | recall=10.24770 | hit_ratio=17.07989 | precision=1.84573 | invalid_users=0.00000 	((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7]))						(((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[2] + x[7])))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.46617 | recall=10.25644 | hit_ratio=17.35537 | precision=1.84573 | invalid_users=0.00000 	((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7]))						(((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[1] + x[6])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.46617 | recall=10.25644 | hit_ratio=17.35537 | precision=1.84573 | invalid_users=0.00000	((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7]))						((((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[1] + x[6])) * (x[2] + x[7])), x[1], x[3], x[2])
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.46617 | recall=10.25644 | hit_ratio=17.35537 | precision=1.84573 | invalid_users=0.00000	((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7]))						(((x[3] + x[8]) / (x[3] - x[8])) * ((x[1] + x[6])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.28339 | recall=9.70548 | hit_ratio=16.80441 | precision=1.79063 | invalid_users=0.00000		((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7]))						(x[1], x[3], x[2])
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.27221 | recall=10.24770 | hit_ratio=17.07989 | precision=1.84573 | invalid_users=0.00000	((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7]))						(((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.16176 | recall=9.24458 | hit_ratio=16.25344 | precision=1.84573 | invalid_users=0.00000		((x[3] + x[8]) / (x[3] - x[8]))															(((x[3] + x[8]) / (x[3] - x[8])) * ((x[1] + x[6])) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.19461 | recall=9.48969 | hit_ratio=16.52893 | precision=1.84573 | invalid_users=0.00000		(((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[1] + x[2]))								(((x[3] + x[8]) / (x[3] - x[8])) * (x[1] + x[6]) * (x[2] + x[7]))
+[INFO]  model epoch=40 | count (users)=363 | ndcg=6.12997 | recall=9.39786 | hit_ratio=16.25344 | precision=1.81818 | invalid_users=0.00000		(((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[1] + x[2]))								(((x[3] + x[8]) / (x[3] - x[8])) * (x[1] + x[6]) * (x[0] + x[5]) * (x[2] + x[7]))
+
