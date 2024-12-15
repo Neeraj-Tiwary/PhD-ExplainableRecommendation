@@ -283,7 +283,7 @@ def main():
     parser.add_argument('--dataset', type=str, default=CLOTH, help='One of {beauty, cd, cell, cloth}')
     parser.add_argument('--name', type=str, default='train_RL_agent', help='directory name.')
     parser.add_argument('--seed', type=int, default=123, help='random seed.')
-    parser.add_argument('--gpu', type=str, default='0', help='gpu device.')
+    parser.add_argument('--gpu', type=str, default='1', help='gpu device.')
     parser.add_argument('--epochs', type=int, default=100, help='Max number of epochs.')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size.')
     parser.add_argument('--lr', type=float, default=1e-4, help='learning rate.')
@@ -303,8 +303,11 @@ def main():
     parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
     args = parser.parse_args()
 
+    print('args.gpu: ', args.gpu)
+    print('torch.cuda.is_available(): ', torch.cuda.is_available())
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     args.device = torch.device('cuda:0') if torch.cuda.is_available() else 'cpu'
+    print('args.device: ', args.device)
 
     args.dir = '{}/{}'.format(TMP_DIR[args.dataset], args.name)
     if not os.path.isdir(args.dir):

@@ -47,7 +47,7 @@ def train(args):
         model.train()
         while dataloader.has_next():
             # Set learning rate.
-            lr = args.lr * max(1e-4, 1.0 - dataloader.finished_word_num / float(words_to_train))
+            lr = args.lr * max(1e-4, 1.0 - dataloader.finished_word_num / np.float64(words_to_train))
             for pg in optimizer.param_groups:
                 pg['lr'] = lr
 
@@ -138,7 +138,7 @@ def main():
     parser.add_argument('--seed', type=int, default=123, help='random seed.')
     parser.add_argument('--gpu', type=str, default='1', help='gpu device.')
     parser.add_argument('--epochs', type=int, default=30, help='number of epochs to train.')
-    parser.add_argument('--batch_size', type=int, default=64, help='batch size.')
+    parser.add_argument('--batch_size', type=int, default=32, help='batch size.')
     parser.add_argument('--lr', type=float, default=0.5, help='learning rate.')
     parser.add_argument('--weight_decay', type=float, default=0, help='weight decay for adam.')
     parser.add_argument('--l2_lambda', type=float, default=0, help='l2 lambda')
@@ -153,13 +153,16 @@ def main():
     parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
     args = parser.parse_args()
 
+    print('args.gpu: ', args.gpu)
+    print('torch.cuda.is_available(): ', torch.cuda.is_available())
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     args.device = torch.device('cuda:0') if torch.cuda.is_available() else 'cpu'
+    print('args.device: ', args.device)
 
     args.dir = '{}/{}'.format(TMP_DIR[args.dataset], args.name)
     if not os.path.isdir(args.dir):
         os.makedirs(args.dir)
-
+ 
     args.checkpoint_dir = '{}/{}'.format(args.dir, args.checkpoint_folder)
     if not os.path.isdir(args.checkpoint_dir):
         os.makedirs(args.checkpoint_dir)
