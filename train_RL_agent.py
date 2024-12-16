@@ -35,16 +35,21 @@ class ActorCritic(nn.Module):
         self.rewards = []
         self.entropy = []
 
-    def forward(self, inputs, is_debug=0):
+    def forward(self, inputs, device="cpu", is_debug=0):
         state, act_mask = inputs  # state: [bs, state_dim], act_mask: [bs, act_dim]
-        x = self.l1(state)
-        x = F.dropout(F.elu(x), p=0.5)
-        x = self.l2(x)
-        x = F.dropout(F.elu(x), p=0.5)
-        actor_logits = self.actor(x)
+        state = state.to(device)
+        act_mask = act_mask.to(device)
+        x = self.l1(state).to(device)
+        x = F.dropout(F.elu(x), p=0.5).to(device)
+        x = self.l2(x).to(device)
+        x = F.dropout(F.elu(x), p=0.5).to(device)
+        actor_logits = self.actor(x).to(device)
         if is_debug == 1:
             print('actor_logits: pre: ', actor_logits)
-        actor_logits[1 - act_mask] = -999999.0
+        # byte tensor
+        one_minus_act_mask = (1- act_mask).type(torch.bool).to(device)
+        #one_minus_act_mask = 1- act_mask
+        actor_logits[one_minus_act_mask] = -999999.0
         if is_debug == 1:
             print('actor_logits: post: ', actor_logits)
         act_probs = F.softmax(actor_logits, dim=-1)  # Tensor of [bs, act_dim]
@@ -56,7 +61,7 @@ class ActorCritic(nn.Module):
     def select_action(self, batch_states, batch_action_mask, device='cpu', is_debug=0):
         state = torch.FloatTensor(batch_states).to(device)  # Tensor [bs, state_dim]
         act_mask = torch.ByteTensor(batch_action_mask).to(device)  # Tensor of [bs, act_dim]
-        probs, value = self((state, act_mask))  # act_probs: [bs, act_dim], state_value: [bs, 1]
+        probs, value = self((state, act_mask), device)  # act_probs: [bs, act_dim], state_value: [bs, 1]
         if is_debug == 1:
             print('Select_Action: Started...')
             print('probs:', probs)
@@ -183,7 +188,7 @@ def train(args):
     for epoch in range(start_epoch, args.epochs + 1):
         # Start epoch #
         dataloader.reset()
-        model.train()
+        model.train().to(args.device)
         while dataloader.has_next():
             # Get the batch Users
             batch_uids = dataloader.get_batch()
@@ -295,7 +300,7 @@ def main():
     parser.add_argument('--state_history', type=int, default=1, help='state history length')
     parser.add_argument('--hidden', type=int, nargs='*', default=[512, 256], help='number of samples')
     parser.add_argument('--debug', type=int, nargs='*', default=0, help='number of samples')
-    parser.add_argument('--steps_per_checkpoint', type=int, default=5000, help='Number of steps for checkpoint.')
+    parser.add_argument('--steps_per_checkpoint', type=int, default=50000, help='Number of steps for checkpoint.')
     parser.add_argument('--checkpoint_folder', type=str, default='checkpoint', help='Checkpoint folder location')
     parser.add_argument('--log_folder', type=str, default='log', help='Log folder location')
     parser.add_argument('--log_file_name', type=str, default='train_log.txt', help='Log file name')
@@ -306,7 +311,7 @@ def main():
     print('args.gpu: ', args.gpu)
     print('torch.cuda.is_available(): ', torch.cuda.is_available())
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
-    args.device = torch.device('cuda:0') if torch.cuda.is_available() else 'cpu'
+    args.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     print('args.device: ', args.device)
 
     args.dir = '{}/{}'.format(TMP_DIR[args.dataset], args.name)
