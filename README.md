@@ -24,12 +24,12 @@ python train_transe_model.py --dataset <dataset_name>
 
 3. Train RL agent:
 ```bash
-python train_agent.py --dataset <dataset_name>
+python train_RL_agent.py --dataset <dataset_name>
 ```
 
 4. Evaluation
 ```bash
-python test_agent.py --dataset <dataset_name> --run_path True --run_eval True
+python test_RL_agent.py --dataset <dataset_name> --run_path True --run_eval True
 ```
 If "run_path" is True, the program will generate paths for recommendation according to the trained policy.
 If "run_eval" is True, the program will evaluate the recommendation performance based on the resulting paths.
