@@ -28,12 +28,11 @@ from utils import *
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
-logger = None
 #global logger
-
+#logger = None
 
 # Function to get the quantification of the explainability
-def get_explainability_score(pred_labels_details):
+def get_explainability_score(pred_labels_details, args):
     """Compute explainability metrics for predicted recommendations.
     Args:
         pred_labels_details: A prediction label/s consisting of path score, probability, entropy, rewards and path of that prediction.
@@ -82,7 +81,7 @@ def get_explainability_score(pred_labels_details):
         explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_entropy + path_entropy_diff_user_mean) + (pred_probs + path_prob_diff_user_mean))
     #--- Baseline
 
-    if is_debug == 1:
+    if args.debug == 1:
         print('pred_probs={} | pred_entropy={} | pred_reward={} | | pred_path={} | path_prob_diff_user_mean={} | path_entropy_diff_user_mean={} | path_rewards_diff_user_mean={} |  len(pred_path)={}'.
               format(pred_probs, pred_entropy, pred_reward, pred_path, path_prob_diff_user_mean, path_entropy_diff_user_mean, path_rewards_diff_user_mean, len(pred_path)))
         print('explainability_score: ', explainability_score)
@@ -91,7 +90,7 @@ def get_explainability_score(pred_labels_details):
 
 
 # Function to get the quantification of the explainability
-def get_product_affinity_score(pred_labels_details):
+def get_product_prioritisation_score(pred_labels_details, args):
     """Compute explainability metrics for predicted recommendations.
     Args:
         pred_labels_details: A prediction label/s consisting of path score, probability, entropy, rewards and path of that prediction.
@@ -119,7 +118,7 @@ def get_product_affinity_score(pred_labels_details):
     # Compute metrics for Explainability - (Rewards Gain + Score Gain) * Entropy
     affinity_score = ((((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_score + path_score_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean))
 
-    if is_debug == 1:
+    if args.debug == 1:
         print('pred_score={} | pred_probs={} | pred_entropy={} | pred_reward={} | | pred_path={} | path_score_diff_user_mean={} | path_prob_diff_user_mean={} | path_entropy_diff_user_mean={} | path_rewards_diff_user_mean={} |  len(pred_path)={}'.
               format(pred_score, pred_probs, pred_entropy, pred_reward, pred_path, path_score_diff_user_mean, path_prob_diff_user_mean, path_entropy_diff_user_mean, path_rewards_diff_user_mean, len(pred_path)))
         print('affinity_score: ', affinity_score)
@@ -201,7 +200,7 @@ def batch_beam_search(env, model, uids, device, topk, args):
         actmask_pool = _batch_acts_to_masks(acts_pool)  # numpy of [bs, dim]
         actmask_tensor = torch.ByteTensor(actmask_pool).to(device)
         probs, _ = model((state_tensor, actmask_tensor))  # Tensor of [bs, act_dim]
-        #rewards = rewards_pool
+        #rewards = rewards_pool 
         '''if is_debug == 1:
             print('hop:', hop)
             print('state_pool: ', state_pool)
@@ -323,7 +322,7 @@ def predict_paths(policy_file, path_file, test_labels, args):
     pickle.dump(predicts, open(path_file, 'wb'))
 
 
-def evaluate_paths(path_file, train_labels, test_labels, args, epoch):
+def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
     is_debug = args.debug
     embeds = load_embed(args.dataset)
     user_embeds = embeds[USER]
@@ -400,7 +399,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch):
                     sorted_path = pred_paths_revised[userid][pid]
                 else:
                     # Path Prioritization - Through Explainability scoring mechanism
-                    sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (get_explainability_score(x), x[1], x[3], x[2]), reverse=True)
+                    sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (get_explainability_score(x, args), x[1], x[3], x[2]), reverse=True)
                 best_pred_paths[userid].append(sorted_path[0])
     '''if is_debug == 1:
         print('best_pred_paths: ', best_pred_paths)'''
@@ -416,7 +415,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch):
         if args.PAS_score_option == 0:  # Baseline approach
             sorted_path[uid] = best_pred_paths[uid]
         elif args.PAS_score_option == 1:  # PAS (Product Affinity Score)
-            sorted_path[uid] = sorted(best_pred_paths[uid], key= lambda x: (get_product_affinity_score(x)), reverse = True)
+            sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (get_product_prioritisation_score(x, args)), reverse = True)
         elif args.PAS_score_option == 2:  # score
             sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (x[0]), reverse=True)
         elif args.PAS_score_option == 3:  # prob
@@ -430,7 +429,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch):
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((x[3] + x[8]) / (x[3] - x[8])), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[2])), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7])), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (get_product_affinity_score(x)), reverse=True)
+            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (get_product_prioritisation_score(x)), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7])), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[1] + x[6])) * (x[2] + x[7])), reverse=True)
             #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (get_explainability_score(x)), reverse=True)
@@ -482,8 +481,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch):
                 print('pred_labels[uid] :', i, pred_labels[i][j])
                 print('pred_labels_path[uid] :', i, pred_labels_path[i][j])
                 print('pred_labels_details[uid] :', i, pred_labels_details[i][j])
-
-                get_explainability_score(pred_labels_details[i][j])
+                get_explainability_score(pred_labels_details[i][j], args)
     # Model Evaluation
     #print('Count Pred_labels & test_labels: ', len(pred_labels), len(test_labels))
     ndcg, recall, hit_ratio, precision, invalid_users = evaluate(pred_labels, test_labels, args)
@@ -497,11 +495,11 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch):
         ' | invalid_users={:.5f}'.format(invalid_users) +
         ' | execution_timestamp={}'.format(datetime.now())
     )
+    return pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users
 
 
-def test(args):
+def test(args, logger):
     start_epoch = 1
-
     # Parameters created for resumption of run from the last failures
     file_type = r'/*.pkl'
     latest_checkpoint_file = get_latest_file(args.output_dir, file_type)
@@ -513,16 +511,13 @@ def test(args):
     elif args.is_only_run_specific_epoch == 1:
         print('is_only_run_specific_epoch: {} , args.epochs: {}'.format(args.is_only_run_specific_epoch, args.epochs))
         start_epoch = args.epochs
-
     print('start_epoch: ', start_epoch)
-
 
     # Iterate for number of epochs
     for epoch in range(start_epoch, args.epochs + 1):
         policy_file = TMP_DIR[args.dataset] + '/' + args.source_name + '/' + args.checkpoint_folder + '/policy_model_epoch_{}.ckpt'.format(epoch)
         #path_file = args.output_dir + '/policy_paths_epoch{}_{}.pkl'.format(args.epochs, args.run_number)
         path_file = args.output_dir + '/policy_paths_epoch_{}.pkl'.format(epoch)
-
         is_debug = args.debug
         if is_debug == 1:
             print('policy_file : ', policy_file)
@@ -531,11 +526,11 @@ def test(args):
 
         train_labels = load_labels(args.dataset, 'train')
         test_labels = load_labels(args.dataset, 'test')
-
         #train_labels = {key: value for key, value in train_labels.items() if key in range(20000, 22363, 1)}
         #test_labels = {key: value for key, value in test_labels.items() if key in range(20000, 22363, 1)}
-        #train_labels = {key: value for key, value in train_labels.items() if key in range(22012, 22013, 1)}
-        #test_labels = {key: value for key, value in test_labels.items() if key in range(22012, 22013, 1)}
+        if args.users is not None:
+            train_labels = {key: value for key, value in train_labels.items() if key == args.users}
+            test_labels = {key: value for key, value in test_labels.items() if key == args.users}
         if is_debug == 1:
             print('train_labels: ', train_labels)
             print('test_labels: ', test_labels)
@@ -543,8 +538,9 @@ def test(args):
         if args.run_path:
             predict_paths(policy_file, path_file, test_labels, args)
         if args.run_eval:
-            evaluate_paths(path_file, train_labels, test_labels, args, epoch)
+            pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users = evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger)
 
+        return pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users
 
 if __name__ == '__main__':
     boolean = lambda x: (str(x).lower() == 'true')
@@ -552,6 +548,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset', type=str, default=CELL, help='One of {cloth, beauty, cell, cd}')
     parser.add_argument('--source_name', type=str, default='train_RL_agent', help='directory name.')
     parser.add_argument('--output_folder', type=str, default='test_RL_agent', help='directory name.')
+    parser.add_argument('--users', type=int, default=None, help='user list')
     parser.add_argument('--seed', type=int, default=123, help='random seed.')
     parser.add_argument('--gpu', type=str, default='0', help='gpu device.')
     parser.add_argument('--epochs', type=int, default=100, help='num of epochs.')
@@ -565,21 +562,27 @@ if __name__ == '__main__':
     parser.add_argument('--run_path', type=boolean, default=True, help='Generate predicted path? (takes long time)')
     parser.add_argument('--run_eval', type=boolean, default=True, help='Run evaluation?')
     parser.add_argument('--debug', type=int, nargs='*', default=0, help='number of samples')
-    parser.add_argument('--batch_size', type=int, default=512, help='batch size.')
+    parser.add_argument('--batch_size', type=int, default=32, help='batch size.')
     parser.add_argument('--is_resume_from_checkpoint', type=int, default=0, help='Flag for resuming from last checkpoint')
     parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
     parser.add_argument('--log_file_name', type=str, default='test_agent_log', help='logging mode')
     parser.add_argument('--checkpoint_folder', type=str, default='checkpoint', help='Checkpoint folder location')
     parser.add_argument('--MES_score_option', type=str, default=1, help='Choose 0 for [Baseline], Choose 1 for [MES (Rewards Gain * Entropy Gain)], 2 for Only [Rewards Gain], 3 for Only [Entropy Gain], 4 for Only [Probs Gain], 5 for [Entopy Gain * Probs Gain], 6 for [Rewards Gain * Probs Gain], 7 for [Rewards Gain * Entopy Gain * Probs Gain], 8 for [Rewards Gain + Entopy Gain + Probs Gain]')
-    parser.add_argument('--PAS_score_option', type=str, default=1, help='Choose 0 for [Baseline], Choose 1 for [PAS ()], 2 for Only [Score], 3 for Only [Prob], 4 for Only [Entropy], 5 for [Reward]')
+    parser.add_argument('--PAS_score_option', type=str, default=1, help='Choose 0 for [Baseline], Choose 1 for [PPS ()], 2 for Only [Score], 3 for Only [Prob], 4 for Only [Entropy], 5 for [Reward]')
     parser.add_argument('--run_number', type=str, default='1', help='logging mode')
     parser.add_argument('--is_only_run_specific_epoch', type=str, default=1, help='is_only_run_specific_epoch')
-
     args = parser.parse_args()
 
-    is_debug = args.debug
+    print('args.gpu: ', args.gpu)
+    print('torch.cuda.is_available(): ', torch.cuda.is_available())
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
-    args.device = torch.device('cuda:0') if torch.cuda.is_available() else 'cpu'
+    args.device = torch.device('cpu')
+    if args.gpu == 1:
+        if torch.cuda.is_available():
+            args.device = torch.device('cuda:0')
+    print('args.device: ', args.device)
+
+    is_debug = args.debug
     args.output_dir = TMP_DIR[args.dataset] + '/' + args.output_folder
     if not os.path.isdir(args.output_dir):
         os.makedirs(args.output_dir)
@@ -587,6 +590,12 @@ if __name__ == '__main__':
     logger.info(args)
 
     set_random_seed(args.seed)
-
-    test(args)
-
+    pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users = test(args, logger)
+    #print('pred_labels: \n', pred_labels)
+    #print('pred_labels_path: \n', pred_labels_path)
+    #print('pred_labels_details: \n', pred_labels_details)
+    print('ndcg: \n', ndcg)
+    print('recall: \n', recall)
+    print('hit_ratio: \n', hit_ratio)
+    print('precision: \n', precision)
+    print('invalid_users: \n', invalid_users)
