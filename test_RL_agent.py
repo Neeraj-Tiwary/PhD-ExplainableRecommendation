@@ -45,7 +45,9 @@ def get_explainability_score(pred_labels_details, args):
 
         Formula = (S + P + Rw)/ ((MAX range(S) + MAX range(P) + MAX range(Rw))) * R
     """
-    invalid_users = []
+    # Define variable
+    explainability_score = 0
+
     # Extract the key metrics from the prediction label details
     pred_probs = pred_labels_details[1]                     # Probability of the prediction label
     pred_entropy = pred_labels_details[2]                   # Entropy of the prediction label
@@ -103,7 +105,8 @@ def get_product_prioritisation_score(pred_labels_details, args):
 
         Formula = (S + P + Rw)/ ((MAX range(S) + MAX range(P) + MAX range(Rw))) * R
     """
-    invalid_users = []
+    # Define variable
+    affinity_score = 0
     # Extract the key metrics from the prediction label details
     pred_score = pred_labels_details[0]                     # Affinity score of the prediction label
     pred_probs = pred_labels_details[1]                     # Probability of the prediction label
@@ -410,6 +413,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
     pred_labels = {}
     pred_labels_path = {}
     pred_labels_details = {}
+    pred_labels_details_extended = {}
     sorted_path = {}
     for uid in best_pred_paths:
         if args.PAS_score_option == 0:  # Baseline approach
@@ -459,6 +463,8 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
         pred_labels[uid] = top10_pids[::1]  # change order to from smallest to largest!
         pred_labels_path[uid] = top10_pids_path[::1]  # change order to from smallest to largest!
         pred_labels_details[uid] = top10_pids_details[::1]  # change order to from smallest to largest!
+        pred_labels_details_extended[uid] = [(p[4][-1][2], str(p[4][0][1]) + ' ' + str(p[4][0][2]) + ' has ' + str(p[4][1][0]) + ' ' + str(p[4][1][1]) + ' ' + str(p[4][1][2]) + ' which was ' + str(p[4][2][0]) + ' by ' + str(p[4][2][1]) + ' ' + str(p[4][2][2]) + ' who ' + str(p[4][3][0]) + ' ' + str(p[4][3][1]) + ' ' + str(p[4][3][2]), get_explainability_score(p, args), get_product_prioritisation_score(p, args), p) for p in pred_labels_details[uid]]  # change order to from smallest to largest!
+        
 
     pred_labels_1 = sorted(pred_labels)
     test_labels_1 = sorted(test_labels)
@@ -495,7 +501,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
         ' | invalid_users={:.5f}'.format(invalid_users) +
         ' | execution_timestamp={}'.format(datetime.now())
     )
-    return pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users
+    return pred_labels, pred_labels_path, pred_labels_details_extended, ndcg, recall, hit_ratio, precision, invalid_users
 
 
 def test(args, logger):
