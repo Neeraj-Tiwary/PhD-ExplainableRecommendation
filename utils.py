@@ -270,7 +270,7 @@ def get_entity_details(dataset, entity_type, entity_id):
 
 
 def load_checkpoint(checkpoint_fpath):
-    checkpoint = torch.load(checkpoint_fpath, map_location=lambda storage, loc: storage)
+    checkpoint = torch.load(checkpoint_fpath, map_location=lambda storage, loc: storage, weights_only=True)
     return checkpoint
 
 
