@@ -118,7 +118,7 @@ def main(args, logger):
                     args.MES_score_option = 1
                     args.PAS_score_option = 1
                     pred_labels, pred_labels_path, pred_labels_details = recommended(args, logger)
-                    col1, col2, col3, col4, col5 = st.columns([1,1,6,1,1])
+                    col1, col2, col3, col4, col5 = st.columns([1,1,5,1,1])
                     col1.markdown("##### Product Key")
                     col2.markdown("##### Product Name")
                     col3.markdown("##### Explainability of the recommendation")
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     parser.add_argument('--output_folder', type=str, default='test_RL_agent', help='directory name.')
     parser.add_argument('--users', type=int, default=None, help='user list')
     parser.add_argument('--seed', type=int, default=123, help='random seed.')
-    parser.add_argument('--gpu', type=str, default='0', help='gpu device.')
+    parser.add_argument('--gpu', type=int, default=0, help='gpu device.')
     parser.add_argument('--epochs', type=int, default=100, help='num of epochs.')
     parser.add_argument('--max_acts', type=int, default=250, help='Max number of actions.')
     parser.add_argument('--max_path_len', type=int, default=3, help='Max path length.')
@@ -159,13 +159,13 @@ if __name__ == '__main__':
     parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
     parser.add_argument('--log_file_name', type=str, default='test_agent_st_log', help='logging mode')
     parser.add_argument('--checkpoint_folder', type=str, default='checkpoint', help='Checkpoint folder location')
-    parser.add_argument('--MES_score_option', type=str, default=0, help='Choose 0 for [Baseline], Choose 1 for [MES (Rewards Gain * Entropy Gain)], 2 for Only [Rewards Gain], 3 for Only [Entropy Gain], 4 for Only [Probs Gain], 5 for [Entopy Gain * Probs Gain], 6 for [Rewards Gain * Probs Gain], 7 for [Rewards Gain * Entopy Gain * Probs Gain], 8 for [Rewards Gain + Entopy Gain + Probs Gain]')
-    parser.add_argument('--PAS_score_option', type=str, default=0, help='Choose 0 for [Baseline], Choose 1 for [PPS ()], 2 for Only [Score], 3 for Only [Prob], 4 for Only [Entropy], 5 for [Reward]')
-    parser.add_argument('--run_number', type=str, default='1', help='logging mode')
-    parser.add_argument('--is_only_run_specific_epoch', type=str, default=1, help='is_only_run_specific_epoch')
+    parser.add_argument('--MES_score_option', type=int, default=0, help='Choose 0 for [Baseline], Choose 1 for [MES (Rewards Gain * Entropy Gain)], 2 for Only [Rewards Gain], 3 for Only [Entropy Gain], 4 for Only [Probs Gain], 5 for [Entopy Gain * Probs Gain], 6 for [Rewards Gain * Probs Gain], 7 for [Rewards Gain * Entopy Gain * Probs Gain], 8 for [Rewards Gain + Entopy Gain + Probs Gain]')
+    parser.add_argument('--PAS_score_option', type=int, default=0, help='Choose 0 for [Baseline], Choose 1 for [PPS ()], 2 for Only [Score], 3 for Only [Prob], 4 for Only [Entropy], 5 for [Reward]')
+    parser.add_argument('--run_number', type=int, default='1', help='logging mode')
+    parser.add_argument('--is_only_run_specific_epoch', type=int, default=1, help='is_only_run_specific_epoch')
     args = parser.parse_args()
 
-    os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
+    os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
     args.device = torch.device('cpu')
     if args.gpu == '1':
         if torch.cuda.is_available():

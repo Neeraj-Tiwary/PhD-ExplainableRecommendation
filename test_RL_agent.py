@@ -106,7 +106,7 @@ def get_product_prioritisation_score(pred_labels_details, args):
         Formula = (S + P + Rw)/ ((MAX range(S) + MAX range(P) + MAX range(Rw))) * R
     """
     # Define variable
-    affinity_score = 0
+    #affinity_score = 0
     # Extract the key metrics from the prediction label details
     pred_score = pred_labels_details[0]                     # Affinity score of the prediction label
     pred_probs = pred_labels_details[1]                     # Probability of the prediction label
@@ -428,21 +428,10 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
             sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (x[2]), reverse=True)
         elif args.PAS_score_option == 5:  # reward
             sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (x[3]), reverse=True)
-#        else:
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((x[3] + x[8]) / (x[3])), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((x[3] + x[8]) / (x[3] - x[8])), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[2])), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((((x[3] + x[8]) / (x[3] - x[8])) + (x[0] + x[5])) * (x[2] + x[7])), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (get_product_prioritisation_score(x)), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * (x[2] + x[7])), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * ((x[0] + x[5]) * (x[1] + x[6])) * (x[2] + x[7])), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (get_explainability_score(x)), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (((x[3] + x[8]) / (x[3] - x[8])) * (x[5] + x[1] + x[2])), reverse=True)
-            #sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: ((x[3] / (x[3] - x[8])) * (x[5]/(1 if x[0] < 1 else x[0])) * (x[1] / (x[1] - x[6]))), reverse=True)
 
         '''if is_debug == 1:
             print('sorted_path :', sorted_path)'''
-
+        
         top10_pids = [p[-1][2] for _, _, _, _, p, _, _, _, _ in sorted_path[uid][:10]]  # from largest to smallest
         top10_pids_path = [(p[-1][2], str(p[0][1]) + ' ' + str(p[0][2]) + ' has ' + str(p[1][0]) + ' ' + str(p[1][1]) + ' ' + str(p[1][2]) + ' which was ' + str(p[2][0]) + ' by ' + str(p[2][1]) + ' ' + str(p[2][2]) + ' who ' + str(p[3][0]) + ' ' + str(p[3][1]) + ' ' + str(p[3][2])) for _, _, _, _, p, _, _, _, _ in sorted_path[uid] if p[-1][2] in top10_pids]  # from largest to smallest
         top10_pids_details = [(p) for p in sorted_path[uid][:10]]  # from largest to smallest
@@ -556,7 +545,7 @@ if __name__ == '__main__':
     parser.add_argument('--output_folder', type=str, default='test_RL_agent', help='directory name.')
     parser.add_argument('--users', type=int, default=None, help='user list')
     parser.add_argument('--seed', type=int, default=123, help='random seed.')
-    parser.add_argument('--gpu', type=str, default='0', help='gpu device.')
+    parser.add_argument('--gpu', type=int, default=0, help='gpu device.')
     parser.add_argument('--epochs', type=int, default=100, help='num of epochs.')
     parser.add_argument('--max_acts', type=int, default=250, help='Max number of actions.')
     parser.add_argument('--max_path_len', type=int, default=3, help='Max path length.')
@@ -573,15 +562,14 @@ if __name__ == '__main__':
     parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
     parser.add_argument('--log_file_name', type=str, default='test_agent_log', help='logging mode')
     parser.add_argument('--checkpoint_folder', type=str, default='checkpoint', help='Checkpoint folder location')
-    parser.add_argument('--MES_score_option', type=str, default=1, help='Choose 0 for [Baseline], Choose 1 for [MES (Rewards Gain * Entropy Gain)], 2 for Only [Rewards Gain], 3 for Only [Entropy Gain], 4 for Only [Probs Gain], 5 for [Entopy Gain * Probs Gain], 6 for [Rewards Gain * Probs Gain], 7 for [Rewards Gain * Entopy Gain * Probs Gain], 8 for [Rewards Gain + Entopy Gain + Probs Gain]')
-    parser.add_argument('--PAS_score_option', type=str, default=1, help='Choose 0 for [Baseline], Choose 1 for [PPS ()], 2 for Only [Score], 3 for Only [Prob], 4 for Only [Entropy], 5 for [Reward]')
-    parser.add_argument('--run_number', type=str, default='1', help='logging mode')
-    parser.add_argument('--is_only_run_specific_epoch', type=str, default=1, help='is_only_run_specific_epoch')
+    parser.add_argument('--MES_score_option', type=int, default=1, help='Choose 0 for [Baseline], Choose 1 for [MES (Rewards Gain * Entropy Gain)], 2 for Only [Rewards Gain], 3 for Only [Entropy Gain], 4 for Only [Probs Gain], 5 for [Entopy Gain * Probs Gain], 6 for [Rewards Gain * Probs Gain], 7 for [Rewards Gain * Entopy Gain * Probs Gain], 8 for [Rewards Gain + Entopy Gain + Probs Gain]')
+    parser.add_argument('--PAS_score_option', type=int, default=1, help='Choose 0 for [Baseline], Choose 1 for [PPS ()], 2 for Only [Score], 3 for Only [Prob], 4 for Only [Entropy], 5 for [Reward]')
+    parser.add_argument('--run_number', type=int, default='1', help='logging mode')
+    parser.add_argument('--is_only_run_specific_epoch', type=int, default=1, help='is_only_run_specific_epoch')
     args = parser.parse_args()
 
-    print('args.gpu: ', args.gpu)
     print('torch.cuda.is_available(): ', torch.cuda.is_available())
-    os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
+    os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
     args.device = torch.device('cpu')
     if args.gpu == 1:
         if torch.cuda.is_available():
@@ -597,11 +585,4 @@ if __name__ == '__main__':
 
     set_random_seed(args.seed)
     pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users = test(args, logger)
-    #print('pred_labels: \n', pred_labels)
-    #print('pred_labels_path: \n', pred_labels_path)
-    #print('pred_labels_details: \n', pred_labels_details)
-    print('ndcg: \n', ndcg)
-    print('recall: \n', recall)
-    print('hit_ratio: \n', hit_ratio)
-    print('precision: \n', precision)
-    print('invalid_users: \n', invalid_users)
+    
