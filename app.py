@@ -137,7 +137,7 @@ def main(args, logger):
 if __name__ == '__main__':
     boolean = lambda x: (str(x).lower() == 'true')
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default=CELL, help='One of {cloth, beauty, cell, cd}')
+    parser.add_argument('--dataset', type=str, default=BEAUTY, help='One of {cloth, beauty, cell, cd}')
     parser.add_argument('--source_name', type=str, default='train_RL_agent', help='directory name.')
     parser.add_argument('--output_folder', type=str, default='test_RL_agent', help='directory name.')
     parser.add_argument('--users', type=int, default=None, help='user list')

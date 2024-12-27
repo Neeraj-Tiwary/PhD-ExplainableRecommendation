@@ -285,7 +285,7 @@ def train(args):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default=CLOTH, help='One of {beauty, cd, cell, cloth}')
+    parser.add_argument('--dataset', type=str, default=BEAUTY, help='One of {beauty, cd, cell, cloth}')
     parser.add_argument('--name', type=str, default='train_RL_agent', help='directory name.')
     parser.add_argument('--seed', type=int, default=123, help='random seed.')
     parser.add_argument('--gpu', type=str, default='1', help='gpu device.')
