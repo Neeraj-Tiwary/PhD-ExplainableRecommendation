@@ -42,10 +42,12 @@ def main(args, logger):
     st.set_page_config(layout='wide', page_title='Product Recommendation System', page_icon='🎬', initial_sidebar_state='collapsed')
     # Title and sidebar
     st.title('Product Recommendation System')
-    dataset = load_dataset(args.dataset)
-    train_labels = load_labels(args.dataset, 'train')
-    test_labels = load_labels(args.dataset, 'test')
-    selected_user_key, selected_user_name = st.selectbox('Select a user:', [(selected_user_key, get_entity_details(dataset, "user", selected_user_key)) for selected_user_key in test_labels.keys()])
+    with st.sidebar:
+        args.dataset = st.selectbox('Select database:', ["cloth", "beauty", "cell", "cd"])
+        dataset = load_dataset(args.dataset)
+        train_labels = load_labels(args.dataset, 'train')
+        test_labels = load_labels(args.dataset, 'test')
+        selected_user_key, selected_user_name = st.selectbox('Select a user:', [(selected_user_key, get_entity_details(dataset, "user", selected_user_key)) for selected_user_key in test_labels.keys()])
     #selected_user_name = get_entity_details(dataset, "user", selected_user_key)
     args.users = selected_user_key
     p_tab1, p_tab2 = st.tabs(["Historical Purchases", "Recommendations"])

@@ -145,11 +145,11 @@ def main():
     parser.add_argument('--max_grad_norm', type=float, default=5.0, help='Clipping gradient.')
     parser.add_argument('--embed_size', type=int, default=100, help='knowledge embedding size.')
     parser.add_argument('--num_neg_samples', type=int, default=5, help='number of negative samples.')
-    parser.add_argument('--steps_per_checkpoint', type=int, default=10000, help='Number of steps for checkpoint.')
+    parser.add_argument('--steps_per_checkpoint', type=int, default=100000, help='Number of steps for checkpoint.')
     parser.add_argument('--checkpoint_folder', type=str, default='checkpoint', help='Number of steps for checkpoint.')
     parser.add_argument('--log_folder', type=str, default='log', help='Number of steps for checkpoint.')
     parser.add_argument('--log_file_name', type=str, default='train_log.txt', help='Number of steps for checkpoint.')
-    parser.add_argument('--is_resume_from_checkpoint', type=int, default=1, help='Number of steps for checkpoint.')
+    parser.add_argument('--is_resume_from_checkpoint', type=int, default=0, help='Number of steps for checkpoint.')
     parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
     args = parser.parse_args()
 
