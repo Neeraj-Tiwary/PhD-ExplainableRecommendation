@@ -43,7 +43,7 @@ def main(args, logger):
     # Title and sidebar
     st.title('Product Recommendation System')
     with st.sidebar:
-        args.dataset = st.selectbox('Select database:', ["cloth", "beauty", "cell", "cd"])
+        args.dataset = st.selectbox('Select database:', ["beauty", "cell"])
         dataset = load_dataset(args.dataset)
         train_labels = load_labels(args.dataset, 'train')
         test_labels = load_labels(args.dataset, 'test')
