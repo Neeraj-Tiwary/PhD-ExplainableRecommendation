@@ -1,0 +1,321 @@
+[INFO]  Namespace(dataset='cell', name='train_RL_agent', seed=123, gpu='1', epochs=100, batch_size=32, lr=0.0001, max_acts=250, max_path_len=3, gamma=0.99, ent_weight=0.001, act_dropout=0, state_history=1, hidden=[512, 256], debug=0, steps_per_checkpoint=50000, checkpoint_folder='checkpoint', log_folder='log', log_file_name='train_log.txt', is_resume_from_checkpoint=1, logging_mode='a', device=device(type='cuda', index=0), dir='./tmp/Amazon_Cellphones/train_RL_agent', checkpoint_dir='./tmp/Amazon_Cellphones/train_RL_agent/checkpoint', log_dir='./tmp/Amazon_Cellphones/train_RL_agent/log')
+[INFO]  Parameters:['l1.weight', 'l1.bias', 'l2.weight', 'l2.bias', 'actor.weight', 'actor.bias', 'critic.weight', 'critic.bias']
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_1.ckpt
+[INFO]  epoch/step=2/50000 | loss=18.19643 | ploss=18.20106 | vloss=17239056.45649 | entropy=-4.63741 | reward=177.46904
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_2.ckpt
+[INFO]  epoch/step=3/100000 | loss=-0.31439 | ploss=-0.30959 | vloss=17221690.91291 | entropy=-4.79300 | reward=176.08824
+[INFO]  epoch/step=3/150000 | loss=-0.30907 | ploss=-0.30402 | vloss=10898230.27900 | entropy=-5.05496 | reward=111.55958
+[INFO]  epoch/step=3/200000 | loss=-0.25896 | ploss=-0.25391 | vloss=11154946.79128 | entropy=-5.05078 | reward=114.24115
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_3.ckpt
+[INFO]  epoch/step=4/250000 | loss=-0.25679 | ploss=-0.25172 | vloss=10999392.98085 | entropy=-5.06437 | reward=112.04304
+[INFO]  epoch/step=4/300000 | loss=-0.29220 | ploss=-0.28714 | vloss=10658889.81687 | entropy=-5.06423 | reward=109.18165
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_4.ckpt
+[INFO]  epoch/step=5/350000 | loss=-0.22787 | ploss=-0.22280 | vloss=10572281.07060 | entropy=-5.06603 | reward=108.05871
+[INFO]  epoch/step=5/400000 | loss=-0.34203 | ploss=-0.33697 | vloss=10983345.60520 | entropy=-5.06500 | reward=112.39457
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_5.ckpt
+[INFO]  epoch/step=6/450000 | loss=-0.34056 | ploss=-0.33549 | vloss=11017454.95109 | entropy=-5.06479 | reward=112.73686
+[INFO]  epoch/step=6/500000 | loss=-0.32794 | ploss=-0.32288 | vloss=10860714.08216 | entropy=-5.06431 | reward=111.08542
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_6.ckpt
+[INFO]  epoch/step=7/550000 | loss=-0.30808 | ploss=-0.30302 | vloss=10466826.41567 | entropy=-5.06522 | reward=107.28502
+[INFO]  epoch/step=7/600000 | loss=-0.34411 | ploss=-0.33904 | vloss=10765810.43602 | entropy=-5.06570 | reward=110.21856
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_7.ckpt
+[INFO]  epoch/step=8/650000 | loss=-0.28213 | ploss=-0.27706 | vloss=10919509.87698 | entropy=-5.06375 | reward=111.53107
+[INFO]  epoch/step=8/700000 | loss=-0.28468 | ploss=-0.27961 | vloss=10612002.27560 | entropy=-5.06719 | reward=108.65058
+[INFO]  epoch/step=8/750000 | loss=-0.32439 | ploss=-0.31933 | vloss=11083686.48251 | entropy=-5.06217 | reward=113.39977
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_8.ckpt
+[INFO]  epoch/step=9/800000 | loss=-0.31430 | ploss=-0.30924 | vloss=10760895.41560 | entropy=-5.06552 | reward=110.20521
+[INFO]  epoch/step=9/850000 | loss=-0.30873 | ploss=-0.30367 | vloss=10949906.21532 | entropy=-5.06453 | reward=112.04021
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_9.ckpt
+[INFO]  epoch/step=10/900000 | loss=-0.26105 | ploss=-0.25599 | vloss=10857380.58703 | entropy=-5.06566 | reward=110.85781
+[INFO]  epoch/step=10/950000 | loss=-0.24217 | ploss=-0.23710 | vloss=10677031.37164 | entropy=-5.06544 | reward=109.33136
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_10.ckpt
+[INFO]  epoch/step=11/1000000 | loss=-0.12072 | ploss=-0.11565 | vloss=10906314.39754 | entropy=-5.06338 | reward=111.41125
+[INFO]  epoch/step=11/1050000 | loss=-0.18412 | ploss=-0.17906 | vloss=11156707.47889 | entropy=-5.06489 | reward=114.06792
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_11.ckpt
+[INFO]  epoch/step=12/1100000 | loss=-0.33340 | ploss=-0.32833 | vloss=10673537.47458 | entropy=-5.06544 | reward=109.06544
+[INFO]  epoch/step=12/1150000 | loss=-0.03276 | ploss=-0.02769 | vloss=10677334.89359 | entropy=-5.06472 | reward=109.35248
+[INFO]  epoch/step=12/1200000 | loss=-0.26803 | ploss=-0.26297 | vloss=10893542.83300 | entropy=-5.06382 | reward=111.50848
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_12.ckpt
+[INFO]  epoch/step=13/1250000 | loss=-0.34752 | ploss=-0.34246 | vloss=10994311.48907 | entropy=-5.06578 | reward=111.31142
+[INFO]  epoch/step=13/1300000 | loss=-0.16495 | ploss=-0.15988 | vloss=10693832.17750 | entropy=-5.06454 | reward=109.54748
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_13.ckpt
+[INFO]  epoch/step=14/1350000 | loss=-0.23680 | ploss=-0.23174 | vloss=10985496.55405 | entropy=-5.06438 | reward=111.73054
+[INFO]  epoch/step=14/1400000 | loss=-0.22292 | ploss=-0.21786 | vloss=10715012.01148 | entropy=-5.06616 | reward=109.68517
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_14.ckpt
+[INFO]  epoch/step=15/1450000 | loss=-0.12389 | ploss=-0.11883 | vloss=10205218.82369 | entropy=-5.06446 | reward=104.52077
+[INFO]  epoch/step=15/1500000 | loss=-0.30781 | ploss=-0.30275 | vloss=11402616.93257 | entropy=-5.06404 | reward=116.48919
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_15.ckpt
+[INFO]  epoch/step=16/1550000 | loss=-0.34721 | ploss=-0.34215 | vloss=10953418.46680 | entropy=-5.06444 | reward=111.77540
+[INFO]  epoch/step=16/1600000 | loss=-0.26511 | ploss=-0.26005 | vloss=11081783.98609 | entropy=-5.06566 | reward=113.28317
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_16.ckpt
+[INFO]  epoch/step=17/1650000 | loss=-0.04147 | ploss=-0.03640 | vloss=10360548.40465 | entropy=-5.06571 | reward=106.24991
+[INFO]  epoch/step=17/1700000 | loss=-0.34762 | ploss=-0.34256 | vloss=11231066.34449 | entropy=-5.06480 | reward=114.79132
+[INFO]  epoch/step=17/1750000 | loss=-0.14340 | ploss=-0.13834 | vloss=10483731.14471 | entropy=-5.06375 | reward=107.49292
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_17.ckpt
+[INFO]  epoch/step=18/1800000 | loss=-0.32872 | ploss=-0.32366 | vloss=11146985.74595 | entropy=-5.06473 | reward=113.75814
+[INFO]  epoch/step=18/1850000 | loss=-0.27421 | ploss=-0.26915 | vloss=10585126.14601 | entropy=-5.06599 | reward=108.45257
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_18.ckpt
+[INFO]  epoch/step=19/1900000 | loss=-0.23361 | ploss=-0.22855 | vloss=10697709.90649 | entropy=-5.06355 | reward=109.33189
+[INFO]  epoch/step=19/1950000 | loss=-0.34536 | ploss=-0.34030 | vloss=10871980.53935 | entropy=-5.06540 | reward=111.24236
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_19.ckpt
+[INFO]  epoch/step=20/2000000 | loss=-0.23250 | ploss=-0.22744 | vloss=10934195.75262 | entropy=-5.06390 | reward=111.88214
+[INFO]  epoch/step=20/2050000 | loss=-0.31311 | ploss=-0.30804 | vloss=11105479.63835 | entropy=-5.06468 | reward=113.54437
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_20.ckpt
+[INFO]  epoch/step=21/2100000 | loss=-0.34933 | ploss=-0.34426 | vloss=10268396.32482 | entropy=-5.06632 | reward=105.10358
+[INFO]  epoch/step=21/2150000 | loss=-0.32895 | ploss=-0.32388 | vloss=10371228.45360 | entropy=-5.06534 | reward=106.44146
+[INFO]  epoch/step=21/2200000 | loss=-0.31977 | ploss=-0.31470 | vloss=11350237.41131 | entropy=-5.06393 | reward=115.89978
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_21.ckpt
+[INFO]  epoch/step=22/2250000 | loss=-0.27681 | ploss=-0.27174 | vloss=10840599.00477 | entropy=-5.06464 | reward=110.98024
+[INFO]  epoch/step=22/2300000 | loss=-0.32418 | ploss=-0.31911 | vloss=10570089.61352 | entropy=-5.06566 | reward=108.26868
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_22.ckpt
+[INFO]  epoch/step=23/2350000 | loss=-0.32740 | ploss=-0.32234 | vloss=11376277.84153 | entropy=-5.06547 | reward=114.61836
+[INFO]  epoch/step=23/2400000 | loss=-0.30845 | ploss=-0.30338 | vloss=11198447.53405 | entropy=-5.06372 | reward=114.47422
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_23.ckpt
+[INFO]  epoch/step=24/2450000 | loss=-0.27178 | ploss=-0.26671 | vloss=10157883.81655 | entropy=-5.06602 | reward=104.20229
+[INFO]  epoch/step=24/2500000 | loss=-0.21734 | ploss=-0.21228 | vloss=10784973.24470 | entropy=-5.06400 | reward=110.49281
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_24.ckpt
+[INFO]  epoch/step=25/2550000 | loss=-0.33949 | ploss=-0.33443 | vloss=10807899.07623 | entropy=-5.06645 | reward=110.37483
+[INFO]  epoch/step=25/2600000 | loss=-0.12367 | ploss=-0.11860 | vloss=11075601.44210 | entropy=-5.06484 | reward=113.27938
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_25.ckpt
+[INFO]  epoch/step=26/2650000 | loss=-0.27423 | ploss=-0.26916 | vloss=10620750.55412 | entropy=-5.06547 | reward=108.76628
+[INFO]  epoch/step=26/2700000 | loss=-0.35316 | ploss=-0.34810 | vloss=10792821.14622 | entropy=-5.06554 | reward=110.45559
+[INFO]  epoch/step=26/2750000 | loss=-0.30434 | ploss=-0.29928 | vloss=10935963.91545 | entropy=-5.06424 | reward=111.94578
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_26.ckpt
+[INFO]  epoch/step=27/2800000 | loss=-0.34524 | ploss=-0.34018 | vloss=11157093.08903 | entropy=-5.06485 | reward=113.65106
+[INFO]  epoch/step=27/2850000 | loss=-0.31546 | ploss=-0.31040 | vloss=10436248.56673 | entropy=-5.06448 | reward=106.96492
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_27.ckpt
+[INFO]  epoch/step=28/2900000 | loss=-0.31242 | ploss=-0.30735 | vloss=11138017.69483 | entropy=-5.06326 | reward=113.66665
+[INFO]  epoch/step=28/2950000 | loss=-0.34167 | ploss=-0.33660 | vloss=10787473.98399 | entropy=-5.06675 | reward=110.41070
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_28.ckpt
+[INFO]  epoch/step=29/3000000 | loss=-0.31060 | ploss=-0.30553 | vloss=10692572.42242 | entropy=-5.06411 | reward=109.24650
+[INFO]  epoch/step=29/3050000 | loss=-0.34072 | ploss=-0.33565 | vloss=10705528.61900 | entropy=-5.06640 | reward=109.58641
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_29.ckpt
+[INFO]  epoch/step=30/3100000 | loss=-0.30881 | ploss=-0.30375 | vloss=10882480.26051 | entropy=-5.06365 | reward=111.18282
+[INFO]  epoch/step=30/3150000 | loss=-0.32232 | ploss=-0.31725 | vloss=11214011.60429 | entropy=-5.06385 | reward=114.64071
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_30.ckpt
+[INFO]  epoch/step=31/3200000 | loss=-0.25627 | ploss=-0.25120 | vloss=10583749.48616 | entropy=-5.06473 | reward=108.44124
+[INFO]  epoch/step=31/3250000 | loss=-0.32330 | ploss=-0.31823 | vloss=10902300.89891 | entropy=-5.06663 | reward=111.56286
+[INFO]  epoch/step=31/3300000 | loss=-0.34673 | ploss=-0.34167 | vloss=10504729.22425 | entropy=-5.06433 | reward=107.68617
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_31.ckpt
+[INFO]  epoch/step=32/3350000 | loss=-0.22543 | ploss=-0.22037 | vloss=10911990.13496 | entropy=-5.06371 | reward=111.77210
+[INFO]  epoch/step=32/3400000 | loss=-0.09955 | ploss=-0.09448 | vloss=11012322.44082 | entropy=-5.06441 | reward=112.56793
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_32.ckpt
+[INFO]  epoch/step=33/3450000 | loss=-0.30823 | ploss=-0.30316 | vloss=10554065.92638 | entropy=-5.06581 | reward=107.87505
+[INFO]  epoch/step=33/3500000 | loss=-0.33480 | ploss=-0.32973 | vloss=10768839.40132 | entropy=-5.06441 | reward=110.25782
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_33.ckpt
+[INFO]  epoch/step=34/3550000 | loss=-0.32620 | ploss=-0.32113 | vloss=10940373.83372 | entropy=-5.06460 | reward=111.91601
+[INFO]  epoch/step=34/3600000 | loss=-0.16501 | ploss=-0.15995 | vloss=10986448.97780 | entropy=-5.06406 | reward=112.43779
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_34.ckpt
+[INFO]  epoch/step=35/3650000 | loss=-0.34345 | ploss=-0.33839 | vloss=10883337.81856 | entropy=-5.06602 | reward=111.10879
+[INFO]  epoch/step=35/3700000 | loss=-0.27871 | ploss=-0.27365 | vloss=10726675.81985 | entropy=-5.06378 | reward=109.84322
+[INFO]  epoch/step=35/3750000 | loss=-0.35760 | ploss=-0.35254 | vloss=10746652.48105 | entropy=-5.06674 | reward=110.02102
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_35.ckpt
+[INFO]  epoch/step=36/3800000 | loss=-0.30180 | ploss=-0.29674 | vloss=10945835.61121 | entropy=-5.06416 | reward=111.97371
+[INFO]  epoch/step=36/3850000 | loss=-0.37169 | ploss=-0.36662 | vloss=10911481.08898 | entropy=-5.06435 | reward=111.63244
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_36.ckpt
+[INFO]  epoch/step=37/3900000 | loss=-0.21726 | ploss=-0.21220 | vloss=10991687.34352 | entropy=-5.06616 | reward=112.24286
+[INFO]  epoch/step=37/3950000 | loss=-0.16941 | ploss=-0.16434 | vloss=10652968.47913 | entropy=-5.06436 | reward=109.14402
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_37.ckpt
+[INFO]  epoch/step=38/4000000 | loss=-0.17943 | ploss=-0.17437 | vloss=11164284.48127 | entropy=-5.06397 | reward=114.13242
+[INFO]  epoch/step=38/4050000 | loss=-0.30066 | ploss=-0.29560 | vloss=10768104.04483 | entropy=-5.06518 | reward=110.23346
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_38.ckpt
+[INFO]  epoch/step=39/4100000 | loss=-0.32790 | ploss=-0.32283 | vloss=10271105.16269 | entropy=-5.06733 | reward=105.31887
+[INFO]  epoch/step=39/4150000 | loss=-0.24174 | ploss=-0.23667 | vloss=10947045.02126 | entropy=-5.06432 | reward=112.01789
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_39.ckpt
+[INFO]  epoch/step=40/4200000 | loss=-0.14351 | ploss=-0.13845 | vloss=11095400.15323 | entropy=-5.06390 | reward=113.24972
+[INFO]  epoch/step=40/4250000 | loss=-0.30583 | ploss=-0.30076 | vloss=10982711.25896 | entropy=-5.06632 | reward=112.34379
+[INFO]  epoch/step=40/4300000 | loss=-0.34616 | ploss=-0.34110 | vloss=10590329.19691 | entropy=-5.06313 | reward=108.50203
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_40.ckpt
+[INFO]  epoch/step=41/4350000 | loss=-0.28001 | ploss=-0.27495 | vloss=11311001.72083 | entropy=-5.06281 | reward=115.35836
+[INFO]  epoch/step=41/4400000 | loss=-0.30234 | ploss=-0.29727 | vloss=10517510.45678 | entropy=-5.06618 | reward=107.72748
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_41.ckpt
+[INFO]  epoch/step=42/4450000 | loss=-0.19316 | ploss=-0.18809 | vloss=10963678.35831 | entropy=-5.06680 | reward=111.73245
+[INFO]  epoch/step=42/4500000 | loss=-0.29286 | ploss=-0.28779 | vloss=10940370.95989 | entropy=-5.06363 | reward=111.90585
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_42.ckpt
+[INFO]  epoch/step=43/4550000 | loss=-0.12697 | ploss=-0.12191 | vloss=11081835.24512 | entropy=-5.06599 | reward=113.30189
+[INFO]  epoch/step=43/4600000 | loss=-0.26830 | ploss=-0.26324 | vloss=10886929.21226 | entropy=-5.06504 | reward=111.43092
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_43.ckpt
+[INFO]  epoch/step=44/4650000 | loss=-0.35898 | ploss=-0.35391 | vloss=10228595.16090 | entropy=-5.06370 | reward=104.97062
+[INFO]  epoch/step=44/4700000 | loss=-0.31377 | ploss=-0.30871 | vloss=11258782.48790 | entropy=-5.06410 | reward=115.10979
+[INFO]  epoch/step=44/4750000 | loss=-0.31107 | ploss=-0.30601 | vloss=10845785.29493 | entropy=-5.06486 | reward=110.98871
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_44.ckpt
+[INFO]  epoch/step=45/4800000 | loss=-0.23315 | ploss=-0.22808 | vloss=10864010.31675 | entropy=-5.06462 | reward=111.17692
+[INFO]  epoch/step=45/4850000 | loss=-0.30456 | ploss=-0.29949 | vloss=11113989.46083 | entropy=-5.06448 | reward=113.60562
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_45.ckpt
+[INFO]  epoch/step=46/4900000 | loss=-0.30998 | ploss=-0.30492 | vloss=10263260.05045 | entropy=-5.06501 | reward=105.31321
+[INFO]  epoch/step=46/4950000 | loss=0.01204 | ploss=0.01711 | vloss=10943575.28459 | entropy=-5.06646 | reward=111.91255
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_46.ckpt
+[INFO]  epoch/step=47/5000000 | loss=-0.31839 | ploss=-0.31332 | vloss=10920881.81540 | entropy=-5.06336 | reward=111.53564
+[INFO]  epoch/step=47/5050000 | loss=-0.27595 | ploss=-0.27089 | vloss=10955809.78169 | entropy=-5.06546 | reward=112.05459
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_47.ckpt
+[INFO]  epoch/step=48/5100000 | loss=-0.34076 | ploss=-0.33570 | vloss=10777391.36188 | entropy=-5.06372 | reward=110.38259
+[INFO]  epoch/step=48/5150000 | loss=-0.34633 | ploss=-0.34127 | vloss=10676227.08247 | entropy=-5.06573 | reward=109.33465
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_48.ckpt
+[INFO]  epoch/step=49/5200000 | loss=-0.32308 | ploss=-0.31801 | vloss=10998371.64589 | entropy=-5.06571 | reward=112.25278
+[INFO]  epoch/step=49/5250000 | loss=-0.28881 | ploss=-0.28374 | vloss=10714447.23178 | entropy=-5.06628 | reward=109.71507
+[INFO]  epoch/step=49/5300000 | loss=-0.30007 | ploss=-0.29501 | vloss=11117954.75078 | entropy=-5.06250 | reward=113.70091
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_49.ckpt
+[INFO]  epoch/step=50/5350000 | loss=-0.29161 | ploss=-0.28655 | vloss=10842935.31375 | entropy=-5.06465 | reward=110.27463
+[INFO]  epoch/step=50/5400000 | loss=-0.36113 | ploss=-0.35606 | vloss=10818330.41723 | entropy=-5.06445 | reward=110.81585
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_50.ckpt
+[INFO]  epoch/step=51/5450000 | loss=-0.33710 | ploss=-0.33203 | vloss=10967567.78215 | entropy=-5.06561 | reward=112.11623
+[INFO]  epoch/step=51/5500000 | loss=-0.20496 | ploss=-0.19989 | vloss=10831738.22414 | entropy=-5.06425 | reward=110.90347
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_51.ckpt
+[INFO]  epoch/step=52/5550000 | loss=-0.30220 | ploss=-0.29713 | vloss=10778492.98902 | entropy=-5.06547 | reward=110.11459
+[INFO]  epoch/step=52/5600000 | loss=-0.33086 | ploss=-0.32580 | vloss=11232222.22731 | entropy=-5.06275 | reward=114.87099
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_52.ckpt
+[INFO]  epoch/step=53/5650000 | loss=-0.34237 | ploss=-0.33731 | vloss=10609768.34963 | entropy=-5.06681 | reward=108.64234
+[INFO]  epoch/step=53/5700000 | loss=-0.12102 | ploss=-0.11595 | vloss=10579930.70030 | entropy=-5.06264 | reward=108.37488
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_53.ckpt
+[INFO]  epoch/step=54/5750000 | loss=-0.30915 | ploss=-0.30408 | vloss=10966608.41356 | entropy=-5.06616 | reward=112.21300
+[INFO]  epoch/step=54/5800000 | loss=-0.21559 | ploss=-0.21052 | vloss=11052139.55103 | entropy=-5.06629 | reward=113.00816
+[INFO]  epoch/step=54/5850000 | loss=-0.11306 | ploss=-0.10799 | vloss=10708200.60056 | entropy=-5.06422 | reward=109.69805
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_54.ckpt
+[INFO]  epoch/step=55/5900000 | loss=-0.34894 | ploss=-0.34388 | vloss=10870856.88251 | entropy=-5.06298 | reward=111.25062
+[INFO]  epoch/step=55/5950000 | loss=-0.32899 | ploss=-0.32392 | vloss=11222531.44261 | entropy=-5.06563 | reward=114.71519
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_55.ckpt
+[INFO]  epoch/step=56/6000000 | loss=-0.25435 | ploss=-0.24928 | vloss=10329127.18440 | entropy=-5.06488 | reward=105.70454
+[INFO]  epoch/step=56/6050000 | loss=-0.34874 | ploss=-0.34368 | vloss=11071121.55289 | entropy=-5.06497 | reward=113.25647
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_56.ckpt
+[INFO]  epoch/step=57/6100000 | loss=-0.31293 | ploss=-0.30787 | vloss=10755759.56298 | entropy=-5.06378 | reward=110.08215
+[INFO]  epoch/step=57/6150000 | loss=-0.34939 | ploss=-0.34433 | vloss=10667555.87201 | entropy=-5.06390 | reward=109.25415
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_57.ckpt
+[INFO]  epoch/step=58/6200000 | loss=-0.29643 | ploss=-0.29136 | vloss=10933788.54071 | entropy=-5.06615 | reward=111.87059
+[INFO]  epoch/step=58/6250000 | loss=-0.35362 | ploss=-0.34856 | vloss=11051680.98129 | entropy=-5.06430 | reward=112.99771
+[INFO]  epoch/step=58/6300000 | loss=-0.35559 | ploss=-0.35053 | vloss=10696252.41754 | entropy=-5.06421 | reward=109.59434
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_58.ckpt
+[INFO]  epoch/step=59/6350000 | loss=-0.24297 | ploss=-0.23791 | vloss=11503324.46422 | entropy=-5.06575 | reward=117.21297
+[INFO]  epoch/step=59/6400000 | loss=-0.34421 | ploss=-0.33915 | vloss=10396451.74596 | entropy=-5.06484 | reward=106.58507
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_59.ckpt
+[INFO]  epoch/step=60/6450000 | loss=-0.32145 | ploss=-0.31638 | vloss=10865504.17335 | entropy=-5.06582 | reward=110.97951
+[INFO]  epoch/step=60/6500000 | loss=-0.30554 | ploss=-0.30048 | vloss=10910486.52214 | entropy=-5.06426 | reward=111.65737
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_60.ckpt
+[INFO]  epoch/step=61/6550000 | loss=-0.27476 | ploss=-0.26969 | vloss=11354631.59687 | entropy=-5.06491 | reward=115.95479
+[INFO]  epoch/step=61/6600000 | loss=-0.32826 | ploss=-0.32320 | vloss=10565136.23959 | entropy=-5.06516 | reward=108.20138
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_61.ckpt
+[INFO]  epoch/step=62/6650000 | loss=-0.20068 | ploss=-0.19561 | vloss=10976935.31660 | entropy=-5.06427 | reward=112.35702
+[INFO]  epoch/step=62/6700000 | loss=-0.34763 | ploss=-0.34256 | vloss=10946693.02823 | entropy=-5.06512 | reward=111.99503
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_62.ckpt
+[INFO]  epoch/step=63/6750000 | loss=-0.29081 | ploss=-0.28574 | vloss=10547858.08547 | entropy=-5.06411 | reward=108.10203
+[INFO]  epoch/step=63/6800000 | loss=-0.32795 | ploss=-0.32288 | vloss=10944940.64020 | entropy=-5.06475 | reward=111.98962
+[INFO]  epoch/step=63/6850000 | loss=-0.12986 | ploss=-0.12480 | vloss=10691466.84286 | entropy=-5.06532 | reward=109.49202
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_63.ckpt
+[INFO]  epoch/step=64/6900000 | loss=-0.35651 | ploss=-0.35144 | vloss=11055127.46423 | entropy=-5.06345 | reward=112.42971
+[INFO]  epoch/step=64/6950000 | loss=-0.18981 | ploss=-0.18474 | vloss=10920889.99990 | entropy=-5.06572 | reward=111.65034
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_64.ckpt
+[INFO]  epoch/step=65/7000000 | loss=-0.32274 | ploss=-0.31767 | vloss=11088408.21723 | entropy=-5.06482 | reward=113.45011
+[INFO]  epoch/step=65/7050000 | loss=-0.10671 | ploss=-0.10165 | vloss=10669482.01507 | entropy=-5.06380 | reward=109.27739
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_65.ckpt
+[INFO]  epoch/step=66/7100000 | loss=-0.35613 | ploss=-0.35107 | vloss=11080695.09445 | entropy=-5.06376 | reward=112.39155
+[INFO]  epoch/step=66/7150000 | loss=-0.21130 | ploss=-0.20623 | vloss=10846200.59264 | entropy=-5.06569 | reward=111.01859
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_66.ckpt
+[INFO]  epoch/step=67/7200000 | loss=-0.20021 | ploss=-0.19515 | vloss=10853089.22572 | entropy=-5.06424 | reward=110.81796
+[INFO]  epoch/step=67/7250000 | loss=-0.25376 | ploss=-0.24870 | vloss=11346316.80325 | entropy=-5.06293 | reward=115.93541
+[INFO]  epoch/step=67/7300000 | loss=-0.27884 | ploss=-0.27377 | vloss=10683432.26033 | entropy=-5.06725 | reward=109.42943
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_67.ckpt
+[INFO]  epoch/step=68/7350000 | loss=-0.33735 | ploss=-0.33229 | vloss=10834566.53524 | entropy=-5.06419 | reward=110.18746
+[INFO]  epoch/step=68/7400000 | loss=-0.28977 | ploss=-0.28471 | vloss=11027345.40864 | entropy=-5.06460 | reward=112.87935
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_68.ckpt
+[INFO]  epoch/step=69/7450000 | loss=-0.33178 | ploss=-0.32671 | vloss=10607921.27079 | entropy=-5.06509 | reward=108.65135
+[INFO]  epoch/step=69/7500000 | loss=-0.22526 | ploss=-0.22020 | vloss=11277887.50771 | entropy=-5.06371 | reward=115.27835
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_69.ckpt
+[INFO]  epoch/step=70/7550000 | loss=-0.34020 | ploss=-0.33514 | vloss=11180686.79470 | entropy=-5.06396 | reward=114.01223
+[INFO]  epoch/step=70/7600000 | loss=-0.19573 | ploss=-0.19067 | vloss=10732434.54902 | entropy=-5.06546 | reward=109.90421
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_70.ckpt
+[INFO]  epoch/step=71/7650000 | loss=-0.26472 | ploss=-0.25966 | vloss=10902246.95608 | entropy=-5.06463 | reward=111.55296
+[INFO]  epoch/step=71/7700000 | loss=-0.24115 | ploss=-0.23609 | vloss=10236232.98778 | entropy=-5.06368 | reward=104.99586
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_71.ckpt
+[INFO]  epoch/step=72/7750000 | loss=-0.29888 | ploss=-0.29381 | vloss=11429137.20129 | entropy=-5.06648 | reward=116.54898
+[INFO]  epoch/step=72/7800000 | loss=-0.26118 | ploss=-0.25612 | vloss=11014203.98793 | entropy=-5.06212 | reward=112.71689
+[INFO]  epoch/step=72/7850000 | loss=-0.22175 | ploss=-0.21669 | vloss=10817563.62592 | entropy=-5.06625 | reward=110.69693
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_72.ckpt
+[INFO]  epoch/step=73/7900000 | loss=-0.26552 | ploss=-0.26045 | vloss=10926593.56691 | entropy=-5.06420 | reward=111.59035
+[INFO]  epoch/step=73/7950000 | loss=-0.35824 | ploss=-0.35318 | vloss=10837157.70797 | entropy=-5.06523 | reward=110.88939
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_73.ckpt
+[INFO]  epoch/step=74/8000000 | loss=-0.27846 | ploss=-0.27339 | vloss=10869076.25144 | entropy=-5.06411 | reward=111.22924
+[INFO]  epoch/step=74/8050000 | loss=-0.34238 | ploss=-0.33731 | vloss=11113740.62126 | entropy=-5.06535 | reward=113.62427
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_74.ckpt
+[INFO]  epoch/step=75/8100000 | loss=-0.02506 | ploss=-0.02000 | vloss=10744209.91992 | entropy=-5.06540 | reward=108.63729
+[INFO]  epoch/step=75/8150000 | loss=-0.18560 | ploss=-0.18053 | vloss=11247097.80321 | entropy=-5.06466 | reward=114.96889
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_75.ckpt
+[INFO]  epoch/step=76/8200000 | loss=-0.32702 | ploss=-0.32196 | vloss=10717494.59533 | entropy=-5.06196 | reward=109.79473
+[INFO]  epoch/step=76/8250000 | loss=-0.09160 | ploss=-0.08653 | vloss=10739874.79363 | entropy=-5.06558 | reward=109.97651
+[INFO]  epoch/step=76/8300000 | loss=-0.31413 | ploss=-0.30907 | vloss=10987427.25638 | entropy=-5.06445 | reward=112.39864
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_76.ckpt
+[INFO]  epoch/step=77/8350000 | loss=-0.25640 | ploss=-0.25134 | vloss=11424211.61537 | entropy=-5.06535 | reward=116.54442
+[INFO]  epoch/step=77/8400000 | loss=-0.33792 | ploss=-0.33285 | vloss=10286409.04203 | entropy=-5.06576 | reward=105.40326
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_77.ckpt
+[INFO]  epoch/step=78/8450000 | loss=-0.33248 | ploss=-0.32742 | vloss=10987681.12169 | entropy=-5.06446 | reward=112.40309
+[INFO]  epoch/step=78/8500000 | loss=-0.32676 | ploss=-0.32169 | vloss=10717372.20841 | entropy=-5.06545 | reward=109.72839
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_78.ckpt
+[INFO]  epoch/step=79/8550000 | loss=-0.32226 | ploss=-0.31720 | vloss=10976436.07140 | entropy=-5.06174 | reward=112.11668
+[INFO]  epoch/step=79/8600000 | loss=-0.30622 | ploss=-0.30116 | vloss=10825382.14173 | entropy=-5.06592 | reward=110.73132
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_79.ckpt
+[INFO]  epoch/step=80/8650000 | loss=-0.35001 | ploss=-0.34495 | vloss=10675332.63878 | entropy=-5.06454 | reward=108.91073
+[INFO]  epoch/step=80/8700000 | loss=-0.22158 | ploss=-0.21651 | vloss=11316144.86196 | entropy=-5.06608 | reward=115.57979
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_80.ckpt
+[INFO]  epoch/step=81/8750000 | loss=-0.32167 | ploss=-0.31660 | vloss=10674915.16148 | entropy=-5.06461 | reward=108.66728
+[INFO]  epoch/step=81/8800000 | loss=-0.35437 | ploss=-0.34931 | vloss=11193920.84079 | entropy=-5.06376 | reward=114.47003
+[INFO]  epoch/step=81/8850000 | loss=-0.35427 | ploss=-0.34921 | vloss=10820090.01473 | entropy=-5.06499 | reward=110.74582
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_81.ckpt
+[INFO]  epoch/step=82/8900000 | loss=-0.29646 | ploss=-0.29139 | vloss=10351714.14510 | entropy=-5.06455 | reward=105.68117
+[INFO]  epoch/step=82/8950000 | loss=-0.33517 | ploss=-0.33010 | vloss=11174546.75738 | entropy=-5.06470 | reward=114.25715
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_82.ckpt
+[INFO]  epoch/step=83/9000000 | loss=-0.30894 | ploss=-0.30387 | vloss=11223741.99072 | entropy=-5.06499 | reward=114.69734
+[INFO]  epoch/step=83/9050000 | loss=-0.31330 | ploss=-0.30824 | vloss=11107221.49454 | entropy=-5.06238 | reward=113.63722
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_83.ckpt
+[INFO]  epoch/step=84/9100000 | loss=-0.24194 | ploss=-0.23687 | vloss=10677486.59165 | entropy=-5.06658 | reward=109.30515
+[INFO]  epoch/step=84/9150000 | loss=-0.34155 | ploss=-0.33649 | vloss=11161407.86734 | entropy=-5.06574 | reward=114.08325
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_84.ckpt
+[INFO]  epoch/step=85/9200000 | loss=-0.34390 | ploss=-0.33884 | vloss=10522481.00276 | entropy=-5.06250 | reward=107.82863
+[INFO]  epoch/step=85/9250000 | loss=-0.05565 | ploss=-0.05058 | vloss=11167764.32079 | entropy=-5.06451 | reward=114.27639
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_85.ckpt
+[INFO]  epoch/step=86/9300000 | loss=-0.34253 | ploss=-0.33747 | vloss=10757103.88691 | entropy=-5.06488 | reward=109.37195
+[INFO]  epoch/step=86/9350000 | loss=-0.25381 | ploss=-0.24875 | vloss=10961555.91033 | entropy=-5.06303 | reward=112.17643
+[INFO]  epoch/step=86/9400000 | loss=-0.23695 | ploss=-0.23188 | vloss=11018425.44360 | entropy=-5.06579 | reward=112.69869
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_86.ckpt
+[INFO]  epoch/step=87/9450000 | loss=-0.31250 | ploss=-0.30743 | vloss=10971617.58506 | entropy=-5.06482 | reward=111.06260
+[INFO]  epoch/step=87/9500000 | loss=-0.11672 | ploss=-0.11166 | vloss=10796710.90799 | entropy=-5.06286 | reward=110.50172
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_87.ckpt
+[INFO]  epoch/step=88/9550000 | loss=-0.06627 | ploss=-0.06121 | vloss=11016772.75566 | entropy=-5.06641 | reward=112.80653
+[INFO]  epoch/step=88/9600000 | loss=-0.33083 | ploss=-0.32576 | vloss=10827158.73133 | entropy=-5.06482 | reward=110.77086
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_88.ckpt
+[INFO]  epoch/step=89/9650000 | loss=-0.26132 | ploss=-0.25626 | vloss=11118291.15814 | entropy=-5.06215 | reward=113.51246
+[INFO]  epoch/step=89/9700000 | loss=-0.22232 | ploss=-0.21726 | vloss=10670008.35912 | entropy=-5.06587 | reward=109.23696
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_89.ckpt
+[INFO]  epoch/step=90/9750000 | loss=-0.30806 | ploss=-0.30300 | vloss=11006973.78917 | entropy=-5.06373 | reward=112.60219
+[INFO]  epoch/step=90/9800000 | loss=-0.32137 | ploss=-0.31630 | vloss=10688431.94023 | entropy=-5.06503 | reward=109.40788
+[INFO]  epoch/step=90/9850000 | loss=-0.28515 | ploss=-0.28008 | vloss=11215776.88762 | entropy=-5.06413 | reward=114.68799
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_90.ckpt
+[INFO]  epoch/step=91/9900000 | loss=0.00826 | ploss=0.01332 | vloss=10986486.44070 | entropy=-5.06423 | reward=112.35529
+[INFO]  epoch/step=91/9950000 | loss=-0.32942 | ploss=-0.32435 | vloss=10675101.97911 | entropy=-5.06498 | reward=109.34525
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_91.ckpt
+[INFO]  epoch/step=92/10000000 | loss=-0.36793 | ploss=-0.36287 | vloss=11419725.29083 | entropy=-5.06439 | reward=116.44391
+[INFO]  epoch/step=92/10050000 | loss=-0.23326 | ploss=-0.22819 | vloss=10669540.81815 | entropy=-5.06483 | reward=109.30288
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_92.ckpt
+[INFO]  epoch/step=93/10100000 | loss=-0.35551 | ploss=-0.35045 | vloss=10977023.65702 | entropy=-5.06491 | reward=112.02873
+[INFO]  epoch/step=93/10150000 | loss=-0.31183 | ploss=-0.30677 | vloss=10532343.99829 | entropy=-5.06447 | reward=107.95337
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_93.ckpt
+[INFO]  epoch/step=94/10200000 | loss=-0.19791 | ploss=-0.19284 | vloss=11347515.12844 | entropy=-5.06340 | reward=115.95121
+[INFO]  epoch/step=94/10250000 | loss=-0.35853 | ploss=-0.35347 | vloss=10471715.62051 | entropy=-5.06501 | reward=107.37803
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_94.ckpt
+[INFO]  epoch/step=95/10300000 | loss=-0.32968 | ploss=-0.32462 | vloss=11013287.48619 | entropy=-5.06506 | reward=112.35625
+[INFO]  epoch/step=95/10350000 | loss=-0.29398 | ploss=-0.28891 | vloss=10792433.36992 | entropy=-5.06492 | reward=110.48645
+[INFO]  epoch/step=95/10400000 | loss=-0.27790 | ploss=-0.27284 | vloss=11131838.32521 | entropy=-5.06423 | reward=113.80440
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_95.ckpt
+[INFO]  epoch/step=96/10450000 | loss=-0.32714 | ploss=-0.32208 | vloss=10557234.15748 | entropy=-5.06252 | reward=107.75494
+[INFO]  epoch/step=96/10500000 | loss=-0.26097 | ploss=-0.25591 | vloss=11006560.70333 | entropy=-5.06512 | reward=112.60235
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_96.ckpt
+[INFO]  epoch/step=97/10550000 | loss=-0.22982 | ploss=-0.22476 | vloss=11241270.45424 | entropy=-5.06503 | reward=114.41786
+[INFO]  epoch/step=97/10600000 | loss=-0.24635 | ploss=-0.24129 | vloss=10755776.30929 | entropy=-5.06579 | reward=110.11292
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_97.ckpt
+[INFO]  epoch/step=98/10650000 | loss=-0.05801 | ploss=-0.05295 | vloss=11199061.00234 | entropy=-5.06333 | reward=113.99197
+[INFO]  epoch/step=98/10700000 | loss=-0.31383 | ploss=-0.30876 | vloss=10866545.93390 | entropy=-5.06458 | reward=111.20189
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_98.ckpt
+[INFO]  epoch/step=99/10750000 | loss=-0.22291 | ploss=-0.21784 | vloss=10830831.99174 | entropy=-5.06518 | reward=110.67131
+[INFO]  epoch/step=99/10800000 | loss=-0.28690 | ploss=-0.28184 | vloss=10891567.47770 | entropy=-5.06349 | reward=111.43805
+[INFO]  epoch/step=99/10850000 | loss=-0.27341 | ploss=-0.26835 | vloss=11007685.98812 | entropy=-5.06506 | reward=112.61745
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_99.ckpt
+[INFO]  epoch/step=100/10900000 | loss=-0.35257 | ploss=-0.34751 | vloss=11230639.07256 | entropy=-5.06334 | reward=114.10668
+[INFO]  epoch/step=100/10950000 | loss=-0.30962 | ploss=-0.30456 | vloss=10831731.97874 | entropy=-5.06586 | reward=110.89515
+[INFO]  Save model to ./tmp/Amazon_Cellphones/train_RL_agent/checkpoint/policy_model_epoch_100.ckpt
