@@ -1,0 +1,381 @@
+[INFO]  Namespace(dataset='cloth', name='train_RL_agent', seed=123, gpu='1', epochs=100, batch_size=32, lr=0.0001, max_acts=250, max_path_len=3, gamma=0.99, ent_weight=0.001, act_dropout=0, state_history=1, hidden=[512, 256], debug=0, steps_per_checkpoint=50000, checkpoint_folder='checkpoint', log_folder='log', log_file_name='train_log.txt', is_resume_from_checkpoint=1, logging_mode='a', device=device(type='cuda', index=0), dir='./tmp/Amazon_Clothing/train_RL_agent', checkpoint_dir='./tmp/Amazon_Clothing/train_RL_agent/checkpoint', log_dir='./tmp/Amazon_Clothing/train_RL_agent/log')
+[INFO]  Parameters:['l1.weight', 'l1.bias', 'l2.weight', 'l2.bias', 'actor.weight', 'actor.bias', 'critic.weight', 'critic.bias']
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_1.ckpt
+[INFO]  epoch/step=2/50000 | loss=23.50543 | ploss=23.50985 | vloss=36088736.40450 | entropy=-4.42324 | reward=366.56747
+[INFO]  epoch/step=2/100000 | loss=4.70404 | ploss=4.70852 | vloss=41244381.97220 | entropy=-4.48087 | reward=416.19953
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_2.ckpt
+[INFO]  epoch/step=3/150000 | loss=1.34630 | ploss=1.35119 | vloss=25043888.84503 | entropy=-4.88588 | reward=252.68341
+[INFO]  epoch/step=3/200000 | loss=1.17035 | ploss=1.17528 | vloss=23001489.42690 | entropy=-4.92660 | reward=232.12002
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_3.ckpt
+[INFO]  epoch/step=4/250000 | loss=0.92871 | ploss=0.93370 | vloss=20973937.92802 | entropy=-4.98886 | reward=211.47604
+[INFO]  epoch/step=4/300000 | loss=0.81580 | ploss=0.82083 | vloss=19638773.50895 | entropy=-5.02695 | reward=198.06793
+[INFO]  epoch/step=4/350000 | loss=0.82642 | ploss=0.83145 | vloss=19321723.40080 | entropy=-5.02850 | reward=194.95158
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_4.ckpt
+[INFO]  epoch/step=5/400000 | loss=0.83848 | ploss=0.84351 | vloss=19991241.11669 | entropy=-5.02834 | reward=201.50964
+[INFO]  epoch/step=5/450000 | loss=0.83607 | ploss=0.84109 | vloss=18893585.28588 | entropy=-5.02644 | reward=190.80260
+[INFO]  epoch/step=5/500000 | loss=0.85545 | ploss=0.86048 | vloss=19204767.06936 | entropy=-5.02885 | reward=193.79524
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_5.ckpt
+[INFO]  epoch/step=6/550000 | loss=0.85428 | ploss=0.85930 | vloss=19358355.37377 | entropy=-5.02743 | reward=195.11067
+[INFO]  epoch/step=6/600000 | loss=0.81141 | ploss=0.81644 | vloss=19771447.59056 | entropy=-5.02780 | reward=199.36112
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_6.ckpt
+[INFO]  epoch/step=7/650000 | loss=0.92253 | ploss=0.92756 | vloss=19178105.48294 | entropy=-5.03018 | reward=193.51810
+[INFO]  epoch/step=7/700000 | loss=0.97333 | ploss=0.97836 | vloss=18543632.57632 | entropy=-5.02961 | reward=187.26138
+[INFO]  epoch/step=7/750000 | loss=0.84403 | ploss=0.84906 | vloss=19457973.51719 | entropy=-5.02465 | reward=196.35986
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_7.ckpt
+[INFO]  epoch/step=8/800000 | loss=0.83157 | ploss=0.83660 | vloss=20120904.34928 | entropy=-5.02886 | reward=202.73495
+[INFO]  epoch/step=8/850000 | loss=0.85060 | ploss=0.85562 | vloss=20000079.13649 | entropy=-5.02723 | reward=201.67358
+[INFO]  epoch/step=8/900000 | loss=0.93592 | ploss=0.94095 | vloss=19082176.31093 | entropy=-5.02900 | reward=192.53607
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_8.ckpt
+[INFO]  epoch/step=9/950000 | loss=0.91302 | ploss=0.91804 | vloss=19375463.16468 | entropy=-5.02555 | reward=195.38482
+[INFO]  epoch/step=9/1000000 | loss=0.88200 | ploss=0.88703 | vloss=19664011.47361 | entropy=-5.02686 | reward=198.32705
+[INFO]  epoch/step=9/1050000 | loss=0.87376 | ploss=0.87879 | vloss=19240883.15862 | entropy=-5.02722 | reward=194.18629
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_9.ckpt
+[INFO]  epoch/step=10/1100000 | loss=1.15719 | ploss=1.16222 | vloss=19396375.05142 | entropy=-5.03009 | reward=195.57048
+[INFO]  epoch/step=10/1150000 | loss=0.85773 | ploss=0.86276 | vloss=19309373.56829 | entropy=-5.02601 | reward=194.81695
+[INFO]  epoch/step=10/1200000 | loss=0.82987 | ploss=0.83489 | vloss=19334784.08312 | entropy=-5.02890 | reward=195.07324
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_10.ckpt
+[INFO]  epoch/step=11/1250000 | loss=0.83942 | ploss=0.84445 | vloss=19787747.71573 | entropy=-5.02597 | reward=199.53215
+[INFO]  epoch/step=11/1300000 | loss=1.09610 | ploss=1.10113 | vloss=19712862.00982 | entropy=-5.02931 | reward=198.73612
+[INFO]  epoch/step=11/1350000 | loss=0.84094 | ploss=0.84597 | vloss=19259661.28753 | entropy=-5.02759 | reward=194.29884
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_11.ckpt
+[INFO]  epoch/step=12/1400000 | loss=0.84496 | ploss=0.84999 | vloss=19439681.12813 | entropy=-5.02668 | reward=196.07180
+[INFO]  epoch/step=12/1450000 | loss=0.80162 | ploss=0.80665 | vloss=19238317.06483 | entropy=-5.02942 | reward=194.08947
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_12.ckpt
+[INFO]  epoch/step=13/1500000 | loss=0.80899 | ploss=0.81402 | vloss=19712916.00101 | entropy=-5.02639 | reward=198.75485
+[INFO]  epoch/step=13/1550000 | loss=0.84390 | ploss=0.84893 | vloss=19749258.28760 | entropy=-5.02796 | reward=199.14309
+[INFO]  epoch/step=13/1600000 | loss=0.96488 | ploss=0.96991 | vloss=19362156.32299 | entropy=-5.02790 | reward=195.32242
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_13.ckpt
+[INFO]  epoch/step=14/1650000 | loss=0.83512 | ploss=0.84015 | vloss=19080174.88309 | entropy=-5.02692 | reward=192.48894
+[INFO]  epoch/step=14/1700000 | loss=0.83740 | ploss=0.84243 | vloss=18543829.45868 | entropy=-5.02777 | reward=187.28607
+[INFO]  epoch/step=14/1750000 | loss=0.82585 | ploss=0.83088 | vloss=19848893.71178 | entropy=-5.02926 | reward=200.16316
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_14.ckpt
+[INFO]  epoch/step=15/1800000 | loss=0.90424 | ploss=0.90927 | vloss=19914385.63106 | entropy=-5.02746 | reward=200.68644
+[INFO]  epoch/step=15/1850000 | loss=0.94714 | ploss=0.95217 | vloss=19492497.84661 | entropy=-5.02946 | reward=196.62248
+[INFO]  epoch/step=15/1900000 | loss=0.80398 | ploss=0.80901 | vloss=19315004.24829 | entropy=-5.02537 | reward=194.89010
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_15.ckpt
+[INFO]  epoch/step=16/1950000 | loss=0.94814 | ploss=0.95317 | vloss=19693741.05542 | entropy=-5.02846 | reward=198.50503
+[INFO]  epoch/step=16/2000000 | loss=0.90255 | ploss=0.90758 | vloss=19280317.81500 | entropy=-5.02849 | reward=194.56537
+[INFO]  epoch/step=16/2050000 | loss=0.82933 | ploss=0.83436 | vloss=19045977.49511 | entropy=-5.02699 | reward=192.26076
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_16.ckpt
+[INFO]  epoch/step=17/2100000 | loss=0.86995 | ploss=0.87497 | vloss=19261897.62581 | entropy=-5.02578 | reward=194.28100
+[INFO]  epoch/step=17/2150000 | loss=0.86857 | ploss=0.87360 | vloss=18805236.79121 | entropy=-5.02642 | reward=189.86710
+[INFO]  epoch/step=17/2200000 | loss=0.82492 | ploss=0.82995 | vloss=19907566.93119 | entropy=-5.02982 | reward=200.72295
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_17.ckpt
+[INFO]  epoch/step=18/2250000 | loss=0.95263 | ploss=0.95766 | vloss=19619768.31331 | entropy=-5.02752 | reward=197.83117
+[INFO]  epoch/step=18/2300000 | loss=0.86011 | ploss=0.86513 | vloss=19609471.41288 | entropy=-5.02834 | reward=197.73195
+[INFO]  epoch/step=18/2350000 | loss=0.84228 | ploss=0.84731 | vloss=19265501.27356 | entropy=-5.02771 | reward=194.39970
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_18.ckpt
+[INFO]  epoch/step=19/2400000 | loss=0.82428 | ploss=0.82931 | vloss=19495579.77518 | entropy=-5.02635 | reward=196.63572
+[INFO]  epoch/step=19/2450000 | loss=0.90470 | ploss=0.90973 | vloss=19285094.85729 | entropy=-5.02907 | reward=194.55409
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_19.ckpt
+[INFO]  epoch/step=20/2500000 | loss=0.84385 | ploss=0.84887 | vloss=19590379.88970 | entropy=-5.02758 | reward=197.52644
+[INFO]  epoch/step=20/2550000 | loss=0.83870 | ploss=0.84373 | vloss=20321073.83265 | entropy=-5.02801 | reward=204.79369
+[INFO]  epoch/step=20/2600000 | loss=0.82771 | ploss=0.83273 | vloss=19271479.33383 | entropy=-5.02796 | reward=194.37842
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_20.ckpt
+[INFO]  epoch/step=21/2650000 | loss=1.19368 | ploss=1.19870 | vloss=19247246.96857 | entropy=-5.02745 | reward=194.15605
+[INFO]  epoch/step=21/2700000 | loss=0.82663 | ploss=0.83166 | vloss=20294177.15864 | entropy=-5.02607 | reward=204.56446
+[INFO]  epoch/step=21/2750000 | loss=0.85946 | ploss=0.86449 | vloss=19651169.85864 | entropy=-5.02989 | reward=198.15732
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_21.ckpt
+[INFO]  epoch/step=22/2800000 | loss=0.83293 | ploss=0.83796 | vloss=18427369.91774 | entropy=-5.02534 | reward=186.12156
+[INFO]  epoch/step=22/2850000 | loss=0.84261 | ploss=0.84764 | vloss=19755622.67755 | entropy=-5.02812 | reward=199.23330
+[INFO]  epoch/step=22/2900000 | loss=0.85041 | ploss=0.85544 | vloss=19310561.67427 | entropy=-5.02826 | reward=194.81171
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_22.ckpt
+[INFO]  epoch/step=23/2950000 | loss=0.84770 | ploss=0.85273 | vloss=19857842.72850 | entropy=-5.02747 | reward=200.16639
+[INFO]  epoch/step=23/3000000 | loss=0.82483 | ploss=0.82986 | vloss=18965213.13006 | entropy=-5.02559 | reward=191.51632
+[INFO]  epoch/step=23/3050000 | loss=0.89703 | ploss=0.90206 | vloss=19722832.24493 | entropy=-5.02838 | reward=198.82740
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_23.ckpt
+[INFO]  epoch/step=24/3100000 | loss=0.88427 | ploss=0.88930 | vloss=18557266.83095 | entropy=-5.02860 | reward=187.37025
+[INFO]  epoch/step=24/3150000 | loss=0.88507 | ploss=0.89010 | vloss=20257658.65926 | entropy=-5.02676 | reward=204.15289
+[INFO]  epoch/step=24/3200000 | loss=0.86693 | ploss=0.87196 | vloss=18864103.70142 | entropy=-5.02914 | reward=190.49098
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_24.ckpt
+[INFO]  epoch/step=25/3250000 | loss=0.82231 | ploss=0.82734 | vloss=19072862.16507 | entropy=-5.02939 | reward=192.40387
+[INFO]  epoch/step=25/3300000 | loss=1.01344 | ploss=1.01846 | vloss=19490410.83327 | entropy=-5.02803 | reward=196.57785
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_25.ckpt
+[INFO]  epoch/step=26/3350000 | loss=0.90908 | ploss=0.91410 | vloss=20248635.06266 | entropy=-5.02658 | reward=204.03656
+[INFO]  epoch/step=26/3400000 | loss=1.14500 | ploss=1.15003 | vloss=19821127.31406 | entropy=-5.02774 | reward=199.88126
+[INFO]  epoch/step=26/3450000 | loss=0.83826 | ploss=0.84329 | vloss=19474932.10913 | entropy=-5.02646 | reward=196.46638
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_26.ckpt
+[INFO]  epoch/step=27/3500000 | loss=0.82731 | ploss=0.83234 | vloss=19151152.94147 | entropy=-5.02760 | reward=193.27905
+[INFO]  epoch/step=27/3550000 | loss=0.82077 | ploss=0.82580 | vloss=19418591.50497 | entropy=-5.02709 | reward=195.95611
+[INFO]  epoch/step=27/3600000 | loss=0.84866 | ploss=0.85369 | vloss=19637584.35025 | entropy=-5.02795 | reward=198.06410
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_27.ckpt
+[INFO]  epoch/step=28/3650000 | loss=0.95403 | ploss=0.95906 | vloss=19128685.39606 | entropy=-5.02751 | reward=192.91236
+[INFO]  epoch/step=28/3700000 | loss=0.82466 | ploss=0.82969 | vloss=19290255.55710 | entropy=-5.02843 | reward=194.64818
+[INFO]  epoch/step=28/3750000 | loss=0.84174 | ploss=0.84677 | vloss=19340740.98839 | entropy=-5.02789 | reward=195.08743
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_28.ckpt
+[INFO]  epoch/step=29/3800000 | loss=0.90265 | ploss=0.90767 | vloss=19710841.08266 | entropy=-5.02700 | reward=198.71238
+[INFO]  epoch/step=29/3850000 | loss=0.84098 | ploss=0.84601 | vloss=19074361.94683 | entropy=-5.02719 | reward=192.50805
+[INFO]  epoch/step=29/3900000 | loss=0.98329 | ploss=0.98832 | vloss=19652379.47675 | entropy=-5.02803 | reward=198.23002
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_29.ckpt
+[INFO]  epoch/step=30/3950000 | loss=1.01048 | ploss=1.01551 | vloss=19219211.12821 | entropy=-5.02923 | reward=193.94614
+[INFO]  epoch/step=30/4000000 | loss=0.84577 | ploss=0.85079 | vloss=19857484.65667 | entropy=-5.02829 | reward=200.15762
+[INFO]  epoch/step=30/4050000 | loss=0.86901 | ploss=0.87403 | vloss=18821488.14731 | entropy=-5.02768 | reward=190.06035
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_30.ckpt
+[INFO]  epoch/step=31/4100000 | loss=0.81570 | ploss=0.82072 | vloss=20290153.73215 | entropy=-5.02650 | reward=204.37662
+[INFO]  epoch/step=31/4150000 | loss=0.83090 | ploss=0.83593 | vloss=19395940.02945 | entropy=-5.02917 | reward=195.62918
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_31.ckpt
+[INFO]  epoch/step=32/4200000 | loss=0.93514 | ploss=0.94016 | vloss=18855965.98652 | entropy=-5.02594 | reward=190.22104
+[INFO]  epoch/step=32/4250000 | loss=0.85088 | ploss=0.85591 | vloss=19669253.61942 | entropy=-5.02725 | reward=198.38887
+[INFO]  epoch/step=32/4300000 | loss=0.87180 | ploss=0.87683 | vloss=19238500.40054 | entropy=-5.02927 | reward=194.13447
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_32.ckpt
+[INFO]  epoch/step=33/4350000 | loss=0.86221 | ploss=0.86724 | vloss=19651116.96552 | entropy=-5.02720 | reward=197.96379
+[INFO]  epoch/step=33/4400000 | loss=1.00641 | ploss=1.01143 | vloss=19379255.66432 | entropy=-5.02728 | reward=195.51796
+[INFO]  epoch/step=33/4450000 | loss=0.95897 | ploss=0.96399 | vloss=19006599.50035 | entropy=-5.02858 | reward=191.83939
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_33.ckpt
+[INFO]  epoch/step=34/4500000 | loss=0.83722 | ploss=0.84225 | vloss=20270515.06719 | entropy=-5.02830 | reward=204.19064
+[INFO]  epoch/step=34/4550000 | loss=0.85813 | ploss=0.86316 | vloss=19300436.14308 | entropy=-5.02723 | reward=194.73782
+[INFO]  epoch/step=34/4600000 | loss=0.82778 | ploss=0.83281 | vloss=19760221.00407 | entropy=-5.02759 | reward=199.23282
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_34.ckpt
+[INFO]  epoch/step=35/4650000 | loss=0.94604 | ploss=0.95106 | vloss=18614863.17762 | entropy=-5.02716 | reward=187.82679
+[INFO]  epoch/step=35/4700000 | loss=0.84454 | ploss=0.84957 | vloss=19230213.82894 | entropy=-5.02881 | reward=194.05353
+[INFO]  epoch/step=35/4750000 | loss=0.89267 | ploss=0.89769 | vloss=20067328.07000 | entropy=-5.02705 | reward=202.28730
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_35.ckpt
+[INFO]  epoch/step=36/4800000 | loss=0.84320 | ploss=0.84823 | vloss=19327436.42795 | entropy=-5.02706 | reward=194.90405
+[INFO]  epoch/step=36/4850000 | loss=0.84552 | ploss=0.85055 | vloss=19963547.36715 | entropy=-5.02768 | reward=201.23224
+[INFO]  epoch/step=36/4900000 | loss=0.83356 | ploss=0.83859 | vloss=19505207.88128 | entropy=-5.02897 | reward=196.74362
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_36.ckpt
+[INFO]  epoch/step=37/4950000 | loss=0.83980 | ploss=0.84483 | vloss=19394271.19477 | entropy=-5.02634 | reward=195.66774
+[INFO]  epoch/step=37/5000000 | loss=0.85747 | ploss=0.86250 | vloss=20076227.19355 | entropy=-5.02877 | reward=202.36098
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_37.ckpt
+[INFO]  epoch/step=38/5050000 | loss=0.91180 | ploss=0.91683 | vloss=19095271.72734 | entropy=-5.02656 | reward=192.68777
+[INFO]  epoch/step=38/5100000 | loss=0.83740 | ploss=0.84242 | vloss=19876073.75440 | entropy=-5.02548 | reward=200.30195
+[INFO]  epoch/step=38/5150000 | loss=0.84469 | ploss=0.84972 | vloss=18619628.12703 | entropy=-5.03041 | reward=188.00000
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_38.ckpt
+[INFO]  epoch/step=39/5200000 | loss=0.84306 | ploss=0.84809 | vloss=19331629.55475 | entropy=-5.02876 | reward=195.03264
+[INFO]  epoch/step=39/5250000 | loss=0.82659 | ploss=0.83162 | vloss=19657699.65605 | entropy=-5.02818 | reward=198.22632
+[INFO]  epoch/step=39/5300000 | loss=0.86549 | ploss=0.87051 | vloss=18694327.00258 | entropy=-5.02646 | reward=188.79167
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_39.ckpt
+[INFO]  epoch/step=40/5350000 | loss=0.84306 | ploss=0.84809 | vloss=19613305.30132 | entropy=-5.02787 | reward=197.74723
+[INFO]  epoch/step=40/5400000 | loss=0.85786 | ploss=0.86289 | vloss=19585112.89926 | entropy=-5.02715 | reward=197.51722
+[INFO]  epoch/step=40/5450000 | loss=0.83849 | ploss=0.84352 | vloss=19517094.61771 | entropy=-5.02911 | reward=196.81781
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_40.ckpt
+[INFO]  epoch/step=41/5500000 | loss=0.84418 | ploss=0.84921 | vloss=19291484.08619 | entropy=-5.02950 | reward=194.55412
+[INFO]  epoch/step=41/5550000 | loss=0.88167 | ploss=0.88670 | vloss=19351121.16611 | entropy=-5.02520 | reward=195.26609
+[INFO]  epoch/step=41/5600000 | loss=0.83147 | ploss=0.83650 | vloss=19958889.70712 | entropy=-5.02760 | reward=201.12516
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_41.ckpt
+[INFO]  epoch/step=42/5650000 | loss=0.89762 | ploss=0.90265 | vloss=19454930.37631 | entropy=-5.02941 | reward=196.23795
+[INFO]  epoch/step=42/5700000 | loss=0.83839 | ploss=0.84342 | vloss=19407228.32862 | entropy=-5.02640 | reward=195.81196
+[INFO]  epoch/step=42/5750000 | loss=0.91185 | ploss=0.91687 | vloss=19705388.71645 | entropy=-5.02725 | reward=198.71277
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_42.ckpt
+[INFO]  epoch/step=43/5800000 | loss=0.85230 | ploss=0.85733 | vloss=18714510.04976 | entropy=-5.02671 | reward=188.89133
+[INFO]  epoch/step=43/5850000 | loss=0.97653 | ploss=0.98156 | vloss=19987280.88351 | entropy=-5.02831 | reward=201.45118
+[INFO]  epoch/step=43/5900000 | loss=0.83414 | ploss=0.83917 | vloss=19942262.74963 | entropy=-5.02751 | reward=201.06342
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_43.ckpt
+[INFO]  epoch/step=44/5950000 | loss=0.88440 | ploss=0.88943 | vloss=19464277.04442 | entropy=-5.02941 | reward=196.26897
+[INFO]  epoch/step=44/6000000 | loss=0.86838 | ploss=0.87341 | vloss=18875973.04454 | entropy=-5.02577 | reward=190.58844
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_44.ckpt
+[INFO]  epoch/step=45/6050000 | loss=0.85873 | ploss=0.86375 | vloss=20289266.84223 | entropy=-5.02723 | reward=204.26679
+[INFO]  epoch/step=45/6100000 | loss=0.84296 | ploss=0.84799 | vloss=20018758.59932 | entropy=-5.02828 | reward=201.71270
+[INFO]  epoch/step=45/6150000 | loss=0.94372 | ploss=0.94875 | vloss=19236536.97761 | entropy=-5.02741 | reward=194.16351
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_45.ckpt
+[INFO]  epoch/step=46/6200000 | loss=0.86009 | ploss=0.86512 | vloss=19149472.60859 | entropy=-5.02690 | reward=193.28459
+[INFO]  epoch/step=46/6250000 | loss=0.86475 | ploss=0.86978 | vloss=19213204.49065 | entropy=-5.02867 | reward=193.81116
+[INFO]  epoch/step=46/6300000 | loss=0.83365 | ploss=0.83868 | vloss=19282974.90547 | entropy=-5.02886 | reward=194.52413
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_46.ckpt
+[INFO]  epoch/step=47/6350000 | loss=0.83657 | ploss=0.84160 | vloss=19432516.59686 | entropy=-5.02871 | reward=195.92128
+[INFO]  epoch/step=47/6400000 | loss=0.94273 | ploss=0.94776 | vloss=19788259.40319 | entropy=-5.02755 | reward=199.54165
+[INFO]  epoch/step=47/6450000 | loss=0.82427 | ploss=0.82930 | vloss=19499331.03789 | entropy=-5.02618 | reward=196.68919
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_47.ckpt
+[INFO]  epoch/step=48/6500000 | loss=0.83409 | ploss=0.83912 | vloss=19345984.22194 | entropy=-5.02677 | reward=195.04976
+[INFO]  epoch/step=48/6550000 | loss=0.84472 | ploss=0.84974 | vloss=20414604.10409 | entropy=-5.02796 | reward=205.69627
+[INFO]  epoch/step=48/6600000 | loss=0.84412 | ploss=0.84915 | vloss=19328213.30511 | entropy=-5.02857 | reward=195.02237
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_48.ckpt
+[INFO]  epoch/step=49/6650000 | loss=0.84138 | ploss=0.84640 | vloss=18206455.55353 | entropy=-5.02889 | reward=183.86840
+[INFO]  epoch/step=49/6700000 | loss=0.81673 | ploss=0.82176 | vloss=19655667.20384 | entropy=-5.02677 | reward=198.21238
+[INFO]  epoch/step=49/6750000 | loss=0.90487 | ploss=0.90990 | vloss=19619995.35520 | entropy=-5.02856 | reward=197.91982
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_49.ckpt
+[INFO]  epoch/step=50/6800000 | loss=0.90424 | ploss=0.90927 | vloss=19256215.49751 | entropy=-5.02641 | reward=194.19725
+[INFO]  epoch/step=50/6850000 | loss=0.84066 | ploss=0.84569 | vloss=19355545.82936 | entropy=-5.02786 | reward=195.28614
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_50.ckpt
+[INFO]  epoch/step=51/6900000 | loss=0.83511 | ploss=0.84014 | vloss=19563926.21459 | entropy=-5.02833 | reward=197.27563
+[INFO]  epoch/step=51/6950000 | loss=0.81059 | ploss=0.81562 | vloss=19060719.85369 | entropy=-5.02841 | reward=192.33172
+[INFO]  epoch/step=51/7000000 | loss=0.89949 | ploss=0.90452 | vloss=19774130.64673 | entropy=-5.02650 | reward=199.39898
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_51.ckpt
+[INFO]  epoch/step=52/7050000 | loss=0.94533 | ploss=0.95036 | vloss=19798642.07654 | entropy=-5.02724 | reward=199.60792
+[INFO]  epoch/step=52/7100000 | loss=0.89718 | ploss=0.90221 | vloss=18964361.63957 | entropy=-5.02894 | reward=191.43734
+[INFO]  epoch/step=52/7150000 | loss=0.85162 | ploss=0.85665 | vloss=19389547.88084 | entropy=-5.02639 | reward=195.65803
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_52.ckpt
+[INFO]  epoch/step=53/7200000 | loss=0.84078 | ploss=0.84581 | vloss=19782123.25072 | entropy=-5.02833 | reward=199.29908
+[INFO]  epoch/step=53/7250000 | loss=0.93779 | ploss=0.94281 | vloss=19232222.42969 | entropy=-5.02662 | reward=194.19979
+[INFO]  epoch/step=53/7300000 | loss=0.89012 | ploss=0.89515 | vloss=19747236.68632 | entropy=-5.02881 | reward=199.03352
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_53.ckpt
+[INFO]  epoch/step=54/7350000 | loss=0.87049 | ploss=0.87552 | vloss=19299344.01779 | entropy=-5.02708 | reward=194.60478
+[INFO]  epoch/step=54/7400000 | loss=0.90053 | ploss=0.90556 | vloss=20122754.24493 | entropy=-5.02812 | reward=202.82614
+[INFO]  epoch/step=54/7450000 | loss=0.85057 | ploss=0.85559 | vloss=18766751.36832 | entropy=-5.02765 | reward=189.48084
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_54.ckpt
+[INFO]  epoch/step=55/7500000 | loss=0.86835 | ploss=0.87338 | vloss=19516183.77707 | entropy=-5.02871 | reward=196.78744
+[INFO]  epoch/step=55/7550000 | loss=0.88104 | ploss=0.88606 | vloss=19132002.16258 | entropy=-5.02834 | reward=193.10794
+[INFO]  epoch/step=55/7600000 | loss=0.84552 | ploss=0.85055 | vloss=19145216.89068 | entropy=-5.02503 | reward=193.21282
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_55.ckpt
+[INFO]  epoch/step=56/7650000 | loss=0.89950 | ploss=0.90453 | vloss=19605717.70120 | entropy=-5.02794 | reward=197.70158
+[INFO]  epoch/step=56/7700000 | loss=0.81601 | ploss=0.82104 | vloss=19676954.04982 | entropy=-5.02748 | reward=198.38106
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_56.ckpt
+[INFO]  epoch/step=57/7750000 | loss=0.85276 | ploss=0.85778 | vloss=18833664.34587 | entropy=-5.02879 | reward=190.05139
+[INFO]  epoch/step=57/7800000 | loss=0.82066 | ploss=0.82569 | vloss=18794386.55787 | entropy=-5.02849 | reward=189.77463
+[INFO]  epoch/step=57/7850000 | loss=0.85598 | ploss=0.86101 | vloss=19825443.12387 | entropy=-5.02683 | reward=199.90146
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_57.ckpt
+[INFO]  epoch/step=58/7900000 | loss=0.91988 | ploss=0.92491 | vloss=19042779.02534 | entropy=-5.02925 | reward=192.13163
+[INFO]  epoch/step=58/7950000 | loss=0.82978 | ploss=0.83480 | vloss=19939981.45308 | entropy=-5.02770 | reward=200.96888
+[INFO]  epoch/step=58/8000000 | loss=0.84283 | ploss=0.84786 | vloss=19663558.76181 | entropy=-5.02881 | reward=198.29662
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_58.ckpt
+[INFO]  epoch/step=59/8050000 | loss=0.86865 | ploss=0.87368 | vloss=19161167.63420 | entropy=-5.02649 | reward=193.39593
+[INFO]  epoch/step=59/8100000 | loss=0.88370 | ploss=0.88873 | vloss=19921234.64749 | entropy=-5.02796 | reward=200.78290
+[INFO]  epoch/step=59/8150000 | loss=0.87859 | ploss=0.88362 | vloss=19562319.84989 | entropy=-5.02787 | reward=197.33920
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_59.ckpt
+[INFO]  epoch/step=60/8200000 | loss=0.87143 | ploss=0.87646 | vloss=19217254.87862 | entropy=-5.02700 | reward=193.87655
+[INFO]  epoch/step=60/8250000 | loss=0.87415 | ploss=0.87918 | vloss=20043587.82120 | entropy=-5.02490 | reward=202.09166
+[INFO]  epoch/step=60/8300000 | loss=0.86817 | ploss=0.87319 | vloss=19103885.03716 | entropy=-5.02810 | reward=192.74620
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_60.ckpt
+[INFO]  epoch/step=61/8350000 | loss=0.85974 | ploss=0.86477 | vloss=19457147.93435 | entropy=-5.02769 | reward=196.18828
+[INFO]  epoch/step=61/8400000 | loss=0.83659 | ploss=0.84162 | vloss=19020660.94560 | entropy=-5.02918 | reward=192.05355
+[INFO]  epoch/step=61/8450000 | loss=0.84430 | ploss=0.84932 | vloss=19553154.35600 | entropy=-5.02669 | reward=197.15139
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_61.ckpt
+[INFO]  epoch/step=62/8500000 | loss=1.01577 | ploss=1.02080 | vloss=19076493.64148 | entropy=-5.03004 | reward=192.41353
+[INFO]  epoch/step=62/8550000 | loss=0.96271 | ploss=0.96773 | vloss=19799117.22684 | entropy=-5.02550 | reward=199.66741
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_62.ckpt
+[INFO]  epoch/step=63/8600000 | loss=0.83200 | ploss=0.83703 | vloss=19244510.07027 | entropy=-5.02807 | reward=194.04185
+[INFO]  epoch/step=63/8650000 | loss=0.94904 | ploss=0.95407 | vloss=18760107.24879 | entropy=-5.02797 | reward=189.44000
+[INFO]  epoch/step=63/8700000 | loss=0.83075 | ploss=0.83577 | vloss=19280158.94922 | entropy=-5.02731 | reward=194.46312
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_63.ckpt
+[INFO]  epoch/step=64/8750000 | loss=0.98465 | ploss=0.98968 | vloss=19401664.11874 | entropy=-5.02929 | reward=195.75363
+[INFO]  epoch/step=64/8800000 | loss=0.90136 | ploss=0.90639 | vloss=19519423.41334 | entropy=-5.02681 | reward=196.89684
+[INFO]  epoch/step=64/8850000 | loss=0.82991 | ploss=0.83494 | vloss=20138278.99980 | entropy=-5.02795 | reward=202.94083
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_64.ckpt
+[INFO]  epoch/step=65/8900000 | loss=0.84914 | ploss=0.85417 | vloss=18878500.88224 | entropy=-5.02732 | reward=190.60175
+[INFO]  epoch/step=65/8950000 | loss=0.84835 | ploss=0.85338 | vloss=19165530.88258 | entropy=-5.02988 | reward=193.36165
+[INFO]  epoch/step=65/9000000 | loss=0.82569 | ploss=0.83072 | vloss=20245684.62477 | entropy=-5.02711 | reward=204.01699
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_65.ckpt
+[INFO]  epoch/step=66/9050000 | loss=0.85154 | ploss=0.85657 | vloss=19128814.42292 | entropy=-5.02793 | reward=193.02187
+[INFO]  epoch/step=66/9100000 | loss=0.86822 | ploss=0.87325 | vloss=19629201.20273 | entropy=-5.02960 | reward=197.96850
+[INFO]  epoch/step=66/9150000 | loss=0.85385 | ploss=0.85888 | vloss=18931952.29782 | entropy=-5.02521 | reward=191.11533
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_66.ckpt
+[INFO]  epoch/step=67/9200000 | loss=1.23855 | ploss=1.24358 | vloss=19684188.07222 | entropy=-5.02814 | reward=198.45251
+[INFO]  epoch/step=67/9250000 | loss=0.92921 | ploss=0.93423 | vloss=20219770.49178 | entropy=-5.02447 | reward=203.80987
+[INFO]  epoch/step=67/9300000 | loss=0.85203 | ploss=0.85707 | vloss=18500318.81924 | entropy=-5.03069 | reward=186.82576
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_67.ckpt
+[INFO]  epoch/step=68/9350000 | loss=0.82721 | ploss=0.83224 | vloss=19353067.06857 | entropy=-5.02558 | reward=195.24879
+[INFO]  epoch/step=68/9400000 | loss=0.84978 | ploss=0.85481 | vloss=19384977.41851 | entropy=-5.02941 | reward=195.52498
+[INFO]  epoch/step=68/9450000 | loss=0.88775 | ploss=0.89277 | vloss=19649222.08993 | entropy=-5.02757 | reward=198.18393
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_68.ckpt
+[INFO]  epoch/step=69/9500000 | loss=1.04543 | ploss=1.05046 | vloss=19095613.37550 | entropy=-5.02714 | reward=192.64553
+[INFO]  epoch/step=69/9550000 | loss=0.87680 | ploss=0.88182 | vloss=19505274.49715 | entropy=-5.02703 | reward=196.74772
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_69.ckpt
+[INFO]  epoch/step=70/9600000 | loss=0.84435 | ploss=0.84937 | vloss=19311543.07237 | entropy=-5.02898 | reward=194.76587
+[INFO]  epoch/step=70/9650000 | loss=0.84782 | ploss=0.85285 | vloss=19706496.66730 | entropy=-5.02674 | reward=198.77465
+[INFO]  epoch/step=70/9700000 | loss=0.85687 | ploss=0.86190 | vloss=19159380.54508 | entropy=-5.02810 | reward=193.31944
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_70.ckpt
+[INFO]  epoch/step=71/9750000 | loss=0.87504 | ploss=0.88007 | vloss=19079404.85766 | entropy=-5.02876 | reward=192.39573
+[INFO]  epoch/step=71/9800000 | loss=0.87401 | ploss=0.87904 | vloss=19682831.26547 | entropy=-5.02761 | reward=198.50887
+[INFO]  epoch/step=71/9850000 | loss=0.87246 | ploss=0.87748 | vloss=18933788.09484 | entropy=-5.02598 | reward=191.22576
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_71.ckpt
+[INFO]  epoch/step=72/9900000 | loss=0.84473 | ploss=0.84976 | vloss=19952874.53584 | entropy=-5.02926 | reward=201.07017
+[INFO]  epoch/step=72/9950000 | loss=0.82364 | ploss=0.82867 | vloss=19034038.74366 | entropy=-5.02835 | reward=192.09923
+[INFO]  epoch/step=72/10000000 | loss=0.83356 | ploss=0.83859 | vloss=19052887.45294 | entropy=-5.03054 | reward=192.27118
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_72.ckpt
+[INFO]  epoch/step=73/10050000 | loss=0.88910 | ploss=0.89413 | vloss=20313990.12070 | entropy=-5.02610 | reward=204.62029
+[INFO]  epoch/step=73/10100000 | loss=0.89458 | ploss=0.89960 | vloss=19277979.26534 | entropy=-5.02636 | reward=194.55789
+[INFO]  epoch/step=73/10150000 | loss=0.84152 | ploss=0.84655 | vloss=19591237.74907 | entropy=-5.02730 | reward=197.61649
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_73.ckpt
+[INFO]  epoch/step=74/10200000 | loss=0.84999 | ploss=0.85501 | vloss=19145247.29326 | entropy=-5.02880 | reward=193.03909
+[INFO]  epoch/step=74/10250000 | loss=0.85368 | ploss=0.85870 | vloss=19555128.57685 | entropy=-5.02708 | reward=197.23644
+[INFO]  epoch/step=74/10300000 | loss=0.97448 | ploss=0.97951 | vloss=19394884.66895 | entropy=-5.02735 | reward=195.66374
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_74.ckpt
+[INFO]  epoch/step=75/10350000 | loss=0.82499 | ploss=0.83002 | vloss=20008776.44387 | entropy=-5.02885 | reward=201.59840
+[INFO]  epoch/step=75/10400000 | loss=0.84673 | ploss=0.85175 | vloss=18928255.11761 | entropy=-5.02393 | reward=191.17109
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_75.ckpt
+[INFO]  epoch/step=76/10450000 | loss=0.87850 | ploss=0.88353 | vloss=19186465.27010 | entropy=-5.02975 | reward=193.57006
+[INFO]  epoch/step=76/10500000 | loss=0.87597 | ploss=0.88100 | vloss=19465303.90011 | entropy=-5.02839 | reward=196.36076
+[INFO]  epoch/step=76/10550000 | loss=0.87356 | ploss=0.87859 | vloss=19643957.63477 | entropy=-5.02756 | reward=198.14220
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_76.ckpt
+[INFO]  epoch/step=77/10600000 | loss=0.86591 | ploss=0.87093 | vloss=19401235.48048 | entropy=-5.02590 | reward=195.62266
+[INFO]  epoch/step=77/10650000 | loss=1.13749 | ploss=1.14252 | vloss=20192343.38200 | entropy=-5.02749 | reward=203.52491
+[INFO]  epoch/step=77/10700000 | loss=0.82448 | ploss=0.82951 | vloss=19142300.05444 | entropy=-5.02936 | reward=193.17426
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_77.ckpt
+[INFO]  epoch/step=78/10750000 | loss=0.88319 | ploss=0.88822 | vloss=19501607.28130 | entropy=-5.02743 | reward=196.62999
+[INFO]  epoch/step=78/10800000 | loss=0.87548 | ploss=0.88051 | vloss=18431868.38553 | entropy=-5.02731 | reward=186.24032
+[INFO]  epoch/step=78/10850000 | loss=0.85214 | ploss=0.85717 | vloss=19842361.24058 | entropy=-5.02957 | reward=200.09498
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_78.ckpt
+[INFO]  epoch/step=79/10900000 | loss=0.85558 | ploss=0.86060 | vloss=19882340.93732 | entropy=-5.02495 | reward=200.31633
+[INFO]  epoch/step=79/10950000 | loss=0.85575 | ploss=0.86078 | vloss=18907270.35361 | entropy=-5.02815 | reward=190.83001
+[INFO]  epoch/step=79/11000000 | loss=0.93182 | ploss=0.93685 | vloss=19456896.02211 | entropy=-5.02826 | reward=196.32028
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_79.ckpt
+[INFO]  epoch/step=80/11050000 | loss=0.84326 | ploss=0.84828 | vloss=19989775.57618 | entropy=-5.02761 | reward=201.47387
+[INFO]  epoch/step=80/11100000 | loss=0.86690 | ploss=0.87193 | vloss=18614458.57265 | entropy=-5.02800 | reward=188.01447
+[INFO]  epoch/step=80/11150000 | loss=0.87478 | ploss=0.87981 | vloss=20191416.94726 | entropy=-5.02697 | reward=203.43820
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_80.ckpt
+[INFO]  epoch/step=81/11200000 | loss=0.83114 | ploss=0.83617 | vloss=19231743.21234 | entropy=-5.02871 | reward=193.96294
+[INFO]  epoch/step=81/11250000 | loss=1.13373 | ploss=1.13876 | vloss=19528521.27537 | entropy=-5.02752 | reward=196.97388
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_81.ckpt
+[INFO]  epoch/step=82/11300000 | loss=0.89235 | ploss=0.89737 | vloss=19225756.76753 | entropy=-5.02804 | reward=193.94625
+[INFO]  epoch/step=82/11350000 | loss=0.84999 | ploss=0.85501 | vloss=20080856.22055 | entropy=-5.02608 | reward=202.40676
+[INFO]  epoch/step=82/11400000 | loss=0.85879 | ploss=0.86381 | vloss=18775947.61017 | entropy=-5.02731 | reward=189.60142
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_82.ckpt
+[INFO]  epoch/step=83/11450000 | loss=0.84764 | ploss=0.85267 | vloss=19569347.88485 | entropy=-5.03012 | reward=197.14685
+[INFO]  epoch/step=83/11500000 | loss=0.98793 | ploss=0.99296 | vloss=19280575.84409 | entropy=-5.02684 | reward=194.53686
+[INFO]  epoch/step=83/11550000 | loss=0.88615 | ploss=0.89118 | vloss=19541634.34640 | entropy=-5.02640 | reward=197.16245
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_83.ckpt
+[INFO]  epoch/step=84/11600000 | loss=0.82890 | ploss=0.83393 | vloss=18979910.12026 | entropy=-5.02891 | reward=191.28206
+[INFO]  epoch/step=84/11650000 | loss=1.18872 | ploss=1.19375 | vloss=19499750.18259 | entropy=-5.02734 | reward=196.66864
+[INFO]  epoch/step=84/11700000 | loss=1.07143 | ploss=1.07646 | vloss=20281791.40520 | entropy=-5.02840 | reward=204.39616
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_84.ckpt
+[INFO]  epoch/step=85/11750000 | loss=0.87694 | ploss=0.88197 | vloss=19173670.52397 | entropy=-5.02689 | reward=193.43016
+[INFO]  epoch/step=85/11800000 | loss=0.85909 | ploss=0.86412 | vloss=19652717.70219 | entropy=-5.02877 | reward=198.21210
+[INFO]  epoch/step=85/11850000 | loss=0.88046 | ploss=0.88549 | vloss=18967362.60062 | entropy=-5.02720 | reward=191.47487
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_85.ckpt
+[INFO]  epoch/step=86/11900000 | loss=0.85321 | ploss=0.85824 | vloss=19110903.60488 | entropy=-5.02730 | reward=192.78597
+[INFO]  epoch/step=86/11950000 | loss=0.81984 | ploss=0.82486 | vloss=19394942.89134 | entropy=-5.02705 | reward=195.65667
+[INFO]  epoch/step=86/12000000 | loss=0.89784 | ploss=0.90287 | vloss=19243743.51426 | entropy=-5.02810 | reward=194.16432
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_86.ckpt
+[INFO]  epoch/step=87/12050000 | loss=0.85733 | ploss=0.86235 | vloss=19930807.14440 | entropy=-5.02613 | reward=200.94065
+[INFO]  epoch/step=87/12100000 | loss=0.85021 | ploss=0.85524 | vloss=19387051.22465 | entropy=-5.02897 | reward=195.54589
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_87.ckpt
+[INFO]  epoch/step=88/12150000 | loss=0.96557 | ploss=0.97060 | vloss=19376039.69807 | entropy=-5.02852 | reward=195.34895
+[INFO]  epoch/step=88/12200000 | loss=0.83450 | ploss=0.83953 | vloss=19282450.50639 | entropy=-5.02780 | reward=194.52303
+[INFO]  epoch/step=88/12250000 | loss=0.88986 | ploss=0.89489 | vloss=19336461.87951 | entropy=-5.02872 | reward=195.14599
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_88.ckpt
+[INFO]  epoch/step=89/12300000 | loss=0.86957 | ploss=0.87460 | vloss=20150137.99314 | entropy=-5.02740 | reward=202.96994
+[INFO]  epoch/step=89/12350000 | loss=0.88798 | ploss=0.89301 | vloss=19714441.43486 | entropy=-5.02709 | reward=198.80572
+[INFO]  epoch/step=89/12400000 | loss=0.91696 | ploss=0.92199 | vloss=18656783.80394 | entropy=-5.02750 | reward=188.42183
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_89.ckpt
+[INFO]  epoch/step=90/12450000 | loss=0.87123 | ploss=0.87626 | vloss=20409841.01494 | entropy=-5.02624 | reward=205.64399
+[INFO]  epoch/step=90/12500000 | loss=0.87679 | ploss=0.88182 | vloss=20047999.51873 | entropy=-5.02672 | reward=202.06591
+[INFO]  epoch/step=90/12550000 | loss=0.87751 | ploss=0.88254 | vloss=18332398.82484 | entropy=-5.02875 | reward=185.22635
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_90.ckpt
+[INFO]  epoch/step=91/12600000 | loss=0.89364 | ploss=0.89867 | vloss=19240657.03864 | entropy=-5.02816 | reward=194.06112
+[INFO]  epoch/step=91/12650000 | loss=0.86687 | ploss=0.87190 | vloss=19441075.02030 | entropy=-5.02887 | reward=196.11848
+[INFO]  epoch/step=91/12700000 | loss=0.83438 | ploss=0.83941 | vloss=19328466.06928 | entropy=-5.02690 | reward=195.03784
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_91.ckpt
+[INFO]  epoch/step=92/12750000 | loss=0.82094 | ploss=0.82597 | vloss=19689371.92066 | entropy=-5.02674 | reward=198.46499
+[INFO]  epoch/step=92/12800000 | loss=1.05598 | ploss=1.06101 | vloss=19773224.26377 | entropy=-5.02799 | reward=199.40711
+[INFO]  epoch/step=92/12850000 | loss=0.99521 | ploss=1.00024 | vloss=19728345.84135 | entropy=-5.02814 | reward=198.91141
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_92.ckpt
+[INFO]  epoch/step=93/12900000 | loss=0.86807 | ploss=0.87310 | vloss=19744001.57922 | entropy=-5.02595 | reward=199.08153
+[INFO]  epoch/step=93/12950000 | loss=0.92075 | ploss=0.92578 | vloss=19316792.49896 | entropy=-5.02882 | reward=194.92269
+[INFO]  epoch/step=93/13000000 | loss=1.04441 | ploss=1.04944 | vloss=19191201.91978 | entropy=-5.02786 | reward=193.63979
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_93.ckpt
+[INFO]  epoch/step=94/13050000 | loss=0.85019 | ploss=0.85521 | vloss=18569864.32540 | entropy=-5.02777 | reward=187.49649
+[INFO]  epoch/step=94/13100000 | loss=0.87803 | ploss=0.88306 | vloss=20557395.27258 | entropy=-5.02934 | reward=207.08810
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_94.ckpt
+[INFO]  epoch/step=95/13150000 | loss=0.83992 | ploss=0.84494 | vloss=18901743.41457 | entropy=-5.02822 | reward=190.78427
+[INFO]  epoch/step=95/13200000 | loss=1.13099 | ploss=1.13601 | vloss=18853682.62492 | entropy=-5.02813 | reward=190.34895
+[INFO]  epoch/step=95/13250000 | loss=0.86673 | ploss=0.87176 | vloss=19551985.95125 | entropy=-5.02703 | reward=197.22406
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_95.ckpt
+[INFO]  epoch/step=96/13300000 | loss=0.90706 | ploss=0.91209 | vloss=20571055.62680 | entropy=-5.02802 | reward=207.14473
+[INFO]  epoch/step=96/13350000 | loss=1.05566 | ploss=1.06069 | vloss=19512932.97290 | entropy=-5.02706 | reward=196.80970
+[INFO]  epoch/step=96/13400000 | loss=0.84348 | ploss=0.84851 | vloss=18977348.34917 | entropy=-5.02911 | reward=191.58531
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_96.ckpt
+[INFO]  epoch/step=97/13450000 | loss=0.91964 | ploss=0.92466 | vloss=19642085.26371 | entropy=-5.02700 | reward=197.98721
+[INFO]  epoch/step=97/13500000 | loss=0.95105 | ploss=0.95608 | vloss=20135409.27604 | entropy=-5.02751 | reward=202.98048
+[INFO]  epoch/step=97/13550000 | loss=0.85653 | ploss=0.86156 | vloss=18510835.19737 | entropy=-5.02899 | reward=186.97991
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_97.ckpt
+[INFO]  epoch/step=98/13600000 | loss=0.85640 | ploss=0.86143 | vloss=19156504.22532 | entropy=-5.02691 | reward=193.25584
+[INFO]  epoch/step=98/13650000 | loss=0.89327 | ploss=0.89830 | vloss=19376581.74871 | entropy=-5.02907 | reward=195.40883
+[INFO]  epoch/step=98/13700000 | loss=1.12389 | ploss=1.12892 | vloss=20022731.22268 | entropy=-5.02823 | reward=201.85789
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_98.ckpt
+[INFO]  epoch/step=99/13750000 | loss=0.93053 | ploss=0.93555 | vloss=19295712.51425 | entropy=-5.02787 | reward=194.60141
+[INFO]  epoch/step=99/13800000 | loss=0.82873 | ploss=0.83376 | vloss=19700094.11132 | entropy=-5.02771 | reward=198.71127
+[INFO]  epoch/step=99/13850000 | loss=0.87516 | ploss=0.88019 | vloss=18511163.91036 | entropy=-5.02814 | reward=186.93395
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_99.ckpt
+[INFO]  epoch/step=100/13900000 | loss=1.02883 | ploss=1.03386 | vloss=19499759.92890 | entropy=-5.02752 | reward=196.65179
+[INFO]  epoch/step=100/13950000 | loss=1.24952 | ploss=1.25454 | vloss=20284743.14648 | entropy=-5.02384 | reward=204.45989
+[INFO]  Save model to ./tmp/Amazon_Clothing/train_RL_agent/checkpoint/policy_model_epoch_100.ckpt
