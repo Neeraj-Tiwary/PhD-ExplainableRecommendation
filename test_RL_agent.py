@@ -7,6 +7,7 @@ from math import log
 from datetime import datetime
 
 import numpy as np
+import scipy.stats as stats
 from tqdm import tqdm
 from collections import namedtuple
 import torch
@@ -26,6 +27,7 @@ from train_RL_agent import ActorCritic
 from utils import *
 
 import warnings
+from sklearn.metrics import confusion_matrix
 warnings.filterwarnings("ignore", category=UserWarning)
 
 #global logger
@@ -83,13 +85,18 @@ def get_explainability_score(pred_labels_details, args):
         explainability_score = (((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_entropy + path_entropy_diff_user_mean) + (pred_probs + path_prob_diff_user_mean))
     #--- Baseline
 
-    if args.debug == 1:
-        print('pred_probs={} | pred_entropy={} | pred_reward={} | | pred_path={} | path_prob_diff_user_mean={} | path_entropy_diff_user_mean={} | path_rewards_diff_user_mean={} |  len(pred_path)={}'.
-              format(pred_probs, pred_entropy, pred_reward, pred_path, path_prob_diff_user_mean, path_entropy_diff_user_mean, path_rewards_diff_user_mean, len(pred_path)))
-        print('explainability_score: ', explainability_score)
-
     return explainability_score
 
+# Function to get the quantification of the explainability
+def get_explainability_score_confidence_interval(pred_labels_details, std_exp_score, confidence_score, len_exp_scores, args):
+    explainability_score = get_explainability_score(pred_labels_details, args)
+    # Calculate 95% confidence interval for explainability scores
+    t_score = stats.t.ppf(confidence_score, df=len_exp_scores-1) 
+
+    ci_lower = explainability_score - t_score * (std_exp_score / np.sqrt(len_exp_scores))
+    ci_upper = explainability_score + t_score * (std_exp_score / np.sqrt(len_exp_scores))
+    return (explainability_score, ci_lower, ci_upper, len_exp_scores)
+    
 
 # Function to get the quantification of the explainability
 def get_product_prioritisation_score(pred_labels_details, args):
@@ -120,11 +127,11 @@ def get_product_prioritisation_score(pred_labels_details, args):
 
     # Compute metrics for Explainability - (Rewards Gain + Score Gain) * Entropy
     affinity_score = ((((pred_reward + path_rewards_diff_user_mean) / (pred_reward - path_rewards_diff_user_mean)) + (pred_score + path_score_diff_user_mean)) * (pred_entropy + path_entropy_diff_user_mean))
-
-    if args.debug == 1:
+    """ 
+    if args.debug == True:
         print('pred_score={} | pred_probs={} | pred_entropy={} | pred_reward={} | | pred_path={} | path_score_diff_user_mean={} | path_prob_diff_user_mean={} | path_entropy_diff_user_mean={} | path_rewards_diff_user_mean={} |  len(pred_path)={}'.
               format(pred_score, pred_probs, pred_entropy, pred_reward, pred_path, path_score_diff_user_mean, path_prob_diff_user_mean, path_entropy_diff_user_mean, path_rewards_diff_user_mean, len(pred_path)))
-        print('affinity_score: ', affinity_score)
+        print('affinity_score: ', affinity_score) """
 
     return affinity_score
 
@@ -170,9 +177,35 @@ def evaluate(topk_matches, test_user_products, args):
     avg_recall = np.mean(recalls) * 100
     avg_ndcg = np.mean(ndcgs) * 100
     avg_hit = np.mean(hits) * 100
-    if is_debug == 1:
+
+    # Compute confusion matrix metrics
+    all_true = []
+    all_pred = []
+    for uid in test_user_idxs:
+        if uid in invalid_users:
+            continue
+        rel_set = set(test_user_products[uid])
+        pred_set = set(topk_matches.get(uid, []))
+        for pid in pred_set:
+            if pid in rel_set:
+                all_true.append(1)
+                all_pred.append(1)
+            else:
+                all_true.append(0)
+                all_pred.append(1)
+        for pid in rel_set - pred_set:
+            all_true.append(1)
+            all_pred.append(0)
+
+    if all_true and all_pred:
+        fn, fp, tn, tp = confusion_matrix(all_true, all_pred, labels=[0,1]).ravel()
+        cm = confusion_matrix(all_true, all_pred, labels=[0,1])
+        print('Confusion Matrix:\n', cm)
+    else:
+        tn = fp = fn = tp = 0
+    if is_debug == True:
         print('NDCG={:.3f} |  Recall={:.3f} | HR={:.3f} | Precision={:.3f} | Invalid users={}'.format(avg_ndcg, avg_recall, avg_hit, avg_precision, len(invalid_users)))
-    return avg_ndcg, avg_recall, avg_hit, avg_precision, len(invalid_users)
+    return avg_ndcg, avg_recall, avg_hit, avg_precision, len(invalid_users), tn, fp, fn, tp
 
 
 def batch_beam_search(env, model, uids, device, topk, args):
@@ -190,7 +223,7 @@ def batch_beam_search(env, model, uids, device, topk, args):
     probs_pool = [[] for _ in uids]
     rewards_pool = [[] for _ in uids]
     # entropy_pool = [[] for _ in uids]
-    '''if is_debug == 1:
+    '''if is_debug == True:
         # print('state_pool: ', state_pool)
         print('path_pool:', path_pool)
         print('probs_pool:', probs_pool)
@@ -204,7 +237,7 @@ def batch_beam_search(env, model, uids, device, topk, args):
         actmask_tensor = torch.ByteTensor(actmask_pool).to(device)
         probs, _ = model((state_tensor, actmask_tensor))  # Tensor of [bs, act_dim]
         #rewards = rewards_pool 
-        '''if is_debug == 1:
+        '''if is_debug == True:
             print('hop:', hop)
             print('state_pool: ', state_pool)
             print('state_tensor:', state_tensor)
@@ -213,13 +246,13 @@ def batch_beam_search(env, model, uids, device, topk, args):
             print('actmask_tensor:', actmask_tensor)
             print('probs: Earlier: ', probs)'''
         probs = probs + actmask_tensor.float()  # In order to differ from masked actions
-        '''if is_debug == 1:
+        '''if is_debug == True:
             print('probs: After: ', probs)
             print('topk[hop]:', topk[hop])'''
         topk_probs, topk_idxs = torch.topk(probs, topk[hop], dim=1)  # LongTensor of [bs, k]
         topk_idxs = topk_idxs.detach().cpu().numpy()
         topk_probs = topk_probs.detach().cpu().numpy()
-        '''if is_debug == 1:
+        '''if is_debug == True:
             print('topk_probs:', topk_probs, 'topk_idxs:', topk_idxs)
             print('topk_idxs.shape', topk_idxs.shape)'''
 
@@ -229,14 +262,14 @@ def batch_beam_search(env, model, uids, device, topk, args):
             probs = probs_pool[row]
             rewards = rewards_pool[row]
             if (len(rewards) >= 2 and sum(rewards) > 0) or (len(rewards) <= 1):
-                '''if is_debug == 1:
+                '''if is_debug == True:
                     print('row, path, probs: ', row, path, probs)
                     print('topk_idxs[row], topk_probs[row]:', topk_idxs[row], topk_probs[row])
                     print('rewards, sum, len: ', rewards, sum(rewards), len(rewards))'''
                 for idx, p in zip(topk_idxs[row], topk_probs[row]):
                     if idx >= len(acts_pool[row]):  # act idx is invalid
                         continue
-                    '''if is_debug == 1:
+                    '''if is_debug == True:
                         print('idx, p:', idx, p)
                         print('acts_pool[row]:', acts_pool[row])
                         print('acts_pool[row][idx]:', acts_pool[row][idx])'''
@@ -247,7 +280,7 @@ def batch_beam_search(env, model, uids, device, topk, args):
                     else:
                         next_node_type = KG_RELATION[path[-1][1]][relation]
                     new_path = path + [(relation, next_node_type, next_node_id)]
-                    '''if is_debug == 1:
+                    '''if is_debug == True:
                         print('next_node_type:', next_node_type)
                         print('new_path:', new_path)'''
                     new_rewards = env._get_reward(new_path, is_train=0, is_debug=0)
@@ -262,12 +295,12 @@ def batch_beam_search(env, model, uids, device, topk, args):
         acts_pool = env._batch_get_actions(path_pool, False, 0, None, 0, 0)  # list of list, size=bs
         if hop < 2:
             state_pool = env._batch_get_state(path_pool)
-        if is_debug == 1:
+        #if is_debug == True:
             # print('state_pool: ', state_pool)
             #print('path_pool:', path_pool)
             #print('probs_pool:', probs_pool)
             #print('rewards_pool:', rewards_pool)
-            print('shape: path_pool, probs_pool, rewards_pool : ', len(path_pool), len(probs_pool), len(rewards_pool))
+            #print('shape: path_pool, probs_pool, rewards_pool : ', len(path_pool), len(probs_pool), len(rewards_pool))
             #print('acts_pool:', acts_pool)'''
 
     return path_pool, probs_pool, rewards_pool
@@ -277,13 +310,13 @@ def predict_paths(policy_file, path_file, test_labels, args):
     is_debug = args.debug
     env = BatchKGEnvironment(args.dataset, args.max_acts, max_path_len=args.max_path_len, state_history=args.state_history)
     pretrain_sd = load_checkpoint(policy_file)['model_state_dict']
-
-    if is_debug == 1:
+    """ 
+    if is_debug == True:
         print('Start: predict_paths \nPredicting paths...')
         print('env.state_dim : ', env.state_dim)
         print('env.act_dim : ', env.act_dim)
         print('args.gamma : ', args.gamma)
-        print('args.hidden : ', args.hidden)
+        print('args.hidden : ', args.hidden) """
     model = ActorCritic(env.state_dim, env.act_dim, gamma=args.gamma, hidden_sizes=args.hidden).to(args.device)
     model_sd = model.state_dict()
     model_sd.update(pretrain_sd)
@@ -312,7 +345,7 @@ def predict_paths(policy_file, path_file, test_labels, args):
         pbar.update(batch_size)
     predicts = {'paths': all_paths, 'probs': all_probs, 'entropy': all_entropy, 'rewards': all_rewards}
 
-    '''if is_debug == 1:
+    '''if is_debug == True:
         print('paths : ', all_paths)
         print('max(paths) : ', max(all_paths), 'len(paths):', len(all_paths))
         print('probs : ', all_probs)
@@ -382,7 +415,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
                 path_rewards_diff_user_mean = path_info[3] - user_path_mean_stats[uid][3]
                 pred_paths_revised[uid][pid].append((path_info[0], path_info[1], path_info[2], path_info[3], path_info[4], path_score_diff_user_mean, path_prob_diff_user_mean, path_entropy_diff_user_mean, path_rewards_diff_user_mean))
 
-    '''if is_debug == 1:
+    '''if is_debug == True:
         for uid in pred_paths_revised:
             print('len(pred_paths_revised): ', len(pred_paths_revised[uid].values()))
             print('pred_paths_revised: ', pred_paths_revised[uid].values())'''
@@ -401,11 +434,22 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
                     # Baseline approach - without explainability score applied
                     sorted_path = pred_paths_revised[userid][pid]
                 else:
+                    # Calculate mean and standard deviation of explainability scores for a product
+                    explainability_scores = [get_explainability_score(path_info, args) for path_info in pred_paths_revised[userid][pid]]
+                    mean_explainability_score = np.mean(explainability_scores)
+                    std_explainability_score = np.std(explainability_scores)
+                    # Append explainability score to each path info
+                    for idx, path_info in enumerate(pred_paths_revised[userid][pid]):
+                        # Calculate 95% confidence interval for explainability scores
+                        confidence_score = 0.95  # 95% confidence interval
+                        pred_paths_revised[userid][pid][idx] = path_info + get_explainability_score_confidence_interval(path_info, std_explainability_score, confidence_score, len(explainability_scores), args)
+
                     # Path Prioritization - Through Explainability scoring mechanism
                     sorted_path = sorted(pred_paths_revised[userid][pid], key=lambda x: (get_explainability_score(x, args), x[1], x[3], x[2]), reverse=True)
+                    #print('sorted_path: ', sorted_path)
                 best_pred_paths[userid].append(sorted_path[0])
-    '''if is_debug == 1:
-        print('best_pred_paths: ', best_pred_paths)'''
+    if is_debug == True:
+        print('best_pred_paths: ', best_pred_paths)
 
     # 3) Product Prioritization - Compute top 10 recommended products for each user.
     sort_by = 'other' #'reward_per_score'
@@ -429,11 +473,11 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
         elif args.PAS_score_option == 5:  # reward
             sorted_path[uid] = sorted(best_pred_paths[uid], key=lambda x: (x[3]), reverse=True)
 
-        '''if is_debug == 1:
+        '''if is_debug == True:
             print('sorted_path :', sorted_path)'''
-        
-        top10_pids = [p[-1][2] for _, _, _, _, p, _, _, _, _ in sorted_path[uid][:10]]  # from largest to smallest
-        top10_pids_path = [(p[-1][2], str(p[0][1]) + ' ' + str(p[0][2]) + ' has ' + str(p[1][0]) + ' ' + str(p[1][1]) + ' ' + str(p[1][2]) + ' which was ' + str(p[2][0]) + ' by ' + str(p[2][1]) + ' ' + str(p[2][2]) + ' who ' + str(p[3][0]) + ' ' + str(p[3][1]) + ' ' + str(p[3][2])) for _, _, _, _, p, _, _, _, _ in sorted_path[uid] if p[-1][2] in top10_pids]  # from largest to smallest
+        print('sorted_path[uid] :', uid, sorted_path[uid][:10])
+        top10_pids = [p[-1][2] for _, _, _, _, p, _, _, _, _, _, _, _, _ in sorted_path[uid][:10]]  # from largest to smallest
+        top10_pids_path = [(p[-1][2], str(p[0][1]) + ' ' + str(p[0][2]) + ' has ' + str(p[1][0]) + ' ' + str(p[1][1]) + ' ' + str(p[1][2]) + ' which was ' + str(p[2][0]) + ' by ' + str(p[2][1]) + ' ' + str(p[2][2]) + ' who ' + str(p[3][0]) + ' ' + str(p[3][1]) + ' ' + str(p[3][2])) for _, _, _, _, p, _, _, _, _, _, _, _, _ in sorted_path[uid] if p[-1][2] in top10_pids]  # from largest to smallest
         top10_pids_details = [(p) for p in sorted_path[uid][:10]]  # from largest to smallest
         #print('scores[uid] :', uid, np.argsort(scores[uid]))
 
@@ -457,7 +501,7 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
 
     pred_labels_1 = sorted(pred_labels)
     test_labels_1 = sorted(test_labels)
-    if is_debug == 1:
+    if is_debug == True:
         for uid in test_labels_1:
             print('test_labels[uid] :', uid, test_labels[uid])
             print('pred_labels[uid] :', uid, pred_labels[uid])
@@ -469,17 +513,22 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
         for uid in pred_labels:
             print('pred_labels[uid] :', uid, pred_labels[uid])
 
-    if is_debug == 1:
+    if is_debug == True:
         for i in pred_labels:
             for j in (range(len(pred_labels[i]))):
                 print('i: j :', i, j)
                 print('pred_labels[uid] :', i, pred_labels[i][j])
                 print('pred_labels_path[uid] :', i, pred_labels_path[i][j])
                 print('pred_labels_details[uid] :', i, pred_labels_details[i][j])
-                get_explainability_score(pred_labels_details[i][j], args)
+                print('pred_probs={} | pred_entropy={} | pred_reward={} | | pred_path={} | path_prob_diff_user_mean={} | path_entropy_diff_user_mean={} | path_rewards_diff_user_mean={} '.
+                    format(pred_labels_details[i][j][1], pred_labels_details[i][j][2], pred_labels_details[i][j][3], pred_labels_details[i][j][4], pred_labels_details[i][j][6], pred_labels_details[i][j][7], pred_labels_details[i][j][8]))
+                print('explainability_score: ', pred_labels_details[i][j][9])
+                print('explainability_score: CI - Lower', pred_labels_details[i][j][10], 'explainability_score: CI - Upper', pred_labels_details[i][j][11], 'Count:', pred_labels_details[i][j][12])
+        print(pred_paths_revised[21001][11772])
+        print([(p[4][-1][2], str(p[4][0][1]) + ' ' + str(p[4][0][2]) + ' has ' + str(p[4][1][0]) + ' ' + str(p[4][1][1]) + ' ' + str(p[4][1][2]) + ' which was ' + str(p[4][2][0]) + ' by ' + str(p[4][2][1]) + ' ' + str(p[4][2][2]) + ' who ' + str(p[4][3][0]) + ' ' + str(p[4][3][1]) + ' ' + str(p[4][3][2]), get_explainability_score(p, args), get_product_prioritisation_score(p, args), p) for p in pred_paths_revised[21001][11772]])
     # Model Evaluation
     #print('Count Pred_labels & test_labels: ', len(pred_labels), len(test_labels))
-    ndcg, recall, hit_ratio, precision, invalid_users = evaluate(pred_labels, test_labels, args)
+    ndcg, recall, hit_ratio, precision, invalid_users, tn, fp, fn, tp = evaluate(pred_labels, test_labels, args)
     logger.info(
         'model epoch={:d}'.format(epoch) +
         ' | count (users)={}'.format(len(pred_labels)) +
@@ -487,10 +536,14 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
         ' | recall={:.5f}'.format(recall) +
         ' | hit_ratio={:.5f}'.format(hit_ratio) +
         ' | precision={:.5f}'.format(precision) +
+        ' | tn={:.5f}'.format(tn) +
+        ' | fp={:.5f}'.format(fp) +
+        ' | fn={:.5f}'.format(fn) +
+        ' | tp={:.5f}'.format(tp) +
         ' | invalid_users={:.5f}'.format(invalid_users) +
         ' | execution_timestamp={}'.format(datetime.now())
     )
-    return pred_labels, pred_labels_path, pred_labels_details_extended, ndcg, recall, hit_ratio, precision, invalid_users
+    return pred_labels, pred_labels_path, pred_labels_details_extended, ndcg, recall, hit_ratio, precision, invalid_users, tn, fp, fn, tp
 
 
 def test(args, logger):
@@ -514,28 +567,33 @@ def test(args, logger):
         #path_file = args.output_dir + '/policy_paths_epoch{}_{}.pkl'.format(args.epochs, args.run_number)
         path_file = args.output_dir + '/policy_paths_epoch_{}.pkl'.format(epoch)
         is_debug = args.debug
-        if is_debug == 1:
+        if is_debug == True:
             print('policy_file : ', policy_file)
             print('path_file : ', path_file)
             print('args :', args)
 
         train_labels = load_labels(args.dataset, 'train')
         test_labels = load_labels(args.dataset, 'test')
-        #train_labels = {key: value for key, value in train_labels.items() if key in range(20000, 22363, 1)}
-        #test_labels = {key: value for key, value in test_labels.items() if key in range(20000, 22363, 1)}
+        #train_labels = {key: value for key, value in train_labels.items() if key in range(21000, 21002, 1)}
+        #test_labels = {key: value for key, value in test_labels.items() if key in range(21000, 21002, 1)}
         if args.users is not None:
-            train_labels = {key: value for key, value in train_labels.items() if key == args.users}
-            test_labels = {key: value for key, value in test_labels.items() if key == args.users}
-        if is_debug == 1:
+            print('args.users: ', args.users)
+            train_labels = {key: value for key, value in train_labels.items() if key in range(args.users, args.users + 1, 1)}
+            test_labels = {key: value for key, value in test_labels.items() if key in range(args.users, args.users + 1, 1)}
+            print('train_labels: ', train_labels)
+            print('test_labels: ', test_labels)
+            #train_labels = {key: value for key, value in train_labels.items() if key == args.users}
+            #test_labels = {key: value for key, value in test_labels.items() if key == args.users}
+        if is_debug == True:
             print('train_labels: ', train_labels)
             print('test_labels: ', test_labels)
 
         if args.run_path:
             predict_paths(policy_file, path_file, test_labels, args)
         if args.run_eval:
-            pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users = evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger)
+            pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users, tn, fp, fn, tp = evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger)
 
-        return pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users
+        return pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users, tn, fp, fn, tp
 
 if __name__ == '__main__':
     boolean = lambda x: (str(x).lower() == 'true')
@@ -556,7 +614,7 @@ if __name__ == '__main__':
     parser.add_argument('--topk', type=int, nargs='*', default=[10, 10, 12], help='number of samples')
     parser.add_argument('--run_path', type=boolean, default=True, help='Generate predicted path? (takes long time)')
     parser.add_argument('--run_eval', type=boolean, default=True, help='Run evaluation?')
-    parser.add_argument('--debug', type=int, nargs='*', default=0, help='number of samples')
+    parser.add_argument('--debug', type=boolean, default=False, help='debug state')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size.')
     parser.add_argument('--is_resume_from_checkpoint', type=int, default=0, help='Flag for resuming from last checkpoint')
     parser.add_argument('--logging_mode', type=str, default='a', help='logging mode')
@@ -575,6 +633,7 @@ if __name__ == '__main__':
         if torch.cuda.is_available():
             args.device = torch.device('cuda:0')
     print('args.device: ', args.device)
+    print('args.debug: ', args.debug)
 
     is_debug = args.debug
     args.output_dir = TMP_DIR[args.dataset] + '/' + args.output_folder
@@ -584,5 +643,5 @@ if __name__ == '__main__':
     logger.info(args)
 
     set_random_seed(args.seed)
-    pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users = test(args, logger)
+    pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users, tn, fp, fn, tp = test(args, logger)
     
