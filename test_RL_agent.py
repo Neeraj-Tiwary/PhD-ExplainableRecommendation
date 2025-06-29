@@ -432,7 +432,12 @@ def evaluate_paths(path_file, train_labels, test_labels, args, epoch, logger):
                 # Get the path with highest probability
                 if args.MES_score_option == 0: # Baseline approach
                     # Baseline approach - without explainability score applied
-                    sorted_path = pred_paths_revised[userid][pid]
+                    sorted_path = pred_paths_revised[userid][pid]  
+                    # Pad with zeros to match the number of values in the else block (13 values)
+                    # Each path_info has 9 elements, so add 4 zeros to make 13
+                    sorted_path = [tuple(list(path_info) + [0, 0, 0, 0]) for path_info in sorted_path]
+                    print('args.MES_score_option', args.MES_score_option)
+                    print('sorted_path: ', sorted_path)
                 else:
                     # Calculate mean and standard deviation of explainability scores for a product
                     explainability_scores = [get_explainability_score(path_info, args) for path_info in pred_paths_revised[userid][pid]]
