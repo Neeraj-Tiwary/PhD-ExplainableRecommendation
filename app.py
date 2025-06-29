@@ -34,7 +34,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 #logger = None
 
 def recommended(args, logger):
-    pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users = test(args, logger)
+    pred_labels, pred_labels_path, pred_labels_details, ndcg, recall, hit_ratio, precision, invalid_users, tn, fp, fn, tp = test(args, logger)
     return pred_labels, pred_labels_path, pred_labels_details
 
 def main(args, logger):
