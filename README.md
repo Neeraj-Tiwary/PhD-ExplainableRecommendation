@@ -59,8 +59,9 @@ You can customize `app.py` to visualize recommendations, upload datasets, or dis
 ### Journal Publications
 1. N. Tiwary, S. A. Mohd Noah, F. Fauzi and T. S. Yee, Max Explainability Score–A quantitative metric for explainability evaluation in knowledge graph-based recommendations, Computers and Electrical Engineering, vol. 116, p. 109190, 2024, https://doi.org/10.1016/j.compeleceng.2024.109190
 2. N. Tiwary, S. A. M. Noah, F. Fauzi and T. S. Yee, A Review of Explainable Recommender Systems Utilizing Knowledge Graphs and Reinforcement Learning, in IEEE Access, vol. 12, pp. 91999-92019, 2024, Doi: 10.1109/ACCESS.2024.3422416
-3. S. M. Al-Ghuribi, S. A. Mohd Noah, T. N. Mohammed, N. Tiwary and N. I. Y. Saat, A Comparative Study of Sentiment-Aware Collaborative Filtering Algorithms for Arabic Recommendation Systems, IEEE Access, vol. 12, pp. 174441-174454, 2024, doi: 10.1109/ACCESS.2024.3489658
-4. Tiwary, N., Mohd Noah, S., Fauzi, F., Yee, T., & Al-Ghuribi, S, Enhancing Recommender Systems with Deep reinforcement Learning and Knowledge Graph Embeddings, Malaysian Journal of Computer Science, 2025, In Press.
+3. Tiwary, N., Mohd Noah, S.A. & Fauzi, F. Prioritising explainable AI-driven recommendations with knowledge graphs and reinforcement learning. J. King Saud Univ. Comput. Inf. Sci. 37, 156 (2025). https://doi.org/10.1007/s44443-025-00173-5
+4. Tiwary, N., Noah, M., Azman, S., Fauzi, F., Yee, T. S., & Al-Ghuribi, S. (2025). ENHANCING RECOMMENDER SYSTEMS WITH DEEP REINFORCEMENT LEARNING AND KNOWLEDGE GRAPH EMBEDDINGS. Malaysian Journal of Computer Science, 38.
+5. S. M. Al-Ghuribi, S. A. Mohd Noah, T. N. Mohammed, N. Tiwary and N. I. Y. Saat, A Comparative Study of Sentiment-Aware Collaborative Filtering Algorithms for Arabic Recommendation Systems, IEEE Access, vol. 12, pp. 174441-174454, 2024, doi: 10.1109/ACCESS.2024.3489658
 
 ### Conference Contributions
 1. N. Tiwary, S. A. M. Noah, F. Fauzi and T. S. Yee, Advancing Recommender Systems with Deep Reinforcement Learning, in 16th IEEE International Conference on Knowledge and Systems Engineering (KSE 2024), Kuala Lumpur, Malaysia, 5-7 Nov 2024
